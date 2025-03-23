@@ -30,6 +30,21 @@ export class RankDevs{
         }, 10000);
     }
 
-    private stopTracking():void{}
+    private stopTracking(): void{
+        if (!this.isTyping || !this.typingStartTime) return;
+
+        const duration = Date.now() - this.typingStartTime;
+        this.typingStartTime = null;
+        this.isTyping = false;
+
+        const language = vscode.window.activeTextEditor?.document.languageId || 'unknown';
+
+        const apiKey = this.context.globalState.get<string>('rankDevsApiKey');
+        if (apiKey) {
+            sendTypingDataToBackend({apiKey, typingTime:duration, language});
+        } else {
+            console.error('API key is missing!');
+        }
+    }
 
 }
