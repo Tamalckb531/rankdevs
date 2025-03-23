@@ -13,7 +13,7 @@ interface Payload{
 
 type Props = Omit<Payload, 'timestamp'>;
 
-const sendTypingDataToBackend = async ({ apiKey,typingTime,language}:Props) => {
+export const sendTypingDataToBackend = async ({ apiKey,typingTime,language}:Props) => {
     const backendUrl = process.env.BACKEND_URL;
 
     if (!backendUrl) {
@@ -46,4 +46,3 @@ const sendTypingDataToBackend = async ({ apiKey,typingTime,language}:Props) => {
         console.error('Error sending typing data:', error);
     }
 }
-export default sendTypingDataToBackend;
