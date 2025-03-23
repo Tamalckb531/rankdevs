@@ -11,7 +11,9 @@ interface Payload{
     timestamp:number,
 }
 
-const sendTypingDataToBackend = async ({ apiKey,typingTime,language}:Payload) => {
+type Props = Omit<Payload, 'timestamp'>;
+
+const sendTypingDataToBackend = async ({ apiKey,typingTime,language}:Props) => {
     const backendUrl = process.env.BACKEND_URL;
 
     if (!backendUrl) {
@@ -25,5 +27,23 @@ const sendTypingDataToBackend = async ({ apiKey,typingTime,language}:Payload) =>
         language,
         timestamp: Date.now()
     } 
+
+    try {
+        const response = await fetch(`${backendUrl}/track`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+            console.log('Typing data sent successfully!');
+        } else {
+            console.error('Failed to send data to backend:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error sending typing data:', error);
+    }
 }
 export default sendTypingDataToBackend;
