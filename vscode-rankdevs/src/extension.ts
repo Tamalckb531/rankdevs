@@ -1,28 +1,32 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { RankDevs } from './rankDevs';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	console.log('RankDevs extension is now active!');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-rankdevs" is now active!');
+	const rankDevs = new RankDevs(context);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('vscode-rankdevs.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('This is Tamal');
+	// Track user typing by registering the change event in the active editor
+
+	context.subscriptions.push(
+		vscode.workspace.onDidChangeTextDocument((event) => rankDevs.trackTyping(event))
+	)
+
+	const disposable = vscode.commands.registerCommand('vscode-rankdevs.setApiKey', () => {
+		
+		vscode.window.showInputBox({
+			prompt: 'Enter your Api Key : '
+		}).then((apiKey) => {
+			if (apiKey) rankDevs.setApiKey(apiKey);
+		});
 	});
 
 	context.subscriptions.push(disposable);
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	console.log('RankDevs extension is now deactivated!');
+}
 
 //? Hi there 
