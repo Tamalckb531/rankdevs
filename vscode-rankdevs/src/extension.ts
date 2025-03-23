@@ -28,5 +28,3 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
 	console.log('RankDevs extension is now deactivated!');
 }
-
-//? Hi there 
