@@ -14,8 +14,35 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
+  id              String  @id @default(uuid())
+  githubUserName  String
+  twitterUsername String? // Nullable, optional link
+  peerlistLink    String?
+  leetcodeLink    String?
+  codeforcesLink  String?
+  totalCodingTime Int     @default(0) // Total seconds spent coding
+  graphStats      Json // Storing weekly, monthly JSON data for graphs
+  pieStats        Json // Data for pie chart & daily usage by language
+
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  LeaderboardEntry LeaderboardEntry[]
+}
+
+model LeaderboardEntry {
+  id              String          @id @default(uuid())
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+  leaderboardType LeaderboardType
+  codingTime      Int // Total coding time in seconds (hr.mm.ss format will be calculated in frontend)
+  languageStats   Json // JSON to store time spent on each language
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum LeaderboardType {
+  DAILY
+  WEEKLY
+  MONTHLY
 }
