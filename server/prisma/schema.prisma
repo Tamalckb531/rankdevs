@@ -16,33 +16,32 @@ datasource db {
 model User {
   id              String  @id @default(uuid())
   githubUserName  String
+  apiKey          String  @unique
   twitterUsername String? // Nullable, optional link
   peerlistLink    String?
   leetcodeLink    String?
   codeforcesLink  String?
-  totalCodingTime Int     @default(0) // Total seconds spent coding
-  graphStats      Json // Storing weekly, monthly JSON data for graphs
-  pieStats        Json // Data for pie chart & daily usage by language
 
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  LeaderboardEntry LeaderboardEntry[]
-}
+  dailyStats Json
+  // Storing daily stats in:
+  //? {'total':250, 'js':30... format}
 
-model LeaderboardEntry {
-  id              String          @id @default(uuid())
-  userId          String
-  user            User            @relation(fields: [userId], references: [id])
-  leaderboardType LeaderboardType
-  codingTime      Int // Total coding time in seconds (hr.mm.ss format will be calculated in frontend)
-  languageStats   Json // JSON to store time spent on each language
+  weeklyStats Json
+  // Storing weekly stats in 
+  //?{sum:{'total':250, 'js':30...}, sunday:{'total':250, 'js':30...} ...format}
+
+  monthlyStats Json
+  // Storing monthly stats in 
+  //?{sum:{'total':250, 'js':30...}, 1:{'total':250, 'js':30...} ...format}
+
+  yearlyStats Json
+  // Storing yearly stats in 
+  //?{sum:{'total':250, 'js':30...}, Jan:{'total':250, 'js':30...} ...format}
+
+  totalStats Json
+  // Storing total stats in 
+  //?{sum:{'total':250, 'js':30...}, 2021:{'total':250, 'js':30...} ...format}
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-enum LeaderboardType {
-  DAILY
-  WEEKLY
-  MONTHLY
 }
