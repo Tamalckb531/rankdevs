@@ -3,6 +3,7 @@ import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from '@prisma/client'
 import { inMemoryStats } from "../utils/inMemoryStats.js";
 import { updateStats } from "../utils/inMemoFunctions.js";
+import type { Payload } from "../utils/types.js";
 
 const prisma = new PrismaClient();
 
@@ -11,12 +12,7 @@ export const hello = async (c:Context) => {
 }
 
 export const updateLeaderboard = async (c: Context) => {
-    const payload = await c.req.json<{
-        apiKey: string;
-        typingTime: number;
-        language: string;
-        timestamp: number;
-    }>();
+    const payload = await c.req.json<Payload>();
 
     try {
         //? Find the user by apiKey
