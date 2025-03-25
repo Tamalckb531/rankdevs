@@ -20,7 +20,23 @@ app.get('/test', (c) => {
 })
 
 //? routers 
-app.route('/api/leaderboard',leaderboardRoute)
+app.route('/api/leaderboard', leaderboardRoute)
+
+//? Global catch middleware
+// Global Error Handler
+app.onError((err:any, c) => {
+  const statuscode = err.status || 500;
+  const message = err.message || 'Internal server error';
+
+  return c.json(
+    {
+      success: false,
+      statuscode,
+      message,
+    },
+    statuscode
+  );
+});
 
 serve({
   fetch: app.fetch,
