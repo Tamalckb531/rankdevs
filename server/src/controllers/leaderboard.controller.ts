@@ -3,7 +3,7 @@ import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from '@prisma/client'
 import { inMemoryStats } from "../utils/inMemoryStats.js";
 import { initializeStats, updateStats } from "../utils/inMemoFunctions.js";
-import type { Payload } from "../utils/types.js";
+import type { Payload, statPayload } from "../utils/types.js";
 
 const prisma = new PrismaClient();
 
@@ -44,4 +44,33 @@ export const updateLeaderboard = async (c: Context) => {
         throw new HTTPException(500, { message: error.message || 'An error from leader board update' });
     }
 
+}
+
+export const getDaily = async (c: Context) => {
+    try {
+        let data: statPayload[] = [];
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                githubUserName: true,
+                twitterUsername:true
+            },
+        });
+
+        
+        users.forEach(user => {
+            const userStats = inMemoryStats[user.id]?.dailyStats;
+
+            if (userStats) {
+                const { logs, ...realStats } = userStats;
+                data.push({ ...user, Stats:realStats });
+            }
+        })
+
+
+        return c.json(data);
+
+    }catch (error: any) {
+        throw new HTTPException(500, { message: error.message || 'An error from leader board getDaily' });
+    }
 }

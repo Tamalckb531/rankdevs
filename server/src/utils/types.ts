@@ -13,3 +13,15 @@ export type Stats = {
     [key: string]: number | any;
     logs: Log[];
 }
+
+type tableStats = {
+    total: number;
+    [key: string]: number;
+}
+
+export type statPayload = {
+    id: string;
+    githubUserName: string;
+    twitterUsername: string | null;
+    Stats: tableStats;
+}
