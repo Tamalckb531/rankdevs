@@ -2,7 +2,7 @@ import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from '@prisma/client'
 import { inMemoryStats } from "../utils/inMemoryStats.js";
-import { updateStats } from "../utils/inMemoFunctions.js";
+import { initializeStats, updateStats } from "../utils/inMemoFunctions.js";
 import type { Payload } from "../utils/types.js";
 
 const prisma = new PrismaClient();
@@ -26,9 +26,9 @@ export const updateLeaderboard = async (c: Context) => {
         //? no user entry -> create entry
         if (!inMemoryStats[userId]) {
             inMemoryStats[userId] = {
-                dailyStats: {total:0},
-                weeklyStats: {total:0},
-                monthlyStats: {total:0},
+                dailyStats: initializeStats(),
+                weeklyStats: initializeStats(),
+                monthlyStats: initializeStats(),
             }
         }
 

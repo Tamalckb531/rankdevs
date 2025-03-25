@@ -38,6 +38,7 @@ app.onError((err:any, c) => {
   );
 });
 
+//? server
 serve({
   fetch: app.fetch,
   port: 3000

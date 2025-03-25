@@ -12,6 +12,11 @@ export const updateStats = (stats: Stats, typingTime: number, language: string) 
     stats.logs.push({ typingTime, language, timestamp: now });
 }
 
+export const initializeStats = (): Stats => ({
+    total: 0,
+    logs:[]
+})
+
 export const cleanOldStats = (stats: Stats, windowInMillis: number) => {
     const cutoffTime = Date.now() - windowInMillis;
 
