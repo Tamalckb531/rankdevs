@@ -6,7 +6,14 @@ export type Payload = {
     timestamp:number,
 }
 
+interface Log{
+    typingTime: number;
+    language: string;
+    timestamp: number
+}
+
 export type Stats = {
     total: number;
-    [key: string]: number;
+    logs: Log[];
+    [key: string]: number | Log[];
 }
