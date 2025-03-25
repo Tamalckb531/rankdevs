@@ -74,6 +74,35 @@ export const getDaily = async (c: Context) => {
         throw new HTTPException(500, { message: error.message || 'An error from leader board getDaily' });
     }
 }
+export const getWeekly = async (c: Context) => {
+    try {
+        let data: statPayload[] = [];
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                githubUserName: true,
+                twitterUsername:true
+            },
+        });
+
+        
+        users.forEach(user => {
+            const userStats = inMemoryStats[user.id]?.weeklyStats;
+
+            if (userStats) {
+                const { logs, ...realStats } = userStats;
+                data.push({ ...user, Stats:realStats });
+            }
+        })
+
+
+        return c.json(data);
+
+    }catch (error: any) {
+        throw new HTTPException(500, { message: error.message || 'An error from leader board getDaily' });
+    }
+}
+
 export const getMonthly = async (c: Context) => {
     try {
         let data: statPayload[] = [];
