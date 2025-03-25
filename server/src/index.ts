@@ -54,7 +54,7 @@ setInterval(() => {
       cleanOldStats(monthlyStats, ONE_MONTH);  // Clean stats older than 30 days
   }
   console.log("Old logs cleaned!");
-}, 60 * 1000);
+}, 10 * 60 * 1000);
 
 //? server
 serve({
