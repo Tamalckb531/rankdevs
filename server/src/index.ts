@@ -1,11 +1,26 @@
+import dotenv from 'dotenv';
+import { cors } from 'hono/cors';
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
+import leaderboardRoute from './routes/leaderboard.route.js'
 
-const app = new Hono()
+dotenv.config();
 
-app.get('/', (c) => {
-  return c.text('Hello Tamal!')
+const app = new Hono();
+
+// Enable CORS with type safety, allowing credentials
+app.use('*', cors({
+  origin: 'http://localhost:3001',
+  credentials: true,
+}));
+
+
+app.get('/test', (c) => {
+  return c.text('Sever is healthy')
 })
+
+//? routers 
+app.route('/api/leaderboard',leaderboardRoute)
 
 serve({
   fetch: app.fetch,

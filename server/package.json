@@ -5,10 +5,20 @@
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.6.0",
     "@hono/node-server": "^1.14.0",
     "@prisma/client": "^6.5.0",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.3",
+    "@types/jsonwebtoken": "^9.0.9",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "hono": "^4.7.5",
-    "prisma": "^6.5.0"
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.5.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
