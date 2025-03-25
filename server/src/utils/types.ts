@@ -14,6 +14,6 @@ interface Log{
 
 export type Stats = {
     total: number;
+    [key: string]: number | any;
     logs: Log[];
-    [key: string]: number | Log[];
 }
