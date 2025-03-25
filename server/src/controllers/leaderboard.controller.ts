@@ -2,6 +2,7 @@ import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from '@prisma/client'
 import { inMemoryStats } from "../utils/inMemoryStats.js";
+import { updateStats } from "../utils/inMemoFunctions.js";
 
 const prisma = new PrismaClient();
 
@@ -35,7 +36,13 @@ export const updateLeaderboard = async (c: Context) => {
             }
         }
 
-        //? update times in 
+        //? update times in memory
+        const { dailyStats, weeklyStats, monthlyStats } = inMemoryStats[userId];
+        updateStats(dailyStats, payload.typingTime, payload.language);
+        updateStats(weeklyStats, payload.typingTime, payload.language);
+        updateStats(monthlyStats, payload.typingTime, payload.language);
+
+        return c.json({ status: 200, msg: "stats updated" });
         
     } catch (error: any) {
         throw new HTTPException(500, { message: error.message || 'An error from leader board update' });
