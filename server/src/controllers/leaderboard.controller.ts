@@ -45,89 +45,32 @@ export const updateLeaderboard = async (c: Context) => {
     }
 
 }
-
-export const getDaily = async (c: Context) => {
+const getStats = async (c: Context, statType: 'dailyStats' | 'weeklyStats' | 'monthlyStats') => {
     try {
         let data: statPayload[] = [];
         const users = await prisma.user.findMany({
             select: {
                 id: true,
                 githubUserName: true,
-                twitterUsername:true
+                twitterUsername: true
             },
         });
 
-        
         users.forEach(user => {
-            const userStats = inMemoryStats[user.id]?.dailyStats;
+            const userStats = inMemoryStats[user.id]?.[statType];
 
             if (userStats) {
                 const { logs, ...realStats } = userStats;
-                data.push({ ...user, Stats:realStats });
+                data.push({ ...user, Stats: realStats });
             }
-        })
-
-
-        return c.json(data);
-
-    }catch (error: any) {
-        throw new HTTPException(500, { message: error.message || 'An error from leader board getDaily' });
-    }
-}
-export const getWeekly = async (c: Context) => {
-    try {
-        let data: statPayload[] = [];
-        const users = await prisma.user.findMany({
-            select: {
-                id: true,
-                githubUserName: true,
-                twitterUsername:true
-            },
         });
 
-        
-        users.forEach(user => {
-            const userStats = inMemoryStats[user.id]?.weeklyStats;
-
-            if (userStats) {
-                const { logs, ...realStats } = userStats;
-                data.push({ ...user, Stats:realStats });
-            }
-        })
-
-
         return c.json(data);
-
-    }catch (error: any) {
-        throw new HTTPException(500, { message: error.message || 'An error from leader board getDaily' });
+    } catch (error: any) {
+        throw new HTTPException(500, { message: error.message || `An error from leaderboard ${statType}` });
     }
-}
+};
 
-export const getMonthly = async (c: Context) => {
-    try {
-        let data: statPayload[] = [];
-        const users = await prisma.user.findMany({
-            select: {
-                id: true,
-                githubUserName: true,
-                twitterUsername:true
-            },
-        });
-
-        
-        users.forEach(user => {
-            const userStats = inMemoryStats[user.id]?.monthlyStats;
-
-            if (userStats) {
-                const { logs, ...realStats } = userStats;
-                data.push({ ...user, Stats:realStats });
-            }
-        })
-
-
-        return c.json(data);
-
-    }catch (error: any) {
-        throw new HTTPException(500, { message: error.message || 'An error from leader board getDaily' });
-    }
-}
+export const getDaily = (c: Context) => getStats(c, 'dailyStats');
+export const getWeekly = (c: Context) => getStats(c, 'weeklyStats');
+export const getMonthly = (c: Context) => getStats(c, 'monthlyStats');
