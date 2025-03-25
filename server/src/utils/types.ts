@@ -6,11 +6,7 @@ export type Payload = {
     timestamp:number,
 }
 
-interface Log{
-    typingTime: number;
-    language: string;
-    timestamp: number
-}
+type Log = Omit<Payload,'apiKey'>;
 
 export type Stats = {
     total: number;

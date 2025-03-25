@@ -17,10 +17,13 @@ export const initializeStats = (): Stats => ({
     logs:[]
 })
 
+//? filter old time -> clean total and keys time -> re add total and key time from filtered log
 export const cleanOldStats = (stats: Stats, windowInMillis: number) => {
-    const cutoffTime = Date.now() - windowInMillis;
+    //? This gives time of 24 hours, 7 days, or 30 days ago
+    const cutoffTime = Date.now() - windowInMillis; 
 
-    //? Keep only logs from within the sliding window (last 24 hours, 7 days, or 30 days)
+    //? Keep only last 24 hours, 7 days, or 30 days logs
+    //? basically if timestamp is bigger than time of 24 hours, 7 days, or 30 days ago -> it will be bigger
     stats.logs = stats.logs.filter(log => log.timestamp > cutoffTime);
 
     //? language and totalTime recalculation
