@@ -1,7 +1,4 @@
-export interface Stats{
-    total: number;
-    [key: string]: number;
-}
+import type { Stats } from "./types.js";
 
 export const inMemoryStats: Record<
     string,
