@@ -3,6 +3,7 @@ import { cors } from 'hono/cors';
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import leaderboardRoute from './routes/leaderboard.route.js'
+import dashboardRoute from './routes/dashboard.route.js'
 import { inMemoryStats } from './utils/inMemoryStats.js';
 import { cleanOldStats } from './utils/inMemoFunctions.js';
 
@@ -22,10 +23,10 @@ app.get('/test', (c) => {
 })
 
 //? routers 
-app.route('/api/leaderboard', leaderboardRoute)
+app.route('/api/leaderboard', leaderboardRoute);
+app.route('/api/dashboard', dashboardRoute);
 
 //? Global catch middleware
-// Global Error Handler
 app.onError((err:any, c) => {
   const statuscode = err.status || 500;
   const message = err.message || 'Internal server error';
