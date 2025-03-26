@@ -1,4 +1,3 @@
-import * as vscode from "vscode";
 import * as dotenv from "dotenv";
 import * as path from 'path';
 
