@@ -2,7 +2,9 @@ import * as vscode from 'vscode';
 import { RankDevs } from './rankDevs';
 import { StatsManager } from './StatsManager';
 
+
 let globalContext: vscode.ExtensionContext;
+let intervalId: NodeJS.Timeout;
 
 //? run as soon as user open vs code
 export function activate(context: vscode.ExtensionContext) {
@@ -28,11 +30,17 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//? to clean up the register command
 	context.subscriptions.push(disposable);
+
+	// **Interval-Based Cleanup for Daily/Weekly/Monthly Logs**
+    intervalId = setInterval(() => {
+        const manager = StatsManager.getInstance(globalContext);
+		manager.intervalWiseCleanUp();
+    }, 10 * 60 * 1000); // Run every 10 minutes
 }
 
 //? run as soon as user close vs code
 export function deactivate() {
-	console.log('RankDevs extension is now deactivated!');
+	clearInterval(intervalId);
 	const manager = StatsManager.getInstance(globalContext);
 	manager.cleanup(globalContext)
 }
