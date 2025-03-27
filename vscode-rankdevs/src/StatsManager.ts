@@ -14,7 +14,13 @@ export class StatsManager{
     }
 
     private updateStats(stats: Stats, typingTime: number, language: string) {
-        
+        //? FLOW : increment in total and key -> save the log
+        const now = Date.now();
+
+        stats.total += typingTime;
+        stats[language] = (stats[language] || 0) + typingTime;
+
+        stats.logs.push({ typingTime, language, timestamp: now });
     }
 
     public static getInstance(context:vscode.ExtensionContext): StatsManager{
