@@ -13,7 +13,7 @@ export class StatsManager{
         this.monthly = context.globalState.get<Stats>('monthlyStats') || { total: 0, logs: [] };
     }
 
-    private updateStats(stats: Stats, typingTime: number, language: string) {
+    private updateStats = (stats: Stats, typingTime: number, language: string):void => {
         //? FLOW : increment in total and key -> save the log
         const now = Date.now();
 
@@ -23,20 +23,38 @@ export class StatsManager{
         stats.logs.push({ typingTime, language, timestamp: now });
     }
 
-    public static getInstance(context:vscode.ExtensionContext): StatsManager{
+    private cleanOldStats = (stats: Stats, lastLimitFinder: number) => {
+        //? FLOW : filter old time -> clean total and keys time -> re add total and key time from filtered log
+
+        //? This gives time of 24 hours, 7 dyas or 30 days ago
+        const lastLimit = Date.now() - lastLimitFinder; 
+
+        const outdatedLogs = stats.logs.filter(log => log.timestamp < lastLimit);
+
+        outdatedLogs.forEach(log => {
+            stats.total -= log.typingTime;
+            stats[log.language] -= log.typingTime;
+
+            if (stats[log.language] <= 0) delete stats[log.language];
+        });
+
+        stats.logs = stats.logs.filter(log => log.timestamp > lastLimit);
+    }
+
+    public static getInstance = (context:vscode.ExtensionContext): StatsManager =>{
         if (!StatsManager.instance) {
             StatsManager.instance = new StatsManager(context);
         }
         return StatsManager.instance;
     }
 
-    public addTypingData(language: string, typingTime: number): void{
+    public addTypingData = (language: string, typingTime: number): void => {
         this.updateStats(this.daily, typingTime, language);
         this.updateStats(this.weekly, typingTime, language);
         this.updateStats(this.monthly, typingTime, language);
     }
     
-    public cleanup(context: vscode.ExtensionContext): void {
+    public cleanup = (context: vscode.ExtensionContext): void => {
         context.globalState.update('dailyStats', this.daily);
         context.globalState.update('weeklyStats', this.weekly);
         context.globalState.update('monthlyStats', this.monthly);
