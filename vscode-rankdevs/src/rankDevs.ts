@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { sendTypingDataToBackend } from './apiService';
+import { StatsManager } from './StatsManager';
 
 export class RankDevs{
     private context: vscode.ExtensionContext;
@@ -49,14 +50,8 @@ export class RankDevs{
         this.typingStartTime = null;
         this.isTyping = false;
 
-        // const language = vscode.window.activeTextEditor?.document.languageId || 'unknown';
-
-        const apiKey = this.context.globalState.get<string>('rankDevsApiKey');
-        if (apiKey) {
-            sendTypingDataToBackend({apiKey, typingTime:duration, language});
-        } else {
-            console.error('API key is missing!');
-        }
+        const manager = StatsManager.getInstance(this.context);
+        manager.addTypingData(this.typingStartLan, duration);
     }
 
 }

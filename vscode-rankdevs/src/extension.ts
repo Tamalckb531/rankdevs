@@ -1,9 +1,13 @@
 import * as vscode from 'vscode';
 import { RankDevs } from './rankDevs';
+import { StatsManager } from './StatsManager';
+
+let globalContext: vscode.ExtensionContext;
 
 //? run as soon as user open vs code
 export function activate(context: vscode.ExtensionContext) {
 	console.log('RankDevs extension is now active!');
+	globalContext = context;
 
 	const rankDevs = new RankDevs(context);
 
@@ -29,4 +33,6 @@ export function activate(context: vscode.ExtensionContext) {
 //? run as soon as user close vs code
 export function deactivate() {
 	console.log('RankDevs extension is now deactivated!');
+	const manager = StatsManager.getInstance(globalContext);
+	manager.cleanup(globalContext)
 }

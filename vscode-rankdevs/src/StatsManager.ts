@@ -1,17 +1,33 @@
 import {Stats} from './types'
+import * as vscode from 'vscode';
 
 export class StatsManager{
     private static instance: StatsManager;
     private daily: Stats = {total:0, logs:[]};
     private weekly: Stats = {total:0, logs:[]};
-    private monthly: Stats = { total: 0, logs: [] };
+    private monthly: Stats = {total:0, logs:[]};
     
-    private constructor() { }
+    private constructor(context:vscode.ExtensionContext) { 
+        this.daily = context.globalState.get<Stats>('dailyStats') || { total: 0, logs: [] };
+        this.weekly = context.globalState.get<Stats>('weeklyStats') || { total: 0, logs: [] };
+        this.monthly = context.globalState.get<Stats>('monthlyStats') || { total: 0, logs: [] };
+    }
 
-    public static getInstance(): StatsManager{
+    public static getInstance(context:vscode.ExtensionContext): StatsManager{
         if (!StatsManager.instance) {
-            StatsManager.instance = new StatsManager();
+            StatsManager.instance = new StatsManager(context);
         }
         return StatsManager.instance;
     }
+
+    public addTypingData(language: string, typingTime: number): void{
+        //? Will store the data inside Daily, weekly and monthly
+    }
+    
+    public cleanup(context: vscode.ExtensionContext): void {
+        context.globalState.update('dailyStats', this.daily);
+        context.globalState.update('weeklyStats', this.weekly);
+        context.globalState.update('monthlyStats', this.monthly);
+    }
+    
 }
