@@ -9,3 +9,16 @@ export type Stats = {
     [key: string]: number | any;
     logs: Log[];
 }
+
+export type refinedStats = {
+    total: number;
+    [key: string]: number | any;
+}
+
+export interface Payload{
+    apiKey: string,
+    timestamp: number,
+    dailyStats:refinedStats,
+    weeklyStats:refinedStats,
+    monthlyStats:refinedStats,
+}

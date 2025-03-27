@@ -31,19 +31,19 @@ export class RankDevs{
 
         if (this.typingTimer) clearTimeout(this.typingTimer);
         if (currentLanguage !== this.typingStartLan) {
-            this.stopTracking(this.typingStartLan);
+            this.stopTracking();
             return;
         }
 
         this.typingTimer = setTimeout(() => {
             const now = Date.now();
             if (now - this.typingStartTime! >= 10000) {
-                this.stopTracking(this.typingStartLan);
+                this.stopTracking();
             }
         }, 10000);
     }
 
-    private stopTracking(language:string): void{
+    private stopTracking(): void{
         if (!this.isTyping || !this.typingStartTime) return;
 
         const duration = Date.now() - this.typingStartTime;
@@ -52,6 +52,15 @@ export class RankDevs{
 
         const manager = StatsManager.getInstance(this.context);
         manager.addTypingData(this.typingStartLan, duration); //? {'js',120}
+    }
+
+    public callApiService(): void{
+        const apiKey = this.context.globalState.get<string>('rankDevsApiKey');
+        if (apiKey) {
+            sendTypingDataToBackend(apiKey, this.context);
+        } else {
+            console.error('API key is missing!');
+        }
     }
 
 }

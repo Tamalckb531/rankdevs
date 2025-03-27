@@ -1,18 +1,19 @@
 import * as dotenv from "dotenv";
 import * as path from 'path';
+import * as vscode from 'vscode';
+
+import {Stats, refinedStats, Payload} from './types'
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-interface Payload{
-    apiKey: string,
-    typingTime: number,
-    language: string,
-    timestamp:number,
+
+
+const extractStats = (stat: Stats): refinedStats => {
+    const { log, ...otherProps } = stat;
+    return otherProps;
 }
 
-type Props = Omit<Payload, 'timestamp'>;
-
-export const sendTypingDataToBackend = async ({ apiKey,typingTime,language}:Props) => {
+export const sendTypingDataToBackend = async (apiKey:string, context:vscode.ExtensionContext) => {
     const backendUrl = process.env.BACKEND_URL;
 
     if (!backendUrl) {
@@ -20,15 +21,26 @@ export const sendTypingDataToBackend = async ({ apiKey,typingTime,language}:Prop
         return;
     }
 
+    const dailyStats:Stats = context.globalState.get<Stats>('dailyStats') || { total: 0, logs: [] };
+    const weeklyStats:Stats = context.globalState.get<Stats>('weeklyStats') || { total: 0, logs: [] };
+    const monthlyStats: Stats = context.globalState.get<Stats>('monthlyStats') || { total: 0, logs: [] };
+    
+    if (dailyStats.total === 0 && weeklyStats.total === 0 && monthlyStats.total === 0) return;
+
+    const dailyRefinedStats:refinedStats = extractStats(dailyStats);
+    const weeklyRefinedStats:refinedStats = extractStats(weeklyStats);
+    const monthlyRefinedStats:refinedStats = extractStats(monthlyStats);
+
     const payload:Payload = {
         apiKey,
-        typingTime,
-        language,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        dailyStats:dailyRefinedStats,
+        weeklyStats:weeklyRefinedStats,
+        monthlyStats:monthlyRefinedStats,
     } 
 
     try {
-        const response = await fetch(`${backendUrl}/track`, {
+        const response = await fetch(`${backendUrl}/api/leaderboard/update`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

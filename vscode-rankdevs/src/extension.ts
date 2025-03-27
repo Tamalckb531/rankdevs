@@ -4,7 +4,8 @@ import { StatsManager } from './StatsManager';
 
 
 let globalContext: vscode.ExtensionContext;
-let intervalId: NodeJS.Timeout;
+let intervalIdForCleanup: NodeJS.Timeout;
+let intervalIdForApiCall: NodeJS.Timeout;
 
 //? run as soon as user open vs code
 export function activate(context: vscode.ExtensionContext) {
@@ -32,15 +33,22 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 
 	// **Interval-Based Cleanup for Daily/Weekly/Monthly Logs**
-    intervalId = setInterval(() => {
+    intervalIdForCleanup = setInterval(() => {
         const manager = StatsManager.getInstance(globalContext);
 		manager.intervalWiseCleanUp();
-    }, 10 * 60 * 1000); // Run every 10 minutes
+	}, 10 * 60 * 1000); // Run every 10 minutes
+	
+	// **Interval-Based api call**
+	intervalIdForApiCall = setInterval(() => {
+		rankDevs.callApiService();
+	}, 2 * 60 * 1000); // Run every 2 minutes
+
 }
 
 //? run as soon as user close vs code
 export function deactivate() {
-	clearInterval(intervalId);
+	clearInterval(intervalIdForCleanup);
+	clearInterval(intervalIdForApiCall);
 	const manager = StatsManager.getInstance(globalContext);
 	manager.cleanup(globalContext)
 }
