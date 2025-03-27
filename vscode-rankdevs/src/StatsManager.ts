@@ -13,6 +13,10 @@ export class StatsManager{
         this.monthly = context.globalState.get<Stats>('monthlyStats') || { total: 0, logs: [] };
     }
 
+    private updateStats(stats: Stats, typingTime: number, language: string) {
+        
+    }
+
     public static getInstance(context:vscode.ExtensionContext): StatsManager{
         if (!StatsManager.instance) {
             StatsManager.instance = new StatsManager(context);
@@ -21,7 +25,9 @@ export class StatsManager{
     }
 
     public addTypingData(language: string, typingTime: number): void{
-        //? Will store the data inside Daily, weekly and monthly
+        this.updateStats(this.daily, typingTime, language);
+        this.updateStats(this.weekly, typingTime, language);
+        this.updateStats(this.monthly, typingTime, language);
     }
     
     public cleanup(context: vscode.ExtensionContext): void {

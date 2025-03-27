@@ -51,7 +51,7 @@ export class RankDevs{
         this.isTyping = false;
 
         const manager = StatsManager.getInstance(this.context);
-        manager.addTypingData(this.typingStartLan, duration);
+        manager.addTypingData(this.typingStartLan, duration); //? {'js',120}
     }
 
 }
