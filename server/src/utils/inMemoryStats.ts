@@ -1,4 +1,4 @@
-import type { Stats } from "./types.js";
+import type { Stats} from "./types.js";
 
 export const inMemoryStats: Record<
     string,

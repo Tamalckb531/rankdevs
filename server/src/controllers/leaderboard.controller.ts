@@ -2,8 +2,7 @@ import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from '@prisma/client'
 import { inMemoryStats } from "../utils/inMemoryStats.js";
-import { initializeStats, updateStats } from "../utils/inMemoFunctions.js";
-import type { Payload, statPayload } from "../utils/types.js";
+import type { SnapShot, statPayload } from "../utils/types.js";
 
 const prisma = new PrismaClient();
 
@@ -12,32 +11,28 @@ export const hello = async (c:Context) => {
 }
 
 export const updateLeaderboard = async (c: Context) => {
-    const payload = await c.req.json<Payload>();
+    const snap = await c.req.json<SnapShot>();
 
     try {
         //? Find the user by apiKey
+
+        if (!snap.apiKey) return c.json({ status: 401, msg: 'API key missing' });
+
         const user = await prisma.user.findUnique({
-            where: { apiKey: payload.apiKey }
+            where: { apiKey: snap.apiKey }
         });
 
         if (!user) return c.json({ status: 404, msg: 'User not found' });
         const userId = user.id;
 
-        //? no user entry -> create entry
-        if (!inMemoryStats[userId]) {
-            inMemoryStats[userId] = {
-                dailyStats: initializeStats(),
-                weeklyStats: initializeStats(),
-                monthlyStats: initializeStats(),
-            }
+        //? replacing old snap with new snap in every two minute
+        inMemoryStats[userId] = {
+            dailyStats: snap.dailyStats,
+            weeklyStats: snap.weeklyStats,
+            monthlyStats: snap.monthlyStats,
         }
 
         //? update times in memory
-        const { dailyStats, weeklyStats, monthlyStats } = inMemoryStats[userId];
-        updateStats(dailyStats, payload.typingTime, payload.language);
-        updateStats(weeklyStats, payload.typingTime, payload.language);
-        updateStats(monthlyStats, payload.typingTime, payload.language);
-
         return c.json({ status: 200, msg: "stats updated" });
         
     } catch (error: any) {
@@ -60,8 +55,7 @@ const getStats = async (c: Context, statType: 'dailyStats' | 'weeklyStats' | 'mo
             const userStats = inMemoryStats[user.id]?.[statType];
 
             if (userStats) {
-                const { logs, ...realStats } = userStats;
-                data.push({ ...user, Stats: realStats });
+                data.push({ ...user, Stats: userStats });
             }
         });
 

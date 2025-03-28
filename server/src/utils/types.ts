@@ -1,20 +1,13 @@
 
-export type Payload = {
+export type SnapShot = {
     apiKey: string,
-    typingTime: number,
-    language: string,
-    timestamp:number,
+    timestamp: number,
+    dailyStats:Stats,
+    weeklyStats:Stats,
+    monthlyStats:Stats,
 }
-
-type Log = Omit<Payload,'apiKey'>;
 
 export type Stats = {
-    total: number;
-    [key: string]: number | any;
-    logs: Log[];
-}
-
-type tableStats = {
     total: number;
     [key: string]: number;
 }
@@ -23,5 +16,5 @@ export type statPayload = {
     id: string;
     githubUserName: string;
     twitterUsername: string | null;
-    Stats: tableStats;
+    Stats: Stats;
 }

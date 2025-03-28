@@ -16,7 +16,7 @@ const extractStats = (stat: Stats): refinedStats => {
 export const sendTypingDataToBackend = async (apiKey:string, context:vscode.ExtensionContext) => {
     const backendUrl = process.env.BACKEND_URL;
 
-    if (!backendUrl) {
+    if (!backendUrl || !apiKey) {
         console.error('Backend URL not found! Please check your .env file.');
         return;
     }
