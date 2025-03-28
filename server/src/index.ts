@@ -4,8 +4,6 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import leaderboardRoute from './routes/leaderboard.route.js'
 import dashboardRoute from './routes/dashboard.route.js'
-import { inMemoryStats } from './utils/inMemoryStats.js';
-import { cleanOldStats } from './utils/inMemoFunctions.js';
 
 dotenv.config();
 
@@ -41,21 +39,6 @@ app.onError((err:any, c) => {
   );
 });
 
-//? interval wise cleanup 
-// const ONE_DAY = 24 * 60 * 60 * 1000;   
-// const ONE_WEEK = 7 * ONE_DAY;          
-// const ONE_MONTH = 30 * ONE_DAY;     
-
-// setInterval(() => {
-//   for (const userId in inMemoryStats) {
-//       const { dailyStats, weeklyStats, monthlyStats } = inMemoryStats[userId];
-
-//       cleanOldStats(dailyStats, ONE_DAY);      // Clean stats older than 24 hours
-//       cleanOldStats(weeklyStats, ONE_WEEK);    // Clean stats older than 7 days
-//       cleanOldStats(monthlyStats, ONE_MONTH);  // Clean stats older than 30 days
-//   }
-//   console.log("Old logs cleaned!");
-// }, 10 * 60 * 1000);
 
 //? server
 serve({
