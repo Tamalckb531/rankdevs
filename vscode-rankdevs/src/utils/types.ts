@@ -15,6 +15,10 @@ export type refinedStats = {
     [key: string]: number | any;
 }
 
+export type todaysStats = refinedStats & {
+    lastTime: number;
+}
+
 export interface Payload{
     apiKey: string,
     timestamp: number,

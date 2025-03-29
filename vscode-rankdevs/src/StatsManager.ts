@@ -1,11 +1,15 @@
-import {Stats} from './types'
+import { isPrevDay } from './utils/func';
+import {Stats, todaysStats} from './utils/types'
 import * as vscode from 'vscode';
 
 export class StatsManager{
     private static instance: StatsManager;
+
     private daily: Stats = {total:0, logs:[]};
     private weekly: Stats = {total:0, logs:[]};
     private monthly: Stats = { total: 0, logs: [] };
+
+    private today: todaysStats = { total: 0, lastTime:Date.now() };
     
     private ONE_DAY: number = 24 * 60 * 60 * 1000;
     private ONE_WEEK: number = 7 * this.ONE_DAY;
@@ -15,6 +19,8 @@ export class StatsManager{
         this.daily = context.globalState.get<Stats>('dailyStats') || { total: 0, logs: [] };
         this.weekly = context.globalState.get<Stats>('weeklyStats') || { total: 0, logs: [] };
         this.monthly = context.globalState.get<Stats>('monthlyStats') || { total: 0, logs: [] };
+
+        this.today = context.globalState.get<todaysStats>('todaysStats') || { total: 0, lastTime:Date.now() };
     }
 
     private updateStats(stats: Stats, typingTime: number, language: string):void {
@@ -25,6 +31,26 @@ export class StatsManager{
         stats[language] = (stats[language] || 0) + typingTime;
 
         stats.logs.push({ typingTime, language, timestamp: now });
+    }
+
+    private updateTodayStats(typingTime: number, language: string): void{
+        const now = Date.now();
+
+        if (isPrevDay(now, this.today.lastTime)) {
+            //? processing of database and reset time
+            this.resetTodayStats();
+        }
+
+        this.today.total += typingTime;
+        this.today[language] = (this.today[language] || 0) + typingTime;
+        this.today.lastTime = now;
+    }
+
+    private resetTodayStats(): void{
+        this.today = {
+            total: 0,
+            lastTime: Date.now()
+        }
     }
 
     private cleanOldStats(stats: Stats, lastLimitFinder: number) {
@@ -56,6 +82,8 @@ export class StatsManager{
         this.updateStats(this.daily, typingTime, language);
         this.updateStats(this.weekly, typingTime, language);
         this.updateStats(this.monthly, typingTime, language);
+
+        this.updateTodayStats(typingTime, language);
     }
 
     public intervalWiseCleanUp(): void {
@@ -72,6 +100,8 @@ export class StatsManager{
         context.globalState.update('dailyStats', this.daily);
         context.globalState.update('weeklyStats', this.weekly);
         context.globalState.update('monthlyStats', this.monthly);
+
+        context.globalState.update('todaysStats', this.today);
     }
     
 }

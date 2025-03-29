@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 import * as path from 'path';
 import * as vscode from 'vscode';
 
-import {Stats, refinedStats, Payload} from './types'
+import {Stats, refinedStats, Payload} from './utils/types'
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
