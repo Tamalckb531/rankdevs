@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 import * as path from 'path';
 import * as vscode from 'vscode';
 
-import {Stats, refinedStats, Payload} from './utils/types'
+import {Stats, refinedStats, Payload, todaysStats} from './utils/types'
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
@@ -46,6 +46,32 @@ export const sendTypingDataToBackend = async (apiKey:string, context:vscode.Exte
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+            console.log('Typing data sent successfully!');
+        } else {
+            console.error('Failed to send data to backend:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error sending typing data:', error);
+    }
+}
+
+export const sendTodayDataToBackend = async (apiKey: string, data: todaysStats) => {
+    const backendUrl = process.env.BACKEND_URL;
+
+    if (!backendUrl || !apiKey) {
+        console.error('Backend URL or apiKey not found! Please check your .env file.');
+        return;
+    }
+    try {
+        const response = await fetch(`${backendUrl}/api/dashboard/update`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
         });
 
         if (response.ok) {

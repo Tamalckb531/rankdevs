@@ -1,3 +1,4 @@
+import { sendTodayDataToBackend } from './apiService';
 import { isPrevDay } from './utils/func';
 import {Stats, todaysStats} from './utils/types'
 import * as vscode from 'vscode';
@@ -15,7 +16,7 @@ export class StatsManager{
     private ONE_WEEK: number = 7 * this.ONE_DAY;
     private ONE_MONTH = 30 * this.ONE_DAY;
     
-    private constructor(context:vscode.ExtensionContext) { 
+    private constructor(context: vscode.ExtensionContext) { 
         this.daily = context.globalState.get<Stats>('dailyStats') || { total: 0, logs: [] };
         this.weekly = context.globalState.get<Stats>('weeklyStats') || { total: 0, logs: [] };
         this.monthly = context.globalState.get<Stats>('monthlyStats') || { total: 0, logs: [] };
@@ -33,11 +34,12 @@ export class StatsManager{
         stats.logs.push({ typingTime, language, timestamp: now });
     }
 
-    private updateTodayStats(typingTime: number, language: string): void{
+    private updateTodayStats(typingTime: number, language: string, apiKey: string): void{
         const now = Date.now();
 
         if (isPrevDay(now, this.today.lastTime)) {
             //? processing of database and reset time
+            sendTodayDataToBackend(apiKey, this.today);
             this.resetTodayStats();
         }
 
@@ -78,12 +80,12 @@ export class StatsManager{
         return StatsManager.instance;
     }
 
-    public addTypingData(language: string, typingTime: number): void {
+    public addTypingData(language: string, typingTime: number, apiKey:string): void {
         this.updateStats(this.daily, typingTime, language);
         this.updateStats(this.weekly, typingTime, language);
         this.updateStats(this.monthly, typingTime, language);
 
-        this.updateTodayStats(typingTime, language);
+        this.updateTodayStats(typingTime, language, apiKey);
     }
 
     public intervalWiseCleanUp(): void {

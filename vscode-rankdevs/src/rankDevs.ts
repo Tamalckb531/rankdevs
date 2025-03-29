@@ -51,7 +51,12 @@ export class RankDevs{
         this.isTyping = false;
 
         const manager = StatsManager.getInstance(this.context);
-        manager.addTypingData(this.typingStartLan, duration); //? {'js',120}
+        const apiKey = this.context.globalState.get<string>('rankDevsApiKey');
+        if (apiKey) {
+            manager.addTypingData(this.typingStartLan, duration, apiKey); //? {'js',120}
+        } else {
+            console.error('API key is missing!');
+        }
     }
 
     public callApiService(): void{
