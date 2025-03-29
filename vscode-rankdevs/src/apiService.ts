@@ -1,3 +1,4 @@
+
 import * as dotenv from "dotenv";
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -5,7 +6,6 @@ import * as vscode from 'vscode';
 import {Stats, refinedStats, Payload, todaysStats} from './utils/types'
 
 dotenv.config({ path: path.join(__dirname, '../.env') });
-
 
 
 const extractStats = (stat: Stats): refinedStats => {
@@ -65,13 +65,19 @@ export const sendTodayDataToBackend = async (apiKey: string, data: todaysStats) 
         console.error('Backend URL or apiKey not found! Please check your .env file.');
         return;
     }
+
+    const payload:any = {
+        apiKey,
+        data
+    } 
+
     try {
         const response = await fetch(`${backendUrl}/api/dashboard/update`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(payload),
         });
 
         if (response.ok) {

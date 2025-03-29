@@ -12,6 +12,17 @@ export type Stats = {
     [key: string]: number;
 }
 
+type todayDataStats = {
+    total: number;
+    lastTime: number;
+    [key: string]: number;
+}
+
+export type updatePayload = {
+    apiKey: string,
+    data:todayDataStats
+}
+
 export type statPayload = {
     id: string;
     githubUserName: string;
