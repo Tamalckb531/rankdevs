@@ -2,6 +2,9 @@ import * as vscode from 'vscode';
 import { sendTypingDataToBackend } from './apiService';
 import { StatsManager } from './StatsManager';
 
+//? test
+
+
 export class RankDevs{
     private context: vscode.ExtensionContext;
     private typingStartTime: number | null = null;
