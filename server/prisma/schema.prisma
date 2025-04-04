@@ -42,6 +42,8 @@ model User {
   // Storing total stats in 
   //?{sum:{'total':250, 'js':30...}, 2021:{'total':250, 'js':30...} ...format}
 
+  lastStatsTime DateTime //? stores last update time from user's local machine
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
