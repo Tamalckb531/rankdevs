@@ -12,6 +12,54 @@ export type Stats = {
     [key: string]: number;
 }
 
+export type WeeklyStats = {
+    sum: {
+        total: number;
+        [key: string]: number;
+    },
+    [day: string]: {
+        total: number;
+        [key: string]: number;
+    }
+}
+export type MonthlyStats = {
+    sum: {
+      total: number;
+      [key: string]: number; 
+    };
+    [day: number]: {
+      total: number;
+      [key: string]: number;
+    };
+};
+export type YearlyStats = {
+    sum: {
+      total: number;
+      [key: string]: number; 
+    };
+    [month: string]: {
+      total: number;
+      [key: string]: number;
+    };
+};
+export type TotalStats = {
+    sum: {
+      total: number;
+      [key: string]: number; 
+    };
+    [year: number]: {
+      total: number;
+      [key: string]: number;
+    };
+  };
+
+export type allStats = {
+    weeklyStats: WeeklyStats;
+    monthlyStats: MonthlyStats;
+    yearlyStats: YearlyStats;
+    totalStats: TotalStats;
+}
+
 type todayDataStats = {
     total: number;
     lastTime: number;

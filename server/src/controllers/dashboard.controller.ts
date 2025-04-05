@@ -1,7 +1,8 @@
+
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from '@prisma/client'
-import type { updatePayload } from "../utils/types.js";
+import type { allStats, updatePayload} from "../utils/types.js";
 import { initializeMonthlyStats, initializeStats, initializeWeeklyStats, initializeYearlyStats, isNewWeek, sumStats } from "../utils/dashboardTime.js";
 
 const prisma = new PrismaClient();
@@ -21,11 +22,11 @@ export const updateDashboard = async (c: Context) => {
         const { total, lastTime, ...langStats } = data;
         //? for date calculation
         const prevDate = user.lastStatsTime ? new Date(user.lastStatsTime) : null;
-        const today = new Date(lastTime);
+        const today = new Date(lastTime); 
         //? later used in prevDate
         const lastStatsTime = today.toISOString();
 
-        let { weeklyStats, monthlyStats, yearlyStats, totalStats } = user;
+        let { weeklyStats, monthlyStats, yearlyStats, totalStats }:allStats = user as any;
         
         //? Ensure all stats exist or initialize them if empty
         if (!weeklyStats || !monthlyStats || !yearlyStats || !totalStats) {
@@ -51,23 +52,15 @@ export const updateDashboard = async (c: Context) => {
         if (yearChanged) yearlyStats = initializeYearlyStats();
 
         //? Update Stats 
-        // @ts-ignore
         weeklyStats[dayOfWeek] = { total, ...langStats };
-        // @ts-ignore
         monthlyStats[dayOfMonth] = { total, ...langStats };
-        // @ts-ignore
         yearlyStats[monthName] = { total, ...langStats };
-        // @ts-ignore
         totalStats[yearName] = { total, ...langStats };
 
         //? Update sum fields
-        // @ts-ignore
         weeklyStats.sum = sumStats(weeklyStats.sum, data);
-        // @ts-ignore
         monthlyStats.sum = sumStats(monthlyStats.sum, data);
-        // @ts-ignore
         yearlyStats.sum = sumStats(yearlyStats.sum, data);
-        // @ts-ignore
         totalStats.sum = sumStats(totalStats.sum, data);
 
         //? Save updated stats
