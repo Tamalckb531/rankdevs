@@ -49,7 +49,7 @@ export const isNewWeek = (prevDate: Date, today: Date): boolean => {
 
 export const sumStats = (existing: any, newData: any) => {
     const result = { ...existing };
-    result.total = (existing.total || 0) + (newData.total || 0);
+    result.total = (existing?.total || 0) + (newData?.total || 0);
     for (const key in newData) {
         if(key!=="total") result[key] = (existing[key] || 0) + (newData[key] || 0);
     }
