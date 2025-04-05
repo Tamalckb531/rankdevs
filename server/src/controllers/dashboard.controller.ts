@@ -19,15 +19,17 @@ export const updateDashboard = async (c: Context) => {
         if (!user) return c.json({ status: 404, message: "User not found, change your apiKey" });
         
         const { total, lastTime, ...langStats } = data;
+        //? for date calculation
         const prevDate = user.lastStatsTime ? new Date(user.lastStatsTime) : null;
         const today = new Date(lastTime);
+        //? later used in prevDate
         const lastStatsTime = today.toISOString();
 
         let { weeklyStats, monthlyStats, yearlyStats, totalStats } = user;
         
-        // Ensure all stats exist or initialize them if empty
+        //? Ensure all stats exist or initialize them if empty
         if (!weeklyStats || !monthlyStats || !yearlyStats || !totalStats) {
-            ({ weeklyStats, monthlyStats, yearlyStats, totalStats } = initializeStats());
+            ({ weeklyStats, monthlyStats, yearlyStats, totalStats } = initializeStats(today.getFullYear(), today.getMonth()));
         }
 
         // Convert Date to useful formats
@@ -45,7 +47,7 @@ export const updateDashboard = async (c: Context) => {
         }
 
         if (weekChanged) weeklyStats = initializeWeeklyStats();
-        if (monthChanged) monthlyStats = initializeMonthlyStats();
+        if (monthChanged) monthlyStats = initializeMonthlyStats(today.getFullYear(), today.getMonth());
         if (yearChanged) yearlyStats = initializeYearlyStats();
 
         //? Update Stats 

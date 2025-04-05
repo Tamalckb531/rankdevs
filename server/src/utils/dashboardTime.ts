@@ -9,8 +9,9 @@ export const initializeWeeklyStats = () => ({
     saturday: { total: 0 },
 });
 
-export const initializeMonthlyStats = () => {
-    const stats:any = { sum: { total: 0 } };
+export const initializeMonthlyStats = (year:number, month:number) => {
+    const stats: any = { sum: { total: 0 } };
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
     for (let i = 1; i <= 31; i++) stats[i] = { total: 0 };
     return stats;
 }; 
@@ -31,9 +32,9 @@ export const initializeYearlyStats = () => ({
     Dec: { total: 0 },
 });
 
-export const initializeStats = () => ({
+export const initializeStats = (year:number, month:number) => ({
     weeklyStats: initializeWeeklyStats(),
-    monthlyStats: initializeMonthlyStats(),
+    monthlyStats: initializeMonthlyStats(year, month),
     yearlyStats: initializeYearlyStats(),
     totalStats: { sum: { total: 0 } },
 });
