@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id              String  @id @default(uuid())
-  githubUserName  String
+  githubUserName  String  @unique
   apiKey          String  @unique
   twitterUsername String? // Nullable, optional link
   peerlistLink    String?
