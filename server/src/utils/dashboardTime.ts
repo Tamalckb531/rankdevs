@@ -41,10 +41,10 @@ export const initializeStats = (year:number, month:number) => ({
 
 export const isNewWeek = (prevDate: Date, today: Date): boolean => {
     const prevMonday = new Date(prevDate);
-    prevMonday.setDate(prevMonday.getDate() - prevMonday.getDate() + 1); // Get start of previous week
+    prevMonday.setDate(prevMonday.getDate() - prevMonday.getDay() + 1); // Get start of previous week
     const todayMonday = new Date(today);
     todayMonday.setDate(todayMonday.getDate() - todayMonday.getDay() + 1); // Get start of this week
-    return prevMonday.getTime() !== todayMonday.getTime();
+    return prevMonday.getDate() !== todayMonday.getDate();
 }
 
 export const sumStats = (existing: any, newData: any) => {

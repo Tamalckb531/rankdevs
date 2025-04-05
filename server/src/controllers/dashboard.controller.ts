@@ -32,11 +32,11 @@ export const updateDashboard = async (c: Context) => {
             ({ weeklyStats, monthlyStats, yearlyStats, totalStats } = initializeStats(today.getFullYear(), today.getMonth()));
         }
 
-        // Convert Date to useful formats
-        const dayOfWeek = today.toLocaleString("en-US", { weekday: "long" }).toLowerCase();
-        const dayOfMonth = today.getDate();
-        const monthName = today.toLocaleString("en-US", { month: "short" });
-        const yearName = today.getFullYear();
+        //? Convert Date to useful formats
+        const dayOfWeek = today.toLocaleString("en-US", { weekday: "long" }).toLowerCase(); // thursday
+        const dayOfMonth = today.getDate(); // 16
+        const monthName = today.toLocaleString("en-US", { month: "short" }); // Dec
+        const yearName = today.getFullYear(); // 1971
 
         let weekChanged = false, monthChanged = false, yearChanged = false;
 
@@ -52,7 +52,7 @@ export const updateDashboard = async (c: Context) => {
 
         //? Update Stats 
         // @ts-ignore
-        weeklyStats[dayOfWeek] = { total, ...otherStats };
+        weeklyStats[dayOfWeek] = { total, ...langStats };
         // @ts-ignore
         monthlyStats[dayOfMonth] = { total, ...langStats };
         // @ts-ignore
