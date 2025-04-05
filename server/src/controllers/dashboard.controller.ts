@@ -7,6 +7,7 @@ import { initializeMonthlyStats, initializeStats, initializeWeeklyStats, initial
 
 const prisma = new PrismaClient();
 
+//! FLOW :: get user with apiKey -> get the previous and current stat time for calculation -> get the stats of user and initialize them if all empty -> if not empty then check if week, month or year changed and initialize the changed -> place data on current position of each stat -> add the data in sum -> update the user model
 export const updateDashboard = async (c: Context) => {
     const { apiKey, data }: updatePayload = await c.req.json();
 
@@ -54,8 +55,8 @@ export const updateDashboard = async (c: Context) => {
         //? Update Stats 
         weeklyStats[dayOfWeek] = { total, ...langStats };
         monthlyStats[dayOfMonth] = { total, ...langStats };
-        yearlyStats[monthName] = { total, ...langStats };
-        totalStats[yearName] = { total, ...langStats };
+        yearlyStats[monthName] = yearlyStats[monthName] ? sumStats(yearlyStats[monthName], data) : { total, ...langStats };
+        totalStats[yearName] = totalStats[yearName] ? sumStats(totalStats[yearName], data) : { total, ...langStats };
 
         //? Update sum fields
         weeklyStats.sum = sumStats(weeklyStats.sum, data);
