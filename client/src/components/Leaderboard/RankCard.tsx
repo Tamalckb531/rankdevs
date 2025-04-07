@@ -9,8 +9,20 @@ interface Props {
 }
 
 const RankCard = ({ rank }: Props) => {
+  let color, img;
+
+  if (rank === "1") {
+    color = "text-amber-400";
+    img = "/golden.svg";
+  } else if (rank === "2") {
+    color = "text-sky-400";
+    img = "/silver.svg";
+  } else {
+    color = "text-red-400";
+    img = "/bronze.svg";
+  }
   return (
-    <Card className="bg-background border flex flex-col items-start w-[250px]">
+    <Card className="bg-background border-none flex flex-col items-start w-[250px]">
       <CardHeader>
         <div className=" flex items-center justify-between  gap-3">
           <RankCardImg />
@@ -20,11 +32,11 @@ const RankCard = ({ rank }: Props) => {
               @TamalCDip
             </p>
           </div>
-          <RankSvg />
+          <RankSvg img={img} />
         </div>
       </CardHeader>
       <CardContent className=" flex flex-col items-center justify-between w-full -mt-5">
-        <h1 className=" text-amber-400 text-xl font-bold">10 Hour 29 Minute</h1>
+        <h1 className={` ${color} text-xl font-bold`}>10 Hour 29 Minute</h1>
         <h2 className=" text-sm text-slate-400">9+ Language</h2>
       </CardContent>
     </Card>
@@ -47,12 +59,12 @@ const RankCardImg = () => {
   );
 };
 
-const RankSvg = () => {
+const RankSvg = ({ img }: { img: string }) => {
   return (
     <div className="w-[30px] h-full">
       <AspectRatio ratio={3 / 4}>
         <Image
-          src="/golden.svg"
+          src={`${img}`}
           alt="Image"
           className="rounded-md object-cover "
           width={100}
