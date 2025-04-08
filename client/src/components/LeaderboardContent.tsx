@@ -3,7 +3,7 @@ import { DataTable } from "./Leaderboard/DataTable";
 
 const LeaderboardContent = () => {
   return (
-    <div>
+    <div className=" w-full">
       <DataTable />
     </div>
   );
