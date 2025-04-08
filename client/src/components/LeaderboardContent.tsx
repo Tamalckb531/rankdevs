@@ -1,7 +1,12 @@
 import React from "react";
+import { DataTable } from "./Leaderboard/DataTable";
 
 const LeaderboardContent = () => {
-  return <div>LeaderboardContent</div>;
+  return (
+    <div>
+      <DataTable />
+    </div>
+  );
 };
 
 export default LeaderboardContent;
