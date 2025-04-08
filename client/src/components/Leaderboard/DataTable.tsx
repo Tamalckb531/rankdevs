@@ -7,6 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { AspectRatio } from "../ui/aspect-ratio";
+import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export function DataTable() {
   const invoices = [
@@ -55,22 +58,24 @@ export function DataTable() {
   ];
 
   return (
-    <div className="w-full rounded-md border">
-      <Table>
+    <div className="w-full rounded-md overflow-hidden">
+      <Table className=" overflow-hidden">
         <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+          <TableRow className=" font-bold text-lg">
+            <TableHead className="w-[100px]">#Rank</TableHead>
+            <TableHead className="w-[160px] text-center">Info</TableHead>
+            <TableHead className="w-[100px] text-center">Time</TableHead>
+            <TableHead className="text-right">Language</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
+            <TableRow key={invoice.invoice} className=" border-none">
+              <TableCell className="font-medium">#1</TableCell>
+              <TableCell>
+                <UserInfo />
+              </TableCell>
+              <TableCell>10 Hr 29 Min</TableCell>
               <TableCell className="text-right">
                 {invoice.totalAmount}
               </TableCell>
@@ -81,3 +86,25 @@ export function DataTable() {
     </div>
   );
 }
+const UserInfo = () => {
+  return (
+    <div className=" flex items-center justify-around">
+      <RankCardImg />
+      <div className="flex flex-col">
+        <p className=" text-[15px] font-bold cursor-pointer">TamalCkb531</p>
+        <p className="text-center text-xs text-slate-400 cursor-pointer">
+          @TamalCDip
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const RankCardImg = () => {
+  return (
+    <Avatar className="w-10 h-10">
+      <AvatarImage src="/ghibili.jpg" alt="Image" />
+      <AvatarFallback>DP</AvatarFallback>
+    </Avatar>
+  );
+};

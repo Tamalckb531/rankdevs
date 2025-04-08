@@ -3,7 +3,7 @@ import { DataTable } from "./Leaderboard/DataTable";
 
 const LeaderboardContent = () => {
   return (
-    <div className=" w-full">
+    <div className="w-full lg:w-[60rem] h-full mt-8">
       <DataTable />
     </div>
   );
