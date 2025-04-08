@@ -4,7 +4,7 @@ import LeaderboardTab from "./Leaderboard/LearderboardTab";
 
 const LeaderboardTitleBar = () => {
   return (
-    <div className=" flex items-center justify-between mt-2">
+    <div className=" flex md:flex-row flex-col gap-3 items-center justify-between md:mt-2 mt-3">
       <LeaderboardText />
       <LeaderboardTab />
     </div>
