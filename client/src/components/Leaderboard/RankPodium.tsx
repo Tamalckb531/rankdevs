@@ -1,10 +1,10 @@
 import React from "react";
 
-const RankPodium = ({ position = 1 }: any) => {
+const RankPodium = ({ position }: any) => {
   const heights: any = {
-    1: "h-[180px]",
-    2: "h-[120px]",
-    3: "h-[100px]",
+    "1": "h-[210px]",
+    "2": "h-[190px]",
+    "3": "h-[170px]",
   };
 
   return (
@@ -44,13 +44,13 @@ const RankPodium = ({ position = 1 }: any) => {
         </div>
 
         {/* Main Body */}
-        <div className="absolute inset-0 top-6 bg-background border-x border-t border-neutral-300 dark:border-neutral-600 overflow-hidden">
+        <div className="absolute inset-0 top-6 bg-background border-x border-neutral-100 dark:border-neutral-900 overflow-hidden">
           {/* Center Text */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-6xl font-bold bg-gradient-to-r from-black to-neutral-700 dark:from-white dark:to-neutral-300 bg-clip-text text-transparent">
-              {position === 1 && "1st"}
-              {position === 2 && "2nd"}
-              {position === 3 && "3rd"}
+            <div className="text-6xl font-bold bg-gradient-to-r from-zinc-500 to-slate-200 dark:from-zinc-800 dark:to-slate-300 bg-clip-text text-transparent">
+              {position === "1" && "1st"}
+              {position === "2" && "2nd"}
+              {position === "3" && "3rd"}
             </div>
           </div>
         </div>

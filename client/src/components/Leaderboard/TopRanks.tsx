@@ -8,9 +8,13 @@ interface Props {
 
 const TopRanks = ({ rank }: Props) => {
   return (
-    <div className=" flex flex-col gap-2 items-center justify-center">
+    <div
+      className={` ${
+        rank == "2" || rank == "3" ? "hidden" : "flex"
+      } md:flex flex-col gap-2 items-center justify-end h-full`}
+    >
       <RankCard rank={rank} />
-      <RankPodium />
+      <RankPodium position={rank} />
     </div>
   );
 };
