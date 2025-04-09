@@ -2,8 +2,7 @@ import React from "react";
 
 export const LanguageWrapper = () => {
   return (
-    <div className=" flex flex-wrap items-end justify-end gap-2">
-      <LanguageCard />
+    <div className=" flex items-center justify-start gap-2">
       <LanguageCard />
       <LanguageCard />
     </div>

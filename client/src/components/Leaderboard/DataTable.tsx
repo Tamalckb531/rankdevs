@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { LanguageWrapper } from "./LanguageWrapper";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 export function DataTable() {
   const invoices = [
@@ -57,40 +58,46 @@ export function DataTable() {
   ];
 
   return (
-    <div className="w-full rounded-md border overflow-hidden shadow-md dark:shadow-amber-50">
-      <Table className="border-separate border-spacing-y-2 w-full overflow-hidden px-2">
-        <TableHeader>
-          <TableRow className=" font-bold text-lg border-b border-slate-400">
-            <TableHead className="w-[100px]">#Rank</TableHead>
-            <TableHead className="w-[160px] text-center">Info</TableHead>
-            <TableHead className="w-[100px] text-center">Time</TableHead>
-            <TableHead className="text-right">Language</TableHead>
-          </TableRow>
-          <TableRow className=" hover:bg-background h-0 w-full">
-            <TableHead colSpan={4} className="p-0 h-0">
-              <div className="border-b border-muted w-full h-[1px]"></div>
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice} className=" border-none py-4 mb-4">
-              <TableCell className="font-medium text-lg text-slate-400">
-                #1
-              </TableCell>
-              <TableCell>
-                <UserInfo />
-              </TableCell>
-              <TableCell className=" font-medium text-[15px]">
-                10 Hr 29 Min
-              </TableCell>
-              <TableCell className="text-right">
-                <LanguageWrapper />
-              </TableCell>
+    <div className="w-full rounded-md border shadow-md dark:shadow-amber-50">
+      <ScrollArea className=" w-full rounded-md">
+        <Table className="border-separate border-spacing-y-2 w-full px-2">
+          <TableHeader>
+            <TableRow className=" font-bold text-lg border-b border-slate-400">
+              <TableHead className="w-[100px] min-w-[100px]">#Rank</TableHead>
+              <TableHead className="w-[170px] min-w-[170px]">Info</TableHead>
+              <TableHead className="w-[120px] min-w-[120px]">Time</TableHead>
+              <TableHead>Language</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+            <TableRow className=" hover:bg-background h-0 w-full">
+              <TableHead colSpan={4} className="p-0 h-0">
+                <div className="border-b border-muted w-full h-[1px]"></div>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {invoices.map((invoice) => (
+              <TableRow
+                key={invoice.invoice}
+                className=" border-none py-4 mb-4"
+              >
+                <TableCell className="font-medium text-lg text-slate-400">
+                  #1
+                </TableCell>
+                <TableCell>
+                  <UserInfo />
+                </TableCell>
+                <TableCell className=" font-medium text-[16px] text-slate-300">
+                  10 Hr 29 Min
+                </TableCell>
+                <TableCell>
+                  <LanguageWrapper />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     </div>
   );
 }
