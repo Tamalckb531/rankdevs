@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { LanguageWrapper } from "./LanguageWrapper";
 
 export function DataTable() {
   const invoices = [
@@ -84,7 +85,7 @@ export function DataTable() {
                 10 Hr 29 Min
               </TableCell>
               <TableCell className="text-right">
-                {invoice.totalAmount}
+                <LanguageWrapper />
               </TableCell>
             </TableRow>
           ))}
