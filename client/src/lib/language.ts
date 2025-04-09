@@ -65,6 +65,18 @@ export const languages: Record<string, LanguageColor> = {
   scss: { color: "#c6538c" },
   shaderlab: { color: "#222c37" },
   shellscript: { color: "#eb864b" },
+  swift: { color: "#F05138" },
+  tailwindcss: { color: "#38bdf8" },
+  terraform: { color: "#7b42bb" },
+  tex: { color: "#3D6117" },
+  typescript: { color: "#3178c6" },
+  typescriptreact: { color: "#3178c6" },
+  vb: { color: "#945db7" },
+  vue: { color: "#41b883" },
+  wat: { color: "#6548a3" },
+  xml: { color: "#0060ac" },
+  xsl: { color: "#9c3eaf" },
+  yaml: { color: "#cb171e" },
 };
 
 export const getContrastTextColor = (hexColor: string): string => {
