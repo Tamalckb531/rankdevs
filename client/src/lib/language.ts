@@ -48,6 +48,23 @@ export const languages: Record<string, LanguageColor> = {
   "objective-c": { color: "#438eff" },
   "objective-cpp": { color: "#6866fb" },
   perl: { color: "#0298c3" },
+  php: { color: "#4F5D95" },
+  plaintext: { color: "#28292b" },
+  postcss: { color: "#dc3a0c" },
+  powershell: { color: "#012456" },
+  prisma: { color: "#0c344b" },
+  properties: { color: "#b5b5b5" },
+  jade: { color: "#a86454" },
+  python: { color: "#3572A5" },
+  r: { color: "#276DC3" },
+  raku: { color: "#0000fb" },
+  razor: { color: "#512be4" },
+  restructuredtext: { color: "#141414" },
+  ruby: { color: "#701516" },
+  rust: { color: "#dea584" },
+  scss: { color: "#c6538c" },
+  shaderlab: { color: "#222c37" },
+  shellscript: { color: "#eb864b" },
 };
 
 export const getContrastTextColor = (hexColor: string): string => {
