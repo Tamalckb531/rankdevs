@@ -7,8 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { AspectRatio } from "../ui/aspect-ratio";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export function DataTable() {
@@ -58,24 +56,33 @@ export function DataTable() {
   ];
 
   return (
-    <div className="w-full rounded-md overflow-hidden">
-      <Table className=" overflow-hidden">
+    <div className="w-full rounded-md border overflow-hidden shadow-md dark:shadow-amber-50">
+      <Table className="border-separate border-spacing-y-2 w-full overflow-hidden px-2">
         <TableHeader>
-          <TableRow className=" font-bold text-lg">
+          <TableRow className=" font-bold text-lg border-b border-slate-400">
             <TableHead className="w-[100px]">#Rank</TableHead>
             <TableHead className="w-[160px] text-center">Info</TableHead>
             <TableHead className="w-[100px] text-center">Time</TableHead>
             <TableHead className="text-right">Language</TableHead>
           </TableRow>
+          <TableRow className=" hover:bg-background h-0 w-full">
+            <TableHead colSpan={4} className="p-0 h-0">
+              <div className="border-b border-muted w-full h-[1px]"></div>
+            </TableHead>
+          </TableRow>
         </TableHeader>
         <TableBody>
           {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice} className=" border-none">
-              <TableCell className="font-medium">#1</TableCell>
+            <TableRow key={invoice.invoice} className=" border-none py-4 mb-4">
+              <TableCell className="font-medium text-lg text-slate-400">
+                #1
+              </TableCell>
               <TableCell>
                 <UserInfo />
               </TableCell>
-              <TableCell>10 Hr 29 Min</TableCell>
+              <TableCell className=" font-medium text-[15px]">
+                10 Hr 29 Min
+              </TableCell>
               <TableCell className="text-right">
                 {invoice.totalAmount}
               </TableCell>
