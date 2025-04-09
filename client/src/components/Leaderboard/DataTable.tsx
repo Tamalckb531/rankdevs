@@ -86,7 +86,7 @@ export function DataTable() {
                 <TableCell>
                   <UserInfo />
                 </TableCell>
-                <TableCell className=" font-medium text-[16px] text-slate-300">
+                <TableCell className="text-[16px] dark:text-slate-300 font-bold ">
                   10 Hr 29 Min
                 </TableCell>
                 <TableCell>
