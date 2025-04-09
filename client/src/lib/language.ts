@@ -90,3 +90,31 @@ export const getContrastTextColor = (hexColor: string): string => {
 
   return luminance > 0.5 ? "#000000" : "#FFFFFF";
 };
+
+export const getLanguageType = (language: string) => {
+  switch (language) {
+    case "dockercompose":
+    case "dockerbake":
+    case "dockerfile":
+      return "docker";
+    case "fortran-modern":
+      return "fortran";
+    case "git-commit":
+    case "git-rebase":
+    case "ignore":
+      return "git";
+    case "javascriptreact":
+      return "jsx";
+    case "typescriptreact":
+      return "tsx";
+    case "jade":
+      return "pug";
+    case "plaintext":
+      return "txt";
+    case "jsonl":
+    case "jsonc":
+      return "json";
+    default:
+      return language;
+  }
+};

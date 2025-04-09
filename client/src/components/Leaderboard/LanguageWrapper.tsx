@@ -1,4 +1,8 @@
-import { getContrastTextColor, languages } from "@/lib/language";
+import {
+  getContrastTextColor,
+  getLanguageType,
+  languages,
+} from "@/lib/language";
 import React from "react";
 
 interface lang {
@@ -9,12 +13,20 @@ interface lang {
 export const LanguageWrapper = () => {
   return (
     <div className=" flex items-center justify-start gap-2">
+      <LanguageCard language="typescript" time="1H" />
       <LanguageCard language="javascript" time="1H" />
       <LanguageCard language="typescriptreact" time="29M" />
       <LanguageCard language="css" time="2H 31M " />
       <LanguageCard language="prisma" time="35M" />
       <LanguageCard language="dockerfile" time="1H 2M" />
       <LanguageCard language="rust" time="59M" />
+      <LanguageCard language="git-commit" time="23M" />
+      <LanguageCard language="fortran-modern" time="23M" />
+      <LanguageCard language="env" time="1M" />
+      <LanguageCard language="tailwindcss" time="45M" />
+      <LanguageCard language="jsonc" time="25M" />
+      <LanguageCard language="lua" time="25M" />
+      <LanguageCard language="terraform" time="25M" />
     </div>
   );
 };
@@ -22,6 +34,7 @@ export const LanguageWrapper = () => {
 const LanguageCard = ({ language, time }: lang) => {
   const langColor = languages[language].color;
   const textColor = getContrastTextColor(langColor);
+  const lang = getLanguageType(language);
   return (
     <div className="relative inline-flex h-fit w-fit overflow-hidden items-center justify-center p-[1px] rounded-full">
       {/* Spinning border */}
@@ -33,7 +46,7 @@ const LanguageCard = ({ language, time }: lang) => {
         style={{ backgroundColor: langColor }}
       >
         <p className={`text-md`} style={{ color: textColor }}>
-          {language} - {time}
+          {lang} - {time}
         </p>
       </div>
     </div>

@@ -36,11 +36,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ScrollArea className=" h-[100vh]">
-            <Header />
-            {children}
-            <ScrollBar orientation="vertical" />
-          </ScrollArea>
+          <Header />
+          {children}
         </ThemeProvider>
       </body>
     </html>
