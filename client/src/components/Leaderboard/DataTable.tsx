@@ -64,7 +64,7 @@ export function DataTable() {
           <TableHeader>
             <TableRow className=" font-bold text-lg border-b border-slate-400">
               <TableHead className="w-[100px] min-w-[100px]">#Rank</TableHead>
-              <TableHead className="w-[170px] min-w-[170px]">Info</TableHead>
+              <TableHead className="w-[160px] min-w-[160px]">Info</TableHead>
               <TableHead className="w-[120px] min-w-[120px]">Time</TableHead>
               <TableHead>Language</TableHead>
             </TableRow>
@@ -103,7 +103,7 @@ export function DataTable() {
 }
 const UserInfo = () => {
   return (
-    <div className=" flex items-center justify-around">
+    <div className=" flex items-center justify-between">
       <RankCardImg />
       <div className="flex flex-col">
         <p className=" text-[15px] font-bold cursor-pointer">TamalCkb531</p>
