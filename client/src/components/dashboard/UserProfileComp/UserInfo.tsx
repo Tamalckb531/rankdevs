@@ -16,7 +16,7 @@ const UserInfo = () => {
           <p className=" text-slate-400 text-sm -mt-0.5">@TamalCDip</p>
         </div>
       </div>
-      <p className=" text-sm text-slate-300">
+      <p className=" text-sm text-slate-600 dark:text-slate-300">
         To confuse your enemy, confuse yourself first ~ Sun Tzu
       </p>
     </div>
