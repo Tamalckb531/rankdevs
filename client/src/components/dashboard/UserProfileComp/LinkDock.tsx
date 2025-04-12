@@ -1,9 +1,9 @@
-import { Github, Link, User, X } from "lucide-react";
+import { Github, User, X } from "lucide-react";
 import React from "react";
 
 const LinkDock = () => {
   return (
-    <div className=" flex items-center justify-around w-full mt-5">
+    <div className=" flex items-center justify-center gap-10 w-full mt-5">
       <span className=" cursor-pointer" title="Github">
         <Github size={22} />
       </span>
