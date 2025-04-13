@@ -7,7 +7,7 @@ interface stat {
 
 const CodingStat = () => {
   return (
-    <div className="flex w-full items-center justify-around">
+    <div className="flex w-full items-center justify-around -mt-2 -mb-2">
       <StatCard time="7H 29M" label="Last 24 hour" />
       <StatCard time="89H 26M" label="All time" />
     </div>

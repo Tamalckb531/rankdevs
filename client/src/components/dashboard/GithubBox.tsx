@@ -26,7 +26,7 @@ const GithubBox = () => {
               </span>
             </p>
             <p className=" text-sm text-slate-400">
-              Last Year Contribution :{" "}
+              Contributions (LY) :{" "}
               <span className=" dark:text-green-400 font-bold text-green-600">
                 884
               </span>
@@ -34,7 +34,7 @@ const GithubBox = () => {
           </div>
           <LanguagePieChart />
         </div>
-        <div className="stat flex items-center justify-around gap-2 -mt-2">
+        <div className="stat flex items-center justify-between pr-10 -mt-2">
           <StatCard topic="Repository" stat="45" />
           <StatCard topic="Fork" stat="48" />
           <StatCard topic="Start" stat="22" />
@@ -59,7 +59,7 @@ const StatCard = ({ topic, stat }: stat) => {
   return (
     <div className="flex flex-col gap-1 justify-center items-center mt-2">
       <p className=" font-bold">{stat}</p>
-      <p className=" text-wrap text-xs">{topic}</p>
+      <p className=" text-wrap text-xs text-slate-400">{topic}</p>
     </div>
   );
 };

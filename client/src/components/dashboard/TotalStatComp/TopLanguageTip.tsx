@@ -57,7 +57,7 @@ const LanguageSlide = ({ language, time, fill }: slide) => {
         <div className=" h-2 w-2" style={{ backgroundColor: fill }}></div>
         <p className=" text-slate-400">{language}</p>
       </div>
-      <p className="font-bold ml-3">{time}</p>
+      <p className="font-bold lg:ml-3 lg:text-md text-[15px]">{time}</p>
     </div>
   );
 };

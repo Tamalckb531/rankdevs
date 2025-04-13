@@ -69,7 +69,10 @@ const chartConfig = {
 
 export function YearlyPieChart() {
   return (
-    <ChartContainer config={chartConfig} className=" aspect-square h-[200px]">
+    <ChartContainer
+      config={chartConfig}
+      className=" aspect-square lg:h-[200px] h-[180px]"
+    >
       <PieChart>
         <ChartTooltip
           cursor={false}
