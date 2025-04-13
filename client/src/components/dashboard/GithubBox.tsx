@@ -58,7 +58,7 @@ interface stat {
 const StatCard = ({ topic, stat }: stat) => {
   return (
     <div className="flex flex-col gap-1 justify-center items-center mt-2">
-      <p className=" font-bold">{stat}</p>
+      <p className=" font-bold text-lg">{stat}</p>
       <p className=" text-wrap text-xs text-slate-400">{topic}</p>
     </div>
   );

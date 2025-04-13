@@ -27,7 +27,10 @@ const chartConfig = {
 
 export function WeeklyPieChart() {
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer
+      config={chartConfig}
+      className="aspect-auto h-[220px] w-full"
+    >
       <LineChart
         accessibilityLayer
         data={chartData}
@@ -46,7 +49,7 @@ export function WeeklyPieChart() {
         />
         <ChartTooltip
           cursor={true}
-          content={<ChartTooltipContent hideLabel />}
+          content={<ChartTooltipContent indicator="dot" />}
         />
         <Line
           dataKey="sum"

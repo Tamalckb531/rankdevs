@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import StatSelect from "./StatsComp/StatSelect";
-import { YearlyLineChart } from "./YearlyComp/yearlyPieChart";
+import { YearlyLineChart } from "./YearlyComp/YearlyLineChart";
 
 const YearlyStats = () => {
   return (

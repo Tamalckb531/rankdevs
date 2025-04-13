@@ -34,7 +34,7 @@ export function YearlyLineChart() {
   return (
     <ChartContainer
       config={chartConfig}
-      className="aspect-auto h-[250px] w-full"
+      className="aspect-auto h-[220px] w-full"
     >
       <LineChart
         accessibilityLayer
@@ -54,7 +54,7 @@ export function YearlyLineChart() {
         />
         <ChartTooltip
           cursor={true}
-          content={<ChartTooltipContent hideLabel />}
+          content={<ChartTooltipContent indicator="dot" />}
         />
         <Line
           dataKey="sum"
