@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import StatSelect from "./StatsComp/StatSelect";
-import { WeeklyPieChart } from "./WeeklyComp/weeklyPieChart";
+import { YearlyLineChart } from "./YearlyComp/yearlyPieChart";
 
 const YearlyStats = () => {
   return (
@@ -11,7 +11,7 @@ const YearlyStats = () => {
         <StatSelect />
       </CardHeader>
       <CardContent>
-        <WeeklyPieChart />
+        <YearlyLineChart />
       </CardContent>
     </Card>
   );
