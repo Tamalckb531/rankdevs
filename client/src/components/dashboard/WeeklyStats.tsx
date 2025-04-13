@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import StatSelect from "./StatsComp/StatSelect";
+import { WeeklyPieChart } from "./WeeklyComp/weeklyPieChart";
 
 const WeeklyStats = () => {
   return (
@@ -9,7 +10,9 @@ const WeeklyStats = () => {
         <CardTitle className="text-xl font-bold">Weekly Stats</CardTitle>
         <StatSelect />
       </CardHeader>
-      <CardContent className=" flex flex-col gap-2 -mt-3"></CardContent>
+      <CardContent>
+        <WeeklyPieChart />
+      </CardContent>
     </Card>
   );
 };
