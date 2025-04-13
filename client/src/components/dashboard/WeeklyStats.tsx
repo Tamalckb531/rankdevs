@@ -1,7 +1,7 @@
 import React from "react";
 
 const WeeklyStats = () => {
-  return <div>WeeklyStats</div>;
+  return <div className=" border">WeeklyStats</div>;
 };
 
 export default WeeklyStats;

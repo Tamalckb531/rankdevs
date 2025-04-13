@@ -17,8 +17,8 @@ const DashboardGridContainer = () => {
       <GithubBox />
       <GithubHeatMap />
       <WeeklyStats />
-      <MonthlyStats />
       <YearlyStats />
+      <MonthlyStats />
     </div>
   );
 };
