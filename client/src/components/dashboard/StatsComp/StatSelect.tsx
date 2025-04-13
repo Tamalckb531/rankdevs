@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Select,
   SelectContent,
@@ -6,13 +7,12 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
-import React from "react";
+} from "@/components/ui/select";
 
 const StatSelect = () => {
   return (
     <Select>
-      <SelectTrigger className="w-[200px]">
+      <SelectTrigger className="w-[150px]">
         <SelectValue placeholder="Select Mode" />
       </SelectTrigger>
       <SelectContent>

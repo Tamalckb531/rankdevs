@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardTitle } from "../ui/card";
-import PlatfromSelect from "./CPComp/PlatfromSelect";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import StatSelect from "./StatsComp/StatSelect";
 
 const WeeklyStats = () => {
@@ -10,6 +9,7 @@ const WeeklyStats = () => {
         <CardTitle className="text-xl font-bold">Weekly Stats</CardTitle>
         <StatSelect />
       </CardHeader>
+      <CardContent className=" flex flex-col gap-2 -mt-3"></CardContent>
     </Card>
   );
 };
