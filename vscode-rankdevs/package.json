@@ -16,8 +16,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-rankdevs.helloWorld",
-        "title": "Hello World"
+        "command": "vscode-rankdevs.setApiKey",
+        "title": "RankDevs: Set Api Key"
       }
     ]
   },
