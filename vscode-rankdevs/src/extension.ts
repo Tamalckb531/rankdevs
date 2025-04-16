@@ -16,8 +16,6 @@ export function activate(context: vscode.ExtensionContext) {
   //? Run whenever user change something in their codebase
   context.subscriptions.push(
     vscode.workspace.onDidChangeTextDocument((event) => {
-      console.log("Yo! User typed shit!");
-
       rankDevs.trackTyping(event);
     })
   );

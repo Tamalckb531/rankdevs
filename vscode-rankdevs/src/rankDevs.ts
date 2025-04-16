@@ -29,21 +29,18 @@ export class RankDevs {
       this.typingStartTime = Date.now();
       this.isTyping = true;
       this.typingStartLan = currentLanguage;
-      console.log("Typing started!");
     }
 
     if (this.typingTimer) clearTimeout(this.typingTimer);
     if (currentLanguage !== this.typingStartLan) {
-      console.log("User change the language");
-      // this.stopTracking();
+      this.stopTracking();
       return;
     }
 
     this.typingTimer = setTimeout(() => {
       const now = Date.now();
       if (now - this.typingStartTime! >= 10000) {
-        // this.stopTracking();
-        console.log("User took more break than the interval");
+        this.stopTracking();
       }
     }, 10000);
   }
@@ -55,13 +52,15 @@ export class RankDevs {
     this.typingStartTime = null;
     this.isTyping = false;
 
-    const manager = StatsManager.getInstance(this.context);
-    const apiKey = this.context.globalState.get<string>("rankDevsApiKey");
-    if (apiKey) {
-      manager.addTypingData(this.typingStartLan, duration, apiKey); //? {'js',120}
-    } else {
-      console.error("API key is missing!");
-    }
+    console.log(`{ ${this.typingStartLan} : ${duration} }`);
+
+    // const manager = StatsManager.getInstance(this.context);
+    // const apiKey = this.context.globalState.get<string>("rankDevsApiKey");
+    // if (apiKey) {
+    //   manager.addTypingData(this.typingStartLan, duration, apiKey); //? {'js',120}
+    // } else {
+    //   console.error("API key is missing!");
+    // }
   }
 
   public callApiService(): void {
