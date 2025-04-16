@@ -18,6 +18,10 @@
       {
         "command": "vscode-rankdevs.setApiKey",
         "title": "RankDevs: Set Api Key"
+      },
+      {
+        "command": "vscode-rankdevs.clearApiKey",
+        "title": "RankDevs: Clear Api Key"
       }
     ]
   },

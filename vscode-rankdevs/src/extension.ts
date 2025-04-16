@@ -22,15 +22,33 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
 
+  //? run when user first time install the app
+  const existingKey: string | undefined =
+    context.globalState.get("rankDevsApiKey");
+  if (!existingKey) {
+    vscode.window
+      .showInputBox({
+        prompt: "Enter your API Key: ",
+        placeHolder: "abc#^$123",
+      })
+      .then((apiKey) => {
+        if (apiKey) rankDevs.setApiKey(apiKey);
+      });
+  }
+
   //? run when user run the setApiKey command
   const disposable = vscode.commands.registerCommand(
     "vscode-rankdevs.setApiKey",
     () => {
       console.log("Yo! User setting api key");
 
+      const apiKeyVal: string | undefined =
+        context.globalState.get("rankDevsApiKey");
+
       vscode.window
         .showInputBox({
           prompt: "Enter your Api Key : ",
+          value: apiKeyVal,
         })
         .then((apiKey) => {
           if (apiKey) rankDevs.setApiKey(apiKey);
@@ -38,8 +56,17 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  //? to clear up the api Key
+  const clearKeyCommand = vscode.commands.registerCommand(
+    "vscode-rankdevs.clearApiKey",
+    () => {
+      context.globalState.update("rankDevsApiKey", undefined);
+      vscode.window.showInformationMessage("API Key cleared");
+    }
+  );
+
   //? to clean up the register command
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable, clearKeyCommand);
 
   // **Interval-Based Cleanup for Daily/Weekly/Monthly Logs**
   // intervalIdForCleanup = setInterval(() => {
