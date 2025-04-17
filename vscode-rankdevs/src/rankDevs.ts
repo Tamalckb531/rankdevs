@@ -52,15 +52,13 @@ export class RankDevs {
     this.typingStartTime = null;
     this.isTyping = false;
 
-    console.log(`{ ${this.typingStartLan} : ${duration} }`);
-
-    // const manager = StatsManager.getInstance(this.context);
-    // const apiKey = this.context.globalState.get<string>("rankDevsApiKey");
-    // if (apiKey) {
-    //   manager.addTypingData(this.typingStartLan, duration, apiKey); //? {'js',120}
-    // } else {
-    //   console.error("API key is missing!");
-    // }
+    const manager = StatsManager.getInstance(this.context);
+    const apiKey = this.context.globalState.get<string>("rankDevsApiKey");
+    if (apiKey) {
+      manager.addTypingData(this.typingStartLan, duration, apiKey); //? {'js',120}
+    } else {
+      console.error("API key is missing!");
+    }
   }
 
   public callApiService(): void {
