@@ -111,7 +111,10 @@ export class StatsManager {
 
     this.updateTodayStats(typingTime, language, apiKey);
 
-    console.log(this.today);
+    console.log("Today: ", this.today);
+    console.log("Daily: ", this.daily);
+    console.log("Weekly: ", this.weekly);
+    console.log("Monthly: ", this.monthly);
   }
 
   public intervalWiseCleanUp(): void {
@@ -239,10 +242,17 @@ export class StatsManager {
   }
 
   public cleanup(context: vscode.ExtensionContext): void {
+    console.log("Clean-up run");
+
     context.globalState.update("dailyStats", this.daily);
     context.globalState.update("weeklyStats", this.weekly);
     context.globalState.update("monthlyStats", this.monthly);
 
     context.globalState.update("todaysStats", this.today);
+
+    console.log("Today from clean-up: ", this.today);
+    console.log("Daily from clean-up: ", this.daily);
+    console.log("Weekly from clean-up: ", this.weekly);
+    console.log("Monthly from clean-up: ", this.monthly);
   }
 }

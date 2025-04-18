@@ -79,17 +79,19 @@ export function activate(context: vscode.ExtensionContext) {
   // }, 2000); // Run every 2 seconds
 
   // **Interval-Based api call**
-  // intervalIdForApiCall = setInterval(() => {
-  // 	rankDevs.callApiService();
-  // }, 2 * 60 * 1000); // Run every 2 minutes
+  intervalIdForApiCall = setInterval(() => {
+    rankDevs.callApiService();
+  }, 20 * 1000); // Run every 20 seconds
 }
 
 //? run as soon as user close vs code
 export function deactivate() {
-  clearInterval(intervalIdForCleanup);
-  // clearInterval(intervalIdForApiCall);
-  const manager = StatsManager.getInstance(globalContext);
-  manager.cleanup(globalContext);
-  manager.intervalWiseCleanUp(); //? clean up before user gets out of the vs code
   console.log("RankDevs got de-active ");
+  clearInterval(intervalIdForCleanup);
+  clearInterval(intervalIdForApiCall);
+  const manager = StatsManager.getInstance(globalContext);
+  const rankDevs = new RankDevs(globalContext);
+  manager.cleanup(globalContext);
+  rankDevs.callApiService();
+  manager.intervalWiseCleanUp(); //? clean up before user gets out of the vs code
 }
