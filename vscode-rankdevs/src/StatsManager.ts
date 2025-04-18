@@ -109,7 +109,9 @@ export class StatsManager {
     this.updateStats(this.weekly, typingTime, language);
     this.updateStats(this.monthly, typingTime, language);
 
-    // this.updateTodayStats(typingTime, language, apiKey);
+    this.updateTodayStats(typingTime, language, apiKey);
+
+    console.log(this.today);
   }
 
   public intervalWiseCleanUp(): void {
