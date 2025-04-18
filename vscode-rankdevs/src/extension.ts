@@ -67,10 +67,16 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(disposable, clearKeyCommand);
 
   // **Interval-Based Cleanup for Daily/Weekly/Monthly Logs**
+  intervalIdForCleanup = setInterval(() => {
+    const manager = StatsManager.getInstance(globalContext);
+    manager.intervalWiseCleanUp();
+  }, 10 * 60 * 1000); // Run every 10 minutes
+
+  // **Interval-Based test Cleanup**
   // intervalIdForCleanup = setInterval(() => {
-  //     const manager = StatsManager.getInstance(globalContext);
-  // 	manager.intervalWiseCleanUp();
-  // }, 10 * 60 * 1000); // Run every 10 minutes
+  //   const manager = StatsManager.getInstance(globalContext);
+  //   manager.testCleanUp();
+  // }, 2000); // Run every 2 seconds
 
   // **Interval-Based api call**
   // intervalIdForApiCall = setInterval(() => {
@@ -80,9 +86,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 //? run as soon as user close vs code
 export function deactivate() {
-  // clearInterval(intervalIdForCleanup);
+  clearInterval(intervalIdForCleanup);
   // clearInterval(intervalIdForApiCall);
-  // const manager = StatsManager.getInstance(globalContext);
-  // manager.cleanup(globalContext)
+  const manager = StatsManager.getInstance(globalContext);
+  manager.cleanup(globalContext);
+  manager.intervalWiseCleanUp(); //? clean up before user gets out of the vs code
   console.log("RankDevs got de-active ");
 }

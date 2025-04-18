@@ -124,6 +124,120 @@ export class StatsManager {
     }
   }
 
+  public testCleanUp(): void {
+    const now = Date.now();
+
+    // Fake Daily Stats (1 log old, 2 logs recent)
+    const daily: Stats = {
+      total: 18000,
+      typescript: 9000,
+      javascript: 4000,
+      python: 5000,
+      logs: [
+        {
+          typingTime: 5000,
+          language: "typescript",
+          timestamp: now - 25 * 60 * 60 * 1000,
+        }, // 25 hrs ago -> //? should get removed
+        {
+          typingTime: 4000,
+          language: "typescript",
+          timestamp: now - 23 * 60 * 60 * 1000,
+        }, // 23 hrs ago
+        {
+          typingTime: 4000,
+          language: "javascript",
+          timestamp: now - 2 * 60 * 60 * 1000,
+        }, // 2 hrs ago
+        {
+          typingTime: 3000,
+          language: "python",
+          timestamp: now - 1 * 60 * 60 * 1000,
+        }, // 1 hr ago
+        {
+          typingTime: 2000,
+          language: "python",
+          timestamp: now - (26 * 60 * 60 * 1000 + 500),
+        }, // 24 hr and .05 second ago -> //? should get removed
+      ],
+    };
+
+    // Fake Weekly Stats (1 log old, 2 recent)
+    const weekly: Stats = {
+      total: 18000,
+      typescript: 6000,
+      java: 7000,
+      go: 5000,
+      logs: [
+        {
+          typingTime: 6000,
+          language: "typescript",
+          timestamp: now - 8 * 24 * 60 * 60 * 1000,
+        }, // 8 days ago -> //? should get removed
+        {
+          typingTime: 4000,
+          language: "java",
+          timestamp: now - 3 * 24 * 60 * 60 * 1000,
+        }, // 3 days ago
+        {
+          typingTime: 3000,
+          language: "java",
+          timestamp: now - (7 * 24 * 60 * 60 * 1000 + 500),
+        }, // 7 days 0.5 s ago -> //? should get removed
+        {
+          typingTime: 5000,
+          language: "go",
+          timestamp: now - 1 * 24 * 60 * 60 * 1000,
+        }, // 1 day ago
+      ],
+    };
+
+    // Fake Monthly Stats (1 log old, 2 recent)
+    const monthly: Stats = {
+      total: 18000,
+      cpp: 8000,
+      rust: 6000,
+      dart: 4000,
+      cobol: 4000,
+      logs: [
+        {
+          typingTime: 8000,
+          language: "cpp",
+          timestamp: now - 35 * 24 * 60 * 60 * 1000,
+        }, // 35 days ago -> //? should get removed
+        {
+          typingTime: 6000,
+          language: "rust",
+          timestamp: now - 15 * 24 * 60 * 60 * 1000,
+        }, // 15 days ago
+        {
+          typingTime: 4000,
+          language: "dart",
+          timestamp: now - 5 * 24 * 60 * 60 * 1000,
+        }, // 5 days ago
+        {
+          typingTime: 4000,
+          language: "cobol",
+          timestamp: now - (30 * 24 * 60 * 60 * 1000 + 500),
+        }, // 30 days 0.5 sec ago -> //? should get removed
+      ],
+    };
+
+    console.log("Before Cleanup:");
+    console.log("Daily:", daily);
+    console.log("Weekly:", weekly);
+    console.log("Monthly:", monthly);
+
+    this.cleanOldStats(daily, this.ONE_DAY);
+    this.cleanOldStats(weekly, this.ONE_WEEK);
+    this.cleanOldStats(monthly, this.ONE_MONTH);
+
+    console.log("After Cleanup:");
+    console.log("Daily:", daily);
+    console.log("Weekly:", weekly);
+    console.log("Monthly:", monthly);
+  }
+
   public cleanup(context: vscode.ExtensionContext): void {
     context.globalState.update("dailyStats", this.daily);
     context.globalState.update("weeklyStats", this.weekly);
