@@ -15,7 +15,11 @@ export class StatsManager {
 
   private ONE_DAY: number = 24 * 60 * 60 * 1000;
   private ONE_WEEK: number = 7 * this.ONE_DAY;
-  private ONE_MONTH = 30 * this.ONE_DAY;
+  private ONE_MONTH: number = 30 * this.ONE_DAY;
+
+  private typeDaily: string = "daily";
+  private typeWeekly: string = "weekly";
+  private typeMonthly: string = "monthly";
 
   private constructor(context: vscode.ExtensionContext) {
     this.context = context;
@@ -43,7 +47,8 @@ export class StatsManager {
   private updateStats(
     stats: Stats,
     typingTime: number,
-    language: string
+    language: string,
+    type: string
   ): void {
     //? FLOW : increment in total and key -> save the log
     const now = Date.now();
@@ -52,6 +57,30 @@ export class StatsManager {
     stats[language] = (stats[language] || 0) + typingTime;
 
     stats.logs.push({ typingTime, language, timestamp: now });
+
+    this.saveToContext(stats, type);
+  }
+
+  private saveToContext(stats: Stats, type: string): void {
+    switch (type) {
+      case this.typeDaily:
+        this.context.globalState.update("dailyStats", stats);
+        break;
+      case this.typeWeekly:
+        this.context.globalState.update("weeklyStats", stats);
+        break;
+      case this.typeMonthly:
+        this.context.globalState.update("monthlyStats", stats);
+        break;
+      default:
+        console.log("Invalid object");
+        break;
+    }
+
+    console.log(
+      "Save to context run successfully! Here's a demo for daily : ",
+      this.context.globalState.get("dailyStats")
+    );
   }
 
   private updateTodayStats(
@@ -79,7 +108,7 @@ export class StatsManager {
     };
   }
 
-  private cleanOldStats(stats: Stats, lastLimitFinder: number) {
+  private cleanOldStats(stats: Stats, lastLimitFinder: number, type: string) {
     //? FLOW : filter old time -> clean total and keys time -> re add total and key time from filtered log
 
     //? This gives time of 24 hours, 7 dyas or 30 days ago
@@ -95,6 +124,8 @@ export class StatsManager {
     });
 
     stats.logs = stats.logs.filter((log) => log.timestamp > lastLimit);
+
+    this.saveToContext(stats, type);
   }
 
   public static getInstance(context: vscode.ExtensionContext): StatsManager {
@@ -109,23 +140,18 @@ export class StatsManager {
     typingTime: number,
     apiKey: string
   ): void {
-    this.updateStats(this.daily, typingTime, language);
-    this.updateStats(this.weekly, typingTime, language);
-    this.updateStats(this.monthly, typingTime, language);
+    this.updateStats(this.daily, typingTime, language, this.typeDaily);
+    this.updateStats(this.weekly, typingTime, language, this.typeWeekly);
+    this.updateStats(this.monthly, typingTime, language, this.typeMonthly);
 
     this.updateTodayStats(typingTime, language, apiKey);
-
-    console.log("Today: ", this.today);
-    console.log("Daily: ", this.daily);
-    console.log("Weekly: ", this.weekly);
-    console.log("Monthly: ", this.monthly);
   }
 
   public intervalWiseCleanUp(): void {
     try {
-      this.cleanOldStats(this.daily, this.ONE_DAY);
-      this.cleanOldStats(this.weekly, this.ONE_WEEK);
-      this.cleanOldStats(this.monthly, this.ONE_MONTH);
+      this.cleanOldStats(this.daily, this.ONE_DAY, this.typeDaily);
+      this.cleanOldStats(this.weekly, this.ONE_WEEK, this.typeWeekly);
+      this.cleanOldStats(this.monthly, this.ONE_MONTH, this.typeMonthly);
     } catch (error: any) {
       console.error("Error happened inside intervalWiseCleanUp : ", error);
     }
@@ -235,9 +261,9 @@ export class StatsManager {
     console.log("Weekly:", weekly);
     console.log("Monthly:", monthly);
 
-    this.cleanOldStats(daily, this.ONE_DAY);
-    this.cleanOldStats(weekly, this.ONE_WEEK);
-    this.cleanOldStats(monthly, this.ONE_MONTH);
+    this.cleanOldStats(daily, this.ONE_DAY, this.typeDaily);
+    this.cleanOldStats(weekly, this.ONE_WEEK, this.typeWeekly);
+    this.cleanOldStats(monthly, this.ONE_MONTH, this.typeMonthly);
 
     console.log("After Cleanup:");
     console.log("Daily:", daily);
@@ -245,30 +271,30 @@ export class StatsManager {
     console.log("Monthly:", monthly);
   }
 
-  public cleanup(): void {
-    console.log("Clean-up run");
+  // public cleanup(): void {
+  //   console.log("Clean-up run");
 
-    this.context.globalState.update("dailyStats", this.daily);
-    this.context.globalState.update("weeklyStats", this.weekly);
-    this.context.globalState.update("monthlyStats", this.monthly);
+  //   this.context.globalState.update("dailyStats", this.daily);
+  //   this.context.globalState.update("weeklyStats", this.weekly);
+  //   this.context.globalState.update("monthlyStats", this.monthly);
 
-    this.context.globalState.update("todaysStats", this.today);
+  //   this.context.globalState.update("todaysStats", this.today);
 
-    console.log(
-      "Today from clean-up: ",
-      this.context.globalState.get<todaysStats>("todaysStats")
-    );
-    console.log(
-      "Daily from clean-up: ",
-      this.context.globalState.get<Stats>("dailyStats")
-    );
-    console.log(
-      "Weekly from clean-up: ",
-      this.context.globalState.get<Stats>("weeklyStats")
-    );
-    console.log(
-      "Monthly from clean-up: ",
-      this.context.globalState.get<Stats>("monthlyStats")
-    );
-  }
+  //   console.log(
+  //     "Today from clean-up: ",
+  //     this.context.globalState.get<todaysStats>("todaysStats")
+  //   );
+  //   console.log(
+  //     "Daily from clean-up: ",
+  //     this.context.globalState.get<Stats>("dailyStats")
+  //   );
+  //   console.log(
+  //     "Weekly from clean-up: ",
+  //     this.context.globalState.get<Stats>("weeklyStats")
+  //   );
+  //   console.log(
+  //     "Monthly from clean-up: ",
+  //     this.context.globalState.get<Stats>("monthlyStats")
+  //   );
+  // }
 }

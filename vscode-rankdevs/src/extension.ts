@@ -15,8 +15,6 @@ export async function activate(context: vscode.ExtensionContext) {
   const manager = StatsManager.getInstance(context);
   await manager.init();
 
-  console.log(globalContext.globalState.get("name"));
-
   //? Run whenever user change something in their codebase
   context.subscriptions.push(
     vscode.workspace.onDidChangeTextDocument((event) => {
@@ -43,8 +41,6 @@ export async function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.commands.registerCommand(
     "vscode-rankdevs.setApiKey",
     () => {
-      console.log("Yo! User setting api key");
-
       const apiKeyVal: string | undefined =
         context.globalState.get("rankDevsApiKey");
 
@@ -74,7 +70,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // **Interval-Based Cleanup for Daily/Weekly/Monthly Logs**
   intervalIdForCleanup = setInterval(() => {
     manager.intervalWiseCleanUp();
-  }, 10 * 60 * 1000); // Run every 10 minutes
+  }, 2 * 60 * 1000); // Run every 2 minutes
 
   // **Interval-Based test Cleanup**
   // intervalIdForCleanup = setInterval(() => {
@@ -91,8 +87,6 @@ export async function activate(context: vscode.ExtensionContext) {
 //? run as soon as user close vs code
 export function deactivate() {
   console.log("RankDevs got de-active ");
-  globalContext.globalState.update("name", "Tamal");
-  console.log(globalContext.globalState.get("name"));
 
   clearInterval(intervalIdForCleanup);
   clearInterval(intervalIdForApiCall);
@@ -100,9 +94,8 @@ export function deactivate() {
   const manager = StatsManager.getInstance(globalContext);
   const rankDevs = new RankDevs(globalContext);
 
-  rankDevs.callApiService();
+  // rankDevs.callApiService();
   rankDevs.stopTracking();
-  5;
-  manager.cleanup();
+  // manager.cleanup();
   manager.intervalWiseCleanUp(); //? clean up before user gets out of the vs code
 }

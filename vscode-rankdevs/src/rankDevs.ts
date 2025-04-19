@@ -39,10 +39,10 @@ export class RankDevs {
 
     this.typingTimer = setTimeout(() => {
       const now = Date.now();
-      if (now - this.typingStartTime! >= 10000) {
+      if (now - this.typingStartTime! >= 4000) {
         this.stopTracking();
       }
-    }, 10000);
+    }, 4000);
   }
 
   public stopTracking(): void {
