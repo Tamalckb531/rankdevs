@@ -5,6 +5,7 @@ import * as vscode from "vscode";
 
 export class StatsManager {
   private static instance: StatsManager;
+  private context: vscode.ExtensionContext;
 
   private daily: Stats = { total: 0, logs: [] };
   private weekly: Stats = { total: 0, logs: [] };
@@ -17,20 +18,23 @@ export class StatsManager {
   private ONE_MONTH = 30 * this.ONE_DAY;
 
   private constructor(context: vscode.ExtensionContext) {
-    this.daily = context.globalState.get<Stats>("dailyStats") || {
-      total: 0,
-      logs: [],
-    };
-    this.weekly = context.globalState.get<Stats>("weeklyStats") || {
-      total: 0,
-      logs: [],
-    };
-    this.monthly = context.globalState.get<Stats>("monthlyStats") || {
-      total: 0,
-      logs: [],
-    };
+    this.context = context;
+  }
 
-    this.today = context.globalState.get<todaysStats>("todaysStats") || {
+  public async init(): Promise<void> {
+    this.daily = this.context.globalState.get<Stats>("dailyStats") || {
+      total: 0,
+      logs: [],
+    };
+    this.weekly = this.context.globalState.get<Stats>("weeklyStats") || {
+      total: 0,
+      logs: [],
+    };
+    this.monthly = this.context.globalState.get<Stats>("monthlyStats") || {
+      total: 0,
+      logs: [],
+    };
+    this.today = this.context.globalState.get<todaysStats>("todaysStats") || {
       total: 0,
       lastTime: Date.now(),
     };
@@ -241,18 +245,30 @@ export class StatsManager {
     console.log("Monthly:", monthly);
   }
 
-  public cleanup(context: vscode.ExtensionContext): void {
+  public cleanup(): void {
     console.log("Clean-up run");
 
-    context.globalState.update("dailyStats", this.daily);
-    context.globalState.update("weeklyStats", this.weekly);
-    context.globalState.update("monthlyStats", this.monthly);
+    this.context.globalState.update("dailyStats", this.daily);
+    this.context.globalState.update("weeklyStats", this.weekly);
+    this.context.globalState.update("monthlyStats", this.monthly);
 
-    context.globalState.update("todaysStats", this.today);
+    this.context.globalState.update("todaysStats", this.today);
 
-    console.log("Today from clean-up: ", this.today);
-    console.log("Daily from clean-up: ", this.daily);
-    console.log("Weekly from clean-up: ", this.weekly);
-    console.log("Monthly from clean-up: ", this.monthly);
+    console.log(
+      "Today from clean-up: ",
+      this.context.globalState.get<todaysStats>("todaysStats")
+    );
+    console.log(
+      "Daily from clean-up: ",
+      this.context.globalState.get<Stats>("dailyStats")
+    );
+    console.log(
+      "Weekly from clean-up: ",
+      this.context.globalState.get<Stats>("weeklyStats")
+    );
+    console.log(
+      "Monthly from clean-up: ",
+      this.context.globalState.get<Stats>("monthlyStats")
+    );
   }
 }

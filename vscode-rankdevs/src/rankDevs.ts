@@ -45,7 +45,7 @@ export class RankDevs {
     }, 10000);
   }
 
-  private stopTracking(): void {
+  public stopTracking(): void {
     if (!this.isTyping || !this.typingStartTime) return;
 
     const duration = Date.now() - this.typingStartTime;
