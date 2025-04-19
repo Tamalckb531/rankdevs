@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { sendTypingDataToBackend } from "./apiService";
+import { sendDataToBackend } from "./apiService";
 import { StatsManager } from "./StatsManager";
 
 //? test
@@ -66,7 +66,7 @@ export class RankDevs {
 
     const apiKey = this.context.globalState.get<string>("rankDevsApiKey");
     if (apiKey) {
-      sendTypingDataToBackend(apiKey, this.context);
+      sendDataToBackend(apiKey, this.context);
     } else {
       console.error("API key is missing!");
     }

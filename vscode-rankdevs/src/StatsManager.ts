@@ -1,4 +1,4 @@
-import { sendTodayDataToBackend } from "./apiService";
+import { sendDataToBackend } from "./apiService";
 import { isPrevDay } from "./utils/func";
 import { Stats, todaysStats } from "./utils/types";
 import * as vscode from "vscode";
@@ -91,7 +91,7 @@ export class StatsManager {
 
     if (isPrevDay(now, this.today.lastTime)) {
       //? processing of database and reset time
-      sendTodayDataToBackend(apiKey, this.today);
+      sendDataToBackend(apiKey, this.context);
     }
 
     this.today.total += typingTime;
