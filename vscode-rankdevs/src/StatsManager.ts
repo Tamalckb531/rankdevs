@@ -20,6 +20,7 @@ export class StatsManager {
   private typeDaily: string = "daily";
   private typeWeekly: string = "weekly";
   private typeMonthly: string = "monthly";
+  private typeToday: string = "today";
 
   private constructor(context: vscode.ExtensionContext) {
     this.context = context;
@@ -61,7 +62,7 @@ export class StatsManager {
     this.saveToContext(stats, type);
   }
 
-  private saveToContext(stats: Stats, type: string): void {
+  private saveToContext(stats: Stats | todaysStats, type: string): void {
     switch (type) {
       case this.typeDaily:
         this.context.globalState.update("dailyStats", stats);
@@ -72,8 +73,11 @@ export class StatsManager {
       case this.typeMonthly:
         this.context.globalState.update("monthlyStats", stats);
         break;
+      case this.typeToday:
+        this.context.globalState.update("todaysStats", stats);
+        break;
       default:
-        console.log("Invalid object");
+        console.log("Invalid type");
         break;
     }
   }
@@ -88,15 +92,16 @@ export class StatsManager {
     if (isPrevDay(now, this.today.lastTime)) {
       //? processing of database and reset time
       sendTodayDataToBackend(apiKey, this.today);
-      this.resetTodayStats();
     }
 
     this.today.total += typingTime;
     this.today[language] = (this.today[language] || 0) + typingTime;
     this.today.lastTime = now;
+
+    this.saveToContext(this.today, this.typeToday);
   }
 
-  private resetTodayStats(): void {
+  public resetTodayStats(): void {
     this.today = {
       total: 0,
       lastTime: Date.now(),

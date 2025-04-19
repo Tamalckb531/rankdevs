@@ -18,6 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log("Daily stats : ", context.globalState.get("dailyStats"));
   console.log("Weekly stats : ", context.globalState.get("weeklyStats"));
   console.log("Monthly stats : ", context.globalState.get("monthlyStats"));
+  console.log("Today stats : ", context.globalState.get("todaysStats"));
 
   //? Run whenever user change something in their codebase
   context.subscriptions.push(
