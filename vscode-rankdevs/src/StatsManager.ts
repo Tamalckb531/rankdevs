@@ -25,7 +25,7 @@ export class StatsManager {
     this.context = context;
   }
 
-  public async init(): Promise<void> {
+  public init(): void {
     this.daily = this.context.globalState.get<Stats>("dailyStats") || {
       total: 0,
       logs: [],
@@ -76,11 +76,6 @@ export class StatsManager {
         console.log("Invalid object");
         break;
     }
-
-    console.log(
-      "Save to context run successfully! Here's a demo for daily : ",
-      this.context.globalState.get("dailyStats")
-    );
   }
 
   private updateTodayStats(

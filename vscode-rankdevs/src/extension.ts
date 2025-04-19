@@ -7,13 +7,17 @@ let intervalIdForCleanup: NodeJS.Timeout;
 let intervalIdForApiCall: NodeJS.Timeout;
 
 //? run as soon as user open vs code
-export async function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
   console.log("Hi Tamal! RankDevs extension is now active!");
   globalContext = context;
 
   const rankDevs = new RankDevs(context);
   const manager = StatsManager.getInstance(context);
-  await manager.init();
+  manager.init();
+
+  console.log("Daily stats : ", context.globalState.get("dailyStats"));
+  console.log("Weekly stats : ", context.globalState.get("weeklyStats"));
+  console.log("Monthly stats : ", context.globalState.get("monthlyStats"));
 
   //? Run whenever user change something in their codebase
   context.subscriptions.push(
@@ -72,16 +76,17 @@ export async function activate(context: vscode.ExtensionContext) {
     manager.intervalWiseCleanUp();
   }, 2 * 60 * 1000); // Run every 2 minutes
 
-  // **Interval-Based test Cleanup**
+  // **!Interval-Based test Cleanup -> DO NOT TOUCH**
   // intervalIdForCleanup = setInterval(() => {
   //   const manager = StatsManager.getInstance(globalContext);
   //   manager.testCleanUp();
   // }, 2000); // Run every 2 seconds
+  // **!Interval-Based test Cleanup -> DO NOT TOUCH**
 
   // **Interval-Based api call**
   intervalIdForApiCall = setInterval(() => {
     rankDevs.callApiService();
-  }, 20 * 1000); // Run every 20 seconds
+  }, 2 * 60 * 1000); // Run every 2 minute
 }
 
 //? run as soon as user close vs code
@@ -91,11 +96,11 @@ export function deactivate() {
   clearInterval(intervalIdForCleanup);
   clearInterval(intervalIdForApiCall);
 
-  const manager = StatsManager.getInstance(globalContext);
-  const rankDevs = new RankDevs(globalContext);
+  // const manager = StatsManager.getInstance(globalContext);
+  // const rankDevs = new RankDevs(globalContext);
 
   // rankDevs.callApiService();
-  rankDevs.stopTracking();
+  // rankDevs.stopTracking();
   // manager.cleanup();
-  manager.intervalWiseCleanUp(); //? clean up before user gets out of the vs code
+  // manager.intervalWiseCleanUp(); //? clean up before user gets out of the vs code
 }
