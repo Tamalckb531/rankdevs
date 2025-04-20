@@ -51,9 +51,9 @@ export const sendDataToBackend = async (
   manager.resetTodayStats();
 
   if (
-    (dailyStats.total === 0 &&
-      weeklyStats.total === 0 &&
-      monthlyStats.total === 0) ||
+    dailyStats.total === 0 &&
+    weeklyStats.total === 0 &&
+    monthlyStats.total === 0 &&
     todayData.total === 0
   )
     return;
