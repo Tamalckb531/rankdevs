@@ -26,6 +26,13 @@ export class StatsManager {
     this.context = context;
   }
 
+  public static getInstance(context: vscode.ExtensionContext): StatsManager {
+    if (!StatsManager.instance) {
+      StatsManager.instance = new StatsManager(context);
+    }
+    return StatsManager.instance;
+  }
+
   public init(): void {
     this.daily = this.context.globalState.get<Stats>("dailyStats") || {
       total: 0,
@@ -106,6 +113,8 @@ export class StatsManager {
       total: 0,
       lastTime: Date.now(),
     };
+
+    this.context.globalState.update("todaysStats", undefined);
   }
 
   private cleanOldStats(stats: Stats, lastLimitFinder: number, type: string) {
@@ -126,13 +135,6 @@ export class StatsManager {
     stats.logs = stats.logs.filter((log) => log.timestamp > lastLimit);
 
     this.saveToContext(stats, type);
-  }
-
-  public static getInstance(context: vscode.ExtensionContext): StatsManager {
-    if (!StatsManager.instance) {
-      StatsManager.instance = new StatsManager(context);
-    }
-    return StatsManager.instance;
   }
 
   public addTypingData(
@@ -270,31 +272,4 @@ export class StatsManager {
     console.log("Weekly:", weekly);
     console.log("Monthly:", monthly);
   }
-
-  // public cleanup(): void {
-  //   console.log("Clean-up run");
-
-  //   this.context.globalState.update("dailyStats", this.daily);
-  //   this.context.globalState.update("weeklyStats", this.weekly);
-  //   this.context.globalState.update("monthlyStats", this.monthly);
-
-  //   this.context.globalState.update("todaysStats", this.today);
-
-  //   console.log(
-  //     "Today from clean-up: ",
-  //     this.context.globalState.get<todaysStats>("todaysStats")
-  //   );
-  //   console.log(
-  //     "Daily from clean-up: ",
-  //     this.context.globalState.get<Stats>("dailyStats")
-  //   );
-  //   console.log(
-  //     "Weekly from clean-up: ",
-  //     this.context.globalState.get<Stats>("weeklyStats")
-  //   );
-  //   console.log(
-  //     "Monthly from clean-up: ",
-  //     this.context.globalState.get<Stats>("monthlyStats")
-  //   );
-  // }
 }
