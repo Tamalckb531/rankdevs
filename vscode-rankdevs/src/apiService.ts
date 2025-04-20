@@ -71,21 +71,21 @@ export const sendDataToBackend = async (
     monthlyStats: monthlyRefinedStats,
   };
 
-  // try {
-  //   const response = await fetch(`${backendUrl}/api/dashboard/update`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(payload),
-  //   });
+  try {
+    const response = await fetch(`${backendUrl}/api/dashboard/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-  //   if (response.ok) {
-  //     console.log("Typing data sent successfully!");
-  //   } else {
-  //     console.error("Failed to send data to backend:", response.statusText);
-  //   }
-  // } catch (error) {
-  //   console.error("Error sending typing data:", error);
-  // }
+    if (response.ok) {
+      console.log("Typing data sent successfully!");
+    } else {
+      console.error("Failed to send data to backend:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error sending typing data:", error);
+  }
 };
