@@ -120,7 +120,7 @@ export class StatsManager {
   private cleanOldStats(stats: Stats, lastLimitFinder: number, type: string) {
     //? FLOW : filter old time -> clean total and keys time -> re add total and key time from filtered log
 
-    //? This gives time of 24 hours, 7 dyas or 30 days ago
+    //? This gives time of 24 hours, 7 days or 30 days ago
     const lastLimit = Date.now() - lastLimitFinder;
 
     const outdatedLogs = stats.logs.filter((log) => log.timestamp < lastLimit);

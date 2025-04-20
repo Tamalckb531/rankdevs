@@ -14,6 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
   const rankDevs = new RankDevs(context);
   const manager = StatsManager.getInstance(context);
   manager.init();
+  manager.intervalWiseCleanUp(); //? initial clean-up while starting
 
   console.log("Daily stats : ", context.globalState.get("dailyStats"));
   console.log("Weekly stats : ", context.globalState.get("weeklyStats"));
