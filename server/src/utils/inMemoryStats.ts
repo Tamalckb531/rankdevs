@@ -6,5 +6,6 @@ export const inMemoryStats: Record<
     dailyStats: Stats;
     weeklyStats: Stats;
     monthlyStats: Stats;
+    todaysStats: Stats & { lastTime: number };
   }
 > = {};

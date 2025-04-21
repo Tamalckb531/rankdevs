@@ -25,12 +25,37 @@ export const updateLeaderboard = async (c: Context) => {
     if (!user) return c.json({ status: 404, msg: "User not found" });
     const userId = user.id;
 
-    //? replacing old snap with new snap in every two minute
-    inMemoryStats[userId] = {
-      dailyStats: snap.dailyStats,
-      weeklyStats: snap.weeklyStats,
-      monthlyStats: snap.monthlyStats,
-    };
+    if (!inMemoryStats[userId]) {
+      inMemoryStats[userId] = {
+        dailyStats: snap.dailyStats,
+        weeklyStats: snap.weeklyStats,
+        monthlyStats: snap.monthlyStats,
+        todaysStats: {
+          ...snap.data,
+          lastTime: parseInt(snap.data.lastTime),
+        },
+      };
+    } else {
+      //? adding the new today stats
+      const stats = inMemoryStats[userId].todaysStats;
+
+      stats.total += snap.data.total;
+      stats.lastTime = parseInt(snap.data.lastTime);
+
+      for (const lang in snap.data) {
+        if (lang !== "total" && lang !== "lastTime") {
+          stats[lang] = (stats[lang] || 0) + snap.data[lang];
+        }
+      }
+
+      //? replacing old snap with new snap in every two minute
+      inMemoryStats[userId] = {
+        dailyStats: snap.dailyStats,
+        weeklyStats: snap.weeklyStats,
+        monthlyStats: snap.monthlyStats,
+        todaysStats: stats,
+      };
+    }
 
     //? update times in memory
     return c.json({ status: 200, msg: "stats updated" });
@@ -40,6 +65,7 @@ export const updateLeaderboard = async (c: Context) => {
     });
   }
 };
+
 const getStats = async (
   c: Context,
   statType: "dailyStats" | "weeklyStats" | "monthlyStats"
