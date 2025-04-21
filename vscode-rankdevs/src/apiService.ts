@@ -72,7 +72,7 @@ export const sendDataToBackend = async (
   };
 
   try {
-    const response = await fetch(`${backendUrl}/api/dashboard/update`, {
+    const response = await fetch(`${backendUrl}/api/leaderboard/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
