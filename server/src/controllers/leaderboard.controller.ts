@@ -95,7 +95,7 @@ export const updateLeaderboard = async (c: Context) => {
 
 const getStats = async (
   c: Context,
-  statType: "dailyStats" | "weeklyStats" | "monthlyStats"
+  statType: "daily" | "weekly" | "monthly"
 ) => {
   try {
     let data: statPayload[] = [];
@@ -107,11 +107,24 @@ const getStats = async (
       },
     });
 
-    users.forEach((user) => {
-      const userStats = inMemoryStats[user.id]?.[statType];
+    //? setting users in a map for easy retrieval
+    const userMap = new Map<string, typeof users[0]>();
+    users.forEach((user) => userMap.set(user.id, user));
 
-      if (userStats) {
-        data.push({ ...user, Stats: userStats });
+    const rankedArray: RankEntry[] = leaderboards[statType];
+
+    //? Rank wise setting the data
+    rankedArray.forEach((entry) => {
+      const user = userMap.get(entry.userId);
+      const stats = inMemoryStats[entry.userId]?.[`${statType}Stats`];
+
+      if (user && stats) {
+        data.push({
+          id: user.id,
+          githubUserName: user.githubUserName,
+          twitterUsername: user.twitterUsername,
+          Stats: stats,
+        });
       }
     });
 
@@ -123,9 +136,9 @@ const getStats = async (
   }
 };
 
-export const getDaily = (c: Context) => getStats(c, "dailyStats");
-export const getWeekly = (c: Context) => getStats(c, "weeklyStats");
-export const getMonthly = (c: Context) => getStats(c, "monthlyStats");
+export const getDaily = (c: Context) => getStats(c, "daily");
+export const getWeekly = (c: Context) => getStats(c, "weekly");
+export const getMonthly = (c: Context) => getStats(c, "monthly");
 
 const insertSorted = (arr: RankEntry[], entry: RankEntry) => {
   let start = 0;
