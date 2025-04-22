@@ -1,8 +1,8 @@
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from "@prisma/client";
-import { inMemoryStats } from "../utils/inMemoryStats.js";
-import type { SnapShot, statPayload } from "../utils/types.js";
+import { inMemoryStats, leaderboards } from "../utils/inMemoryStats.js";
+import type { RankEntry, SnapShot, statPayload } from "../utils/types.js";
 import { isSameDay } from "../utils/inMemoFunctions.js";
 import { saveToDataBase } from "./dashboard.controller.js";
 
@@ -30,9 +30,9 @@ export const updateLeaderboard = async (c: Context) => {
     //? storing user details in memory:
     if (!inMemoryStats[userId]) {
       inMemoryStats[userId] = {
-        dailyStats: { ...snap.dailyStats, rank: 0 },
-        weeklyStats: { ...snap.weeklyStats, rank: 0 },
-        monthlyStats: { ...snap.monthlyStats, rank: 0 },
+        dailyStats: snap.dailyStats,
+        weeklyStats: snap.weeklyStats,
+        monthlyStats: snap.monthlyStats,
         todaysStats: {
           ...snap.data,
           lastTime: parseInt(snap.data.lastTime),
@@ -67,9 +67,9 @@ export const updateLeaderboard = async (c: Context) => {
 
       //? Update the whole object
       inMemoryStats[userId] = {
-        dailyStats: { ...snap.dailyStats, rank: 0 },
-        weeklyStats: { ...snap.weeklyStats, rank: 0 },
-        monthlyStats: { ...snap.monthlyStats, rank: 0 },
+        dailyStats: snap.dailyStats,
+        weeklyStats: snap.weeklyStats,
+        monthlyStats: snap.monthlyStats,
         todaysStats: isSameDay(oldTime, newTime)
           ? stats
           : {
@@ -77,6 +77,11 @@ export const updateLeaderboard = async (c: Context) => {
               lastTime: newTime,
             },
       };
+
+      //? Update rank
+      updateLeaderboardArray("daily", userId, snap.dailyStats.total);
+      updateLeaderboardArray("weekly", userId, snap.weeklyStats.total);
+      updateLeaderboardArray("monthly", userId, snap.monthlyStats.total);
     }
 
     //? update times in memory
@@ -121,3 +126,32 @@ const getStats = async (
 export const getDaily = (c: Context) => getStats(c, "dailyStats");
 export const getWeekly = (c: Context) => getStats(c, "weeklyStats");
 export const getMonthly = (c: Context) => getStats(c, "monthlyStats");
+
+const insertSorted = (arr: RankEntry[], entry: RankEntry) => {
+  let start = 0;
+  let end = arr.length - 1;
+  let mid = end + Math.floor((start - end) / 2);
+
+  while (start <= end) {
+    if (entry.total > arr[mid].total) end = mid - 1;
+    else start = mid + 1;
+    mid = end + Math.floor((start - end) / 2);
+  }
+
+  arr.splice(start, 0, entry);
+};
+
+const removeIfExists = (arr: RankEntry[], userId: string) => {
+  const index = arr.findIndex((e) => e.userId === userId);
+  if (index !== -1) arr.splice(index, 1);
+};
+
+const updateLeaderboardArray = (
+  scope: "daily" | "weekly" | "monthly",
+  userId: string,
+  total: number
+) => {
+  const arr = leaderboards[scope];
+  removeIfExists(arr, userId);
+  insertSorted(arr, { userId, total });
+};

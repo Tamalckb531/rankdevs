@@ -77,3 +77,5 @@ export type statPayload = {
   twitterUsername: string | null;
   Stats: Stats;
 };
+
+export type RankEntry = { userId: string; total: number };
