@@ -3,6 +3,8 @@ import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from "@prisma/client";
 import { inMemoryStats } from "../utils/inMemoryStats.js";
 import type { SnapShot, statPayload } from "../utils/types.js";
+import { isSameDay } from "../utils/inMemoFunctions.js";
+import { saveToDataBase } from "./dashboard.controller.js";
 
 const prisma = new PrismaClient();
 
@@ -25,6 +27,7 @@ export const updateLeaderboard = async (c: Context) => {
     if (!user) return c.json({ status: 404, msg: "User not found" });
     const userId = user.id;
 
+    //? storing user details in memory:
     if (!inMemoryStats[userId]) {
       inMemoryStats[userId] = {
         dailyStats: snap.dailyStats,
@@ -39,21 +42,40 @@ export const updateLeaderboard = async (c: Context) => {
       //? adding the new today stats
       const stats = inMemoryStats[userId].todaysStats;
 
-      stats.total += snap.data.total;
-      stats.lastTime = parseInt(snap.data.lastTime);
+      const newTime = parseInt(snap.data.lastTime);
+      const oldTime = stats.lastTime;
 
-      for (const lang in snap.data) {
-        if (lang !== "total" && lang !== "lastTime") {
-          stats[lang] = (stats[lang] || 0) + snap.data[lang];
+      if (isSameDay(oldTime, newTime)) {
+        stats.total += snap.data.total;
+        stats.lastTime = parseInt(snap.data.lastTime);
+
+        for (const lang in snap.data) {
+          if (lang !== "total" && lang !== "lastTime") {
+            stats[lang] = (stats[lang] || 0) + snap.data[lang];
+          }
+        }
+      } else {
+        //? sending data to the backend to save it
+        const status = await saveToDataBase(stats, user);
+        if (!status) {
+          return c.json({
+            status: 400,
+            msg: "Failed storing today data inside database",
+          });
         }
       }
 
-      //? replacing old snap with new snap in every two minute
+      //? Update the whole object
       inMemoryStats[userId] = {
         dailyStats: snap.dailyStats,
         weeklyStats: snap.weeklyStats,
         monthlyStats: snap.monthlyStats,
-        todaysStats: stats,
+        todaysStats: isSameDay(oldTime, newTime)
+          ? stats
+          : {
+              ...snap.data,
+              lastTime: newTime,
+            },
       };
     }
 

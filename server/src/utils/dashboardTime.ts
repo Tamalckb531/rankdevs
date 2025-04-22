@@ -9,6 +9,7 @@ export const initializeWeeklyStats = () => ({
   saturday: { total: 0 },
 });
 
+//? can initialize a month of data addressing the the leap year also
 export const initializeMonthlyStats = (year: number, month: number) => {
   const stats: any = { sum: { total: 0 } };
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -39,12 +40,17 @@ export const initializeStats = (year: number, month: number) => ({
   totalStats: { sum: { total: 0 } },
 });
 
+// prevDate: april 22, 2025 , today: april 23, 2025 -> return false (not new week)
+// prevDate: april 22, 2025 , today: april 23, 2026 -> return true
+// prevDate: april 22, 2025 , today: may 22, 2025 -> return true
+// prevDate: april 22, 2025 , today: april 28, 2025 -> return true
+
 export const isNewWeek = (prevDate: Date, today: Date): boolean => {
   const prevMonday = new Date(prevDate);
-  prevMonday.setDate(prevMonday.getDate() - prevMonday.getDay() + 1); // Get start of previous week
+  prevMonday.setDate(prevMonday.getDate() - prevMonday.getDay() + 1);
   const todayMonday = new Date(today);
-  todayMonday.setDate(todayMonday.getDate() - todayMonday.getDay() + 1); // Get start of this week
-  return prevMonday.getDate() !== todayMonday.getDate();
+  todayMonday.setDate(todayMonday.getDate() - todayMonday.getDay() + 1);
+  return prevMonday.toDateString() !== todayMonday.toDateString();
 };
 
 export const sumStats = (existing: any, newData: any) => {
