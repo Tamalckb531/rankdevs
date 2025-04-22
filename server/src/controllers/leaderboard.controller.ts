@@ -30,9 +30,9 @@ export const updateLeaderboard = async (c: Context) => {
     //? storing user details in memory:
     if (!inMemoryStats[userId]) {
       inMemoryStats[userId] = {
-        dailyStats: snap.dailyStats,
-        weeklyStats: snap.weeklyStats,
-        monthlyStats: snap.monthlyStats,
+        dailyStats: { ...snap.dailyStats, rank: 0 },
+        weeklyStats: { ...snap.weeklyStats, rank: 0 },
+        monthlyStats: { ...snap.monthlyStats, rank: 0 },
         todaysStats: {
           ...snap.data,
           lastTime: parseInt(snap.data.lastTime),
@@ -67,9 +67,9 @@ export const updateLeaderboard = async (c: Context) => {
 
       //? Update the whole object
       inMemoryStats[userId] = {
-        dailyStats: snap.dailyStats,
-        weeklyStats: snap.weeklyStats,
-        monthlyStats: snap.monthlyStats,
+        dailyStats: { ...snap.dailyStats, rank: 0 },
+        weeklyStats: { ...snap.weeklyStats, rank: 0 },
+        monthlyStats: { ...snap.monthlyStats, rank: 0 },
         todaysStats: isSameDay(oldTime, newTime)
           ? stats
           : {

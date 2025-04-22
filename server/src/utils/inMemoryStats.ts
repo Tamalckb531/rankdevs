@@ -3,9 +3,9 @@ import type { Stats } from "./types.js";
 export const inMemoryStats: Record<
   string,
   {
-    dailyStats: Stats;
-    weeklyStats: Stats;
-    monthlyStats: Stats;
+    dailyStats: Stats & { rank: number };
+    weeklyStats: Stats & { rank: number };
+    monthlyStats: Stats & { rank: number };
     todaysStats: Stats & { lastTime: number };
   }
 > = {};
