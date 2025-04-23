@@ -79,14 +79,13 @@ export const updateLeaderboard = async (c: Context) => {
               lastTime: newTime,
             },
       };
-
-      //? Update rank
-      updateLeaderboardArray("daily", userId, snap.dailyStats.total);
-      updateLeaderboardArray("weekly", userId, snap.weeklyStats.total);
-      updateLeaderboardArray("monthly", userId, snap.monthlyStats.total);
     }
 
-    //? update times in memory
+    //? Update rank
+    updateLeaderboardArray("daily", userId, snap.dailyStats.total);
+    updateLeaderboardArray("weekly", userId, snap.weeklyStats.total);
+    updateLeaderboardArray("monthly", userId, snap.monthlyStats.total);
+
     return c.json({ status: 200, msg: "stats updated" });
   } catch (error: any) {
     throw new HTTPException(500, {
