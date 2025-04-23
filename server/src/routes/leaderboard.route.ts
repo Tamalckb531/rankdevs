@@ -11,6 +11,6 @@ const leaderboardRoute = new Hono();
 leaderboardRoute.get("/daily", getDaily);
 leaderboardRoute.get("/weekly", getWeekly);
 leaderboardRoute.get("/monthly", getMonthly);
-leaderboardRoute.post("/update", updateLeaderboard);
+leaderboardRoute.post("/update", updateLeaderboard); //? comes from vscode extension
 
 export default leaderboardRoute;
