@@ -12,6 +12,8 @@ export const hello = async (c: Context) => {
   return c.text("Hello from leaderboard");
 };
 
+//? Test started
+
 export const updateLeaderboard = async (c: Context) => {
   const snap = await c.req.json<SnapShot>();
 
