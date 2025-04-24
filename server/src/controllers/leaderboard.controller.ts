@@ -31,6 +31,7 @@ export const updateLeaderboard = async (c: Context) => {
 
     //? storing user details in memory:
     if (!inMemoryStats[userId]) {
+      //* Tested -> working fine
       inMemoryStats[userId] = {
         dailyStats: snap.dailyStats,
         weeklyStats: snap.weeklyStats,
@@ -82,6 +83,7 @@ export const updateLeaderboard = async (c: Context) => {
     }
 
     //? Update rank
+    //* Tested -> working fine
     updateLeaderboardArray("daily", userId, snap.dailyStats.total);
     updateLeaderboardArray("weekly", userId, snap.weeklyStats.total);
     updateLeaderboardArray("monthly", userId, snap.monthlyStats.total);
@@ -94,6 +96,7 @@ export const updateLeaderboard = async (c: Context) => {
   }
 };
 
+//* Tested -> working fine
 const getStats = async (
   c: Context,
   statType: "daily" | "weekly" | "monthly"
