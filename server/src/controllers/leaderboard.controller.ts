@@ -68,7 +68,7 @@ export const updateLeaderboard = async (c: Context) => {
         }
       } else {
         //? sending data to the backend to save it
-        const status = await saveToDataBase(stats, user);
+        const status = await saveToDataBase(stats, user, newTime);
         if (!status) {
           return c.json({
             status: 400,
