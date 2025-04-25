@@ -1,4 +1,4 @@
-import type { RankEntry, Stats } from "./types.js";
+import type { RankEntry, Stats, users } from "./types.js";
 
 export const inMemoryStats: Record<
   string,
@@ -9,6 +9,12 @@ export const inMemoryStats: Record<
     todaysStats: Stats & { lastTime: number };
   }
 > = {};
+
+export const userMap = {
+  dailyMap: new Map<string, users>(),
+  weeklyMap: new Map<string, users>(),
+  monthlyMap: new Map<string, users>(),
+};
 
 export const leaderboards = {
   daily: [] as RankEntry[],

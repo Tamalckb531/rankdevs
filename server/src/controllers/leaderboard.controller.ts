@@ -1,8 +1,17 @@
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from "@prisma/client";
-import { inMemoryStats, leaderboards } from "../utils/inMemoryStats.js";
-import type { RankEntry, SnapShot, statPayload } from "../utils/types.js";
+import {
+  inMemoryStats,
+  leaderboards,
+  userMap,
+} from "../utils/inMemoryStats.js";
+import type {
+  RankEntry,
+  SnapShot,
+  statPayload,
+  users,
+} from "../utils/types.js";
 import { isSameDay } from "../utils/inMemoFunctions.js";
 import { saveToDataBase } from "./dashboard.controller.js";
 
@@ -82,6 +91,23 @@ export const updateLeaderboard = async (c: Context) => {
       };
     }
 
+    const newUser: users = {
+      id: user.id,
+      githubUserName: user.githubUserName,
+      twitterUsername: user.twitterUsername,
+    };
+
+    //? add in userMap
+    if (!userMap.dailyMap.get(userId)) {
+      userMap.dailyMap.set(user.id, newUser);
+    }
+    if (!userMap.weeklyMap.get(userId)) {
+      userMap.weeklyMap.set(user.id, newUser);
+    }
+    if (!userMap.monthlyMap.get(userId)) {
+      userMap.monthlyMap.set(user.id, newUser);
+    }
+
     //? Update rank
     //* Tested -> working fine
     updateLeaderboardArray("daily", userId, snap.dailyStats.total);
@@ -103,23 +129,26 @@ const getStats = async (
 ) => {
   try {
     let data: statPayload[] = [];
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        githubUserName: true,
-        twitterUsername: true,
-      },
-    });
 
     //? setting users in a map for easy retrieval
-    const userMap = new Map<string, typeof users[0]>();
-    users.forEach((user) => userMap.set(user.id, user));
-
     const rankedArray: RankEntry[] = leaderboards[statType];
 
     //? Rank wise setting the data
     rankedArray.forEach((entry) => {
-      const user = userMap.get(entry.userId);
+      let user;
+      switch (statType) {
+        case "daily":
+          user = userMap.dailyMap.get(entry.userId);
+          break;
+        case "weekly":
+          user = userMap.weeklyMap.get(entry.userId);
+          break;
+        case "monthly":
+          user = userMap.monthlyMap.get(entry.userId);
+          break;
+        default:
+          return;
+      }
       const stats = inMemoryStats[entry.userId]?.[`${statType}Stats`];
 
       if (user && stats) {
@@ -137,6 +166,20 @@ const getStats = async (
     throw new HTTPException(500, {
       message: error.message || `An error from leaderboard ${statType}`,
     });
+  }
+};
+
+export const getToday = async (c: Context) => {
+  try {
+    const todayStats = Object.entries(inMemoryStats).map(([userId, stats]) => ({
+      userId,
+      todaysStats: stats.todaysStats,
+    }));
+
+    return c.json(todayStats, 200);
+  } catch (error) {
+    console.error("Error in getToday controller:", error);
+    return c.json({ error: "Failed to fetch today's stats" }, 500);
   }
 };
 
@@ -172,3 +215,46 @@ const updateLeaderboardArray = (
   removeIfExists(arr, userId);
   insertSorted(arr, { userId, total });
 };
+
+// const getStats = async (
+//   c: Context,
+//   statType: "daily" | "weekly" | "monthly"
+// ) => {
+//   try {
+//     let data: statPayload[] = [];
+//     const users = await prisma.user.findMany({
+//       select: {
+//         id: true,
+//         githubUserName: true,
+//         twitterUsername: true,
+//       },
+//     });
+
+//     //? setting users in a map for easy retrieval
+//     const userMap = new Map<string, typeof users[0]>();
+//     users.forEach((user) => userMap.set(user.id, user));
+
+//     const rankedArray: RankEntry[] = leaderboards[statType];
+
+//     //? Rank wise setting the data
+//     rankedArray.forEach((entry) => {
+//       const user = userMap.get(entry.userId);
+//       const stats = inMemoryStats[entry.userId]?.[`${statType}Stats`];
+
+//       if (user && stats) {
+//         data.push({
+//           id: user.id,
+//           githubUserName: user.githubUserName,
+//           twitterUsername: user.twitterUsername,
+//           Stats: stats,
+//         });
+//       }
+//     });
+
+//     return c.json(data);
+//   } catch (error: any) {
+//     throw new HTTPException(500, {
+//       message: error.message || `An error from leaderboard ${statType}`,
+//     });
+//   }
+// };

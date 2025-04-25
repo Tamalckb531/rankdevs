@@ -12,6 +12,12 @@ export type Stats = {
   [key: string]: number;
 };
 
+export type users = {
+  id: string;
+  githubUserName: string;
+  twitterUsername: string | null;
+};
+
 export type WeeklyStats = {
   sum: {
     total: number;
