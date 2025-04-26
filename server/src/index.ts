@@ -5,6 +5,8 @@ import { Hono } from "hono";
 import leaderboardRoute from "./routes/leaderboard.route.js";
 import dashboardRoute from "./routes/dashboard.route.js";
 import authRoute from "./routes/auth.route.js";
+import type { RankEntry } from "./utils/types.js";
+import { leaderboards } from "./utils/inMemoryStats.js";
 
 dotenv.config();
 
@@ -27,6 +29,19 @@ app.get("/test", (c) => {
 app.route("/api/auth", authRoute);
 app.route("/api/leaderboard", leaderboardRoute);
 app.route("/api/dashboard", dashboardRoute);
+
+//? Interval wise leaderboard cleanup -> remove in active users from leaderboard
+let dailyInterval: NodeJS.Timeout | null = null,
+  weeklyInterval: NodeJS.Timeout | null = null,
+  monthlyInterval: NodeJS.Timeout | null = null;
+
+// if (dailyInterval) clearInterval(dailyInterval);
+// if (weeklyInterval) clearInterval(weeklyInterval);
+// if (monthlyInterval) clearInterval(monthlyInterval);
+
+dailyInterval = setInterval(() => {}, 1 * 60 * 60 * 1000);
+weeklyInterval = setInterval(() => {}, 24 * 60 * 60 * 1000);
+monthlyInterval = setInterval(() => {}, 3 * 24 * 60 * 60 * 1000);
 
 //? Global catch middleware
 app.onError((err: any, c) => {

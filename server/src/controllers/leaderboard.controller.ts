@@ -49,6 +49,7 @@ export const updateLeaderboard = async (c: Context) => {
           ...snap.data,
           lastTime: parseInt(snap.data.lastTime),
         },
+        lastReportTime: Date.now(),
       };
     } else {
       //? adding the new today stats
@@ -88,6 +89,7 @@ export const updateLeaderboard = async (c: Context) => {
               ...snap.data,
               lastTime: newTime,
             },
+        lastReportTime: Date.now(),
       };
     }
 

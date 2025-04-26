@@ -7,6 +7,7 @@ export const inMemoryStats: Record<
     weeklyStats: Stats;
     monthlyStats: Stats;
     todaysStats: Stats & { lastTime: number };
+    lastReportTime: number;
   }
 > = {};
 
