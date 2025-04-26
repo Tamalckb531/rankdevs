@@ -124,7 +124,6 @@ export const updateLeaderboard = async (c: Context) => {
   }
 };
 
-//* Tested -> working fine
 const getStats = async (
   c: Context,
   statType: "daily" | "weekly" | "monthly"

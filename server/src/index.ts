@@ -6,7 +6,8 @@ import leaderboardRoute from "./routes/leaderboard.route.js";
 import dashboardRoute from "./routes/dashboard.route.js";
 import authRoute from "./routes/auth.route.js";
 import type { RankEntry } from "./utils/types.js";
-import { leaderboards } from "./utils/inMemoryStats.js";
+import { inMemoryStats, leaderboards } from "./utils/inMemoryStats.js";
+import { removeInactiveUsers } from "./utils/inMemoFunctions.js";
 
 dotenv.config();
 
@@ -35,13 +36,19 @@ let dailyInterval: NodeJS.Timeout | null = null,
   weeklyInterval: NodeJS.Timeout | null = null,
   monthlyInterval: NodeJS.Timeout | null = null;
 
-// if (dailyInterval) clearInterval(dailyInterval);
-// if (weeklyInterval) clearInterval(weeklyInterval);
-// if (monthlyInterval) clearInterval(monthlyInterval);
+if (dailyInterval) clearInterval(dailyInterval);
+if (weeklyInterval) clearInterval(weeklyInterval);
+if (monthlyInterval) clearInterval(monthlyInterval);
 
-dailyInterval = setInterval(() => {}, 1 * 60 * 60 * 1000);
-weeklyInterval = setInterval(() => {}, 24 * 60 * 60 * 1000);
-monthlyInterval = setInterval(() => {}, 3 * 24 * 60 * 60 * 1000);
+dailyInterval = setInterval(() => {
+  removeInactiveUsers("daily", 6 * 60 * 60 * 1000); //? 6 hours
+}, 2 * 60 * 60 * 1000); // every 1 hour
+weeklyInterval = setInterval(() => {
+  removeInactiveUsers("weekly", 2 * 24 * 60 * 60 * 1000); // 2 days
+}, 24 * 60 * 60 * 1000); // every 1 day
+monthlyInterval = setInterval(() => {
+  removeInactiveUsers("monthly", 5 * 24 * 60 * 60 * 1000); // 5 days
+}, 3 * 24 * 60 * 60 * 1000); // every 3 days
 
 //? Global catch middleware
 app.onError((err: any, c) => {
