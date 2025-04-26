@@ -46,18 +46,26 @@ export const initializeStats = (year: number, month: number) => ({
 // prevDate: april 22, 2025 , today: april 28, 2025 -> return true
 
 export const isNewWeek = (prevDate: Date, today: Date): boolean => {
-  const prevMonday = new Date(prevDate);
-  prevMonday.setDate(prevMonday.getDate() - prevMonday.getDay() + 1);
-  const todayMonday = new Date(today);
-  todayMonday.setDate(todayMonday.getDate() - todayMonday.getDay() + 1);
-  return prevMonday.toDateString() !== todayMonday.toDateString();
+  const getMonday = (date: Date): Date => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = (day === 0 ? -6 : 1) - day; // Sunday correction
+    d.setDate(d.getDate() + diff);
+    d.setHours(0, 0, 0, 0); // ignore time
+    return d;
+  };
+
+  const prevMonday = getMonday(prevDate);
+  const todayMonday = getMonday(today);
+
+  return prevMonday.getTime() !== todayMonday.getTime();
 };
 
 export const sumStats = (existing: any, newData: any) => {
   const result = { ...existing };
   result.total = (existing?.total || 0) + (newData?.total || 0);
   for (const key in newData) {
-    if (key !== "total")
+    if (key !== "total" && key !== "lastTime")
       result[key] = (existing[key] || 0) + (newData[key] || 0);
   }
   return result;
