@@ -5,6 +5,7 @@ import { ModeToggle } from "./header/ToggleBtn";
 import { Trophy } from "lucide-react";
 import { AvatorDropDown } from "./header/AvatorDropDown";
 import { useRouter } from "next/navigation";
+import Login from "./LoginButton";
 
 const Header = () => {
   const router = useRouter();
@@ -22,7 +23,8 @@ const Header = () => {
           <Trophy size={20} />
         </div>
         <ModeToggle />
-        <AvatorDropDown />
+        {/* <AvatorDropDown /> */}
+        <Login />
       </nav>
     </div>
   );
