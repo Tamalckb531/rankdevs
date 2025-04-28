@@ -27,8 +27,6 @@ export const authOptions: AuthOptions = {
 
   callbacks: {
     async signIn({ user, account, profile }: SignIn) {
-      console.log("Github Profile: ", profile);
-
       const res = await fetch(`${backendUrl}/api/auth/github`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -43,8 +41,7 @@ export const authOptions: AuthOptions = {
         console.log("Error occurred in github controller : ", error);
       }
 
-      const data = await res.json();
-      console.log(data.user);
+      console.log("Run well");
 
       return true;
     },

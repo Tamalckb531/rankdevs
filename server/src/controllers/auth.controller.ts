@@ -38,7 +38,12 @@ export const github = async (c: Context) => {
     if (user) {
       const token: string = jwt.sign({ id: user.id }, secretKey);
 
-      setCookie(c, "access_token", token);
+      setCookie(c, "access_token", token, {
+        httpOnly: false, // so that frontend JS can access if needed
+        secure: process.env.NODE_ENV === "production", // true if production
+        sameSite: "Lax", // or "Strict"
+        path: "/", // allow everywhere
+      });
 
       return c.json({
         msg: "Logged in successfully",
@@ -66,7 +71,12 @@ export const github = async (c: Context) => {
 
       const token: string = jwt.sign({ id: newUser.id }, secretKey);
 
-      setCookie(c, "access_token", token);
+      setCookie(c, "access_token", token, {
+        httpOnly: false, // so that frontend JS can access if needed
+        secure: process.env.NODE_ENV === "production", // true if production
+        sameSite: "Lax", // or "Strict"
+        path: "/", // allow everywhere
+      });
 
       return c.json({
         msg: "Logged in successfully",

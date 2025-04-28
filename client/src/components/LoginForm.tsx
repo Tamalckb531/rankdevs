@@ -9,8 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Github } from "lucide-react";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 
 export function LoginForm({
@@ -19,6 +19,13 @@ export function LoginForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    console.log("Session:", session);
+    console.log("Status:", status);
+    console.log("Expires at:", session?.expires);
+  }, [session, status]);
 
   const handleLogin = async () => {
     setLoading(true);
