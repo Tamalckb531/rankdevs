@@ -21,6 +21,10 @@ export const github = async (c: Context) => {
   try {
     const { githubUserName } = await c.req.json<gt>();
 
+    if (!githubUserName) {
+      throw new HTTPException(400, { message: "GitHub username is required" });
+    }
+
     if (!secretKey) {
       throw new Error(
         "JWT_SECRET_KEY is not defined in the environment variables"
@@ -55,8 +59,8 @@ export const github = async (c: Context) => {
             today.getMonth()
           ),
           yearlyStats: initializeYearlyStats(),
-          totalStats: {},
-          lastStatsTime: "",
+          totalStats: { sum: { total: 0 } },
+          lastStatsTime: new Date(),
         },
       });
 
@@ -66,7 +70,7 @@ export const github = async (c: Context) => {
 
       return c.json({
         msg: "Logged in successfully",
-        user: user,
+        user: newUser,
       });
     }
   } catch (error: any) {

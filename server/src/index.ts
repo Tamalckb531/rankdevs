@@ -5,8 +5,6 @@ import { Hono } from "hono";
 import leaderboardRoute from "./routes/leaderboard.route.js";
 import dashboardRoute from "./routes/dashboard.route.js";
 import authRoute from "./routes/auth.route.js";
-import type { RankEntry } from "./utils/types.js";
-import { inMemoryStats, leaderboards } from "./utils/inMemoryStats.js";
 import { removeInactiveUsers } from "./utils/inMemoFunctions.js";
 
 dotenv.config();
@@ -17,7 +15,7 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: "http://localhost:3001",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -69,7 +67,7 @@ app.onError((err: any, c) => {
 serve(
   {
     fetch: app.fetch,
-    port: 3000,
+    port: 3001,
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
