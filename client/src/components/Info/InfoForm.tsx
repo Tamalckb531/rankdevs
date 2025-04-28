@@ -16,43 +16,128 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Copy } from "lucide-react";
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+  apiKey: z.string().min(8).max(8),
+  twitter: z.string().optional(),
+  peerlist: z.string().optional(),
+  leetcode: z.string().optional(),
+  codeforce: z.string().optional(),
+  portfolio: z.string().optional(),
 });
 
 export function InfoForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      apiKey: "abskieghtupw",
     },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast("Submitted successfully");
+    toast("Event has been created", {
+      description: "Sunday, December 03, 2023 at 9:00 AM",
+      action: {
+        label: "Undo",
+        onClick: () => console.log("Undo"),
+      },
+    });
   }
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 border p-3"
+        className="space-y-6 border p-3 lg:w-[50vw] md:w-[60vw]"
       >
+        <h1 className=" text-center text-2xl">Add or edit your Info </h1>
         <FormField
           control={form.control}
-          name="username"
+          name="apiKey"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>ApiKey</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <div className=" flex items-center justify-center w-full gap-2">
+                  <Input readOnly {...field} />
+                  <div className=" cursor-pointer">
+                    <Copy />
+                  </div>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="twitter"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Twitter : </FormLabel>
+              <FormControl>
+                <Input placeholder="TamalCDip" {...field} />
+              </FormControl>
+              <FormDescription>Add your twitter username here</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="peerlist"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Peerlist : </FormLabel>
+              <FormControl>
+                <Input placeholder="https://peerlist.io/tamaldip" {...field} />
+              </FormControl>
+              <FormDescription>Add your peerlist account here</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="leetcode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Leetcode : </FormLabel>
+              <FormControl>
+                <Input placeholder="TamalCDip" {...field} />
+              </FormControl>
+              <FormDescription>Add Your Leetcode username here</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="codeforce"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Code-Force </FormLabel>
+              <FormControl>
+                <Input placeholder="TamalCDip" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                Add your codeforce username here
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="portfolio"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Portfolio : </FormLabel>
+              <FormControl>
+                <Input placeholder="tamal.com" {...field} />
+              </FormControl>
+              <FormDescription>Add your Portfolio link here</FormDescription>
               <FormMessage />
             </FormItem>
           )}
