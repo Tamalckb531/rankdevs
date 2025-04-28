@@ -23,8 +23,8 @@ const Header = () => {
           <Trophy size={20} />
         </div>
         <ModeToggle />
-        {/* <AvatorDropDown /> */}
-        <Login />
+        <AvatorDropDown />
+        {/* <Login /> */}
       </nav>
     </div>
   );

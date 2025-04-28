@@ -23,6 +23,9 @@ export function AvatorDropDown() {
           Dashboard
         </DropdownMenuItem>
         <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/info")}>
+          change info
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
