@@ -2,7 +2,7 @@ import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from "@prisma/client";
 import type { User } from "@prisma/client";
-import type { allStats, Stats } from "../utils/types.js";
+import type { allStats, InfoPayload, Stats } from "../utils/types.js";
 import {
   initializeMonthlyStats,
   initializeStats,
@@ -136,6 +136,47 @@ export const getDashboard = async (c: Context) => {
     throw new HTTPException(500, {
       message:
         error.message || "An error from dashboard -> getDashboard controller ",
+    });
+  }
+};
+
+export const updateInfo = async (c: Context) => {
+  const userId = c.get("user")?.id;
+  try {
+    const {
+      portfolio,
+      email,
+      twitterUsername,
+      peerlistLink,
+      leetcodeLink,
+      codeforcesLink,
+      linkedIn,
+    } = await c.req.json<InfoPayload>();
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) throw new HTTPException(404, { message: "User not found" });
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        portfolio,
+        email,
+        twitterUsername,
+        peerlistLink,
+        leetcodeLink,
+        codeforcesLink,
+        linkedIn,
+      },
+    });
+
+    return c.json(updatedUser);
+  } catch (error: any) {
+    throw new HTTPException(500, {
+      message:
+        error.message || "An error from dashboard -> updateInfo controller ",
     });
   }
 };

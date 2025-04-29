@@ -85,3 +85,13 @@ export type statPayload = {
 };
 
 export type RankEntry = { userId: string; total: number };
+
+export type InfoPayload = {
+  portfolio: string | null;
+  email: string | null;
+  twitterUsername: string | null;
+  peerlistLink: string | null;
+  leetcodeLink: string | null;
+  codeforcesLink: string | null;
+  linkedIn: string | null;
+};
