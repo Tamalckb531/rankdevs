@@ -12,10 +12,9 @@ import { Github } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
-import { useRecoilState } from "recoil";
-import { userState } from "@/store/atom";
 import { User } from "@/lib/type";
 import { useRouter } from "next/navigation";
+import useUserStore from "@/store/useUserStore";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -28,7 +27,8 @@ export function LoginForm({
   const { data: session, status }: any = useSession();
   const router = useRouter();
 
-  const [user, setUser] = useRecoilState<User | null>(userState);
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
 
   useEffect(() => {
     if (status === "authenticated" && session?.user && !user) {

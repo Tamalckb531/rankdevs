@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,17 +13,13 @@ import {
 import { Button } from "../ui/button";
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useRecoilState } from "recoil";
-import { User } from "@/lib/type";
-import { userState } from "@/store/atom";
+import useUserStore from "@/store/useUserStore";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export function LogoutDialog() {
-  const router = useRouter();
-
-  const [user, setUser] = useRecoilState<User | null>(userState);
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

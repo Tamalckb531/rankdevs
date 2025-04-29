@@ -7,13 +7,11 @@ import { AvatorDropDown } from "./header/AvatorDropDown";
 import { useRouter } from "next/navigation";
 import Login from "./LoginButton";
 import { LogoutDialog } from "./header/LogoutDialog";
-import { userState } from "@/store/atom";
-import { User } from "@/lib/type";
-import { useRecoilState } from "recoil";
+import useUserStore from "@/store/useUserStore";
 
 const Header = () => {
   const router = useRouter();
-  const [user, setUser] = useRecoilState<User | null>(userState);
+  const user = useUserStore((state) => state.user);
   return (
     <div className=" flex items-center justify-between p-2 mt-1 md:mx-3">
       <div className=" logo flex justify-start items-center">
