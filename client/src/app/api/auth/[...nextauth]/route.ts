@@ -15,8 +15,6 @@ interface stu {
   token: JWT;
 }
 
-const backendUrl = process.env.BACKEND_URL;
-
 export const authOptions: AuthOptions = {
   providers: [
     GitHubProvider({
@@ -26,27 +24,17 @@ export const authOptions: AuthOptions = {
   ],
 
   callbacks: {
-    async signIn({ user, account, profile }: SignIn) {
-      const res = await fetch(`${backendUrl}/api/auth/github`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          githubUserName: (profile as { login: string }).login,
-        }),
-        credentials: "include",
-      });
-
-      if (!res.ok) {
-        const error = await res.json();
-        console.log("Error occurred in github controller : ", error);
+    async jwt({ token, account, profile }) {
+      // Add github username from profile to token (only during login)
+      if (account && profile) {
+        token.githubUsername = (profile as any).login;
       }
-
-      console.log("Run well");
-
-      return true;
+      return token;
     },
-
     async session({ session, token }: stu) {
+      if (session.user) {
+        (session.user as any).githubUsername = token.githubUsername;
+      }
       return session;
     },
   },

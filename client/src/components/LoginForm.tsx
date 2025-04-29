@@ -13,18 +13,47 @@ import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { data: session, status } = useSession();
+  const { data: session, status }: any = useSession();
 
   useEffect(() => {
-    console.log("Session:", session);
-    console.log("Status:", status);
-    console.log("Expires at:", session?.expires);
+    if (status === "authenticated" && session?.user) {
+      const sendToBackend = async () => {
+        try {
+          const githubUserName = session.user.githubUsername;
+          console.log(backendUrl);
+
+          const res = await fetch(`${backendUrl}/api/auth/github`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ githubUserName }),
+            credentials: "include",
+          });
+
+          if (!res.ok) {
+            const err = await res.json();
+            setError("Sorry! Login failed : " + err);
+            setLoading(false);
+          }
+
+          const data = await res.json();
+          console.log(data);
+        } catch (err) {
+          setError("Error occurred during server login : " + err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      sendToBackend();
+    }
   }, [session, status]);
 
   const handleLogin = async () => {
@@ -34,11 +63,9 @@ export function LoginForm({
     try {
       const response = await signIn("github", { redirect: false });
 
-      if (response?.error) setError("Failed to login. Please try again");
+      if (response?.error) setError("Github login failed. Please try again");
     } catch (error) {
       setError("An unexpected error occurred. Please try again");
-    } finally {
-      setLoading(false);
     }
   };
 

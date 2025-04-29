@@ -39,9 +39,9 @@ export const github = async (c: Context) => {
       const token: string = jwt.sign({ id: user.id }, secretKey);
 
       setCookie(c, "access_token", token, {
-        httpOnly: false, // so that frontend JS can access if needed
-        secure: process.env.NODE_ENV === "production", // true if production
-        sameSite: "Lax", // or "Strict"
+        httpOnly: true, // so that frontend JS can't access
+        secure: true, // true in all case
+        sameSite: "None", // or "Strict" / "Lax"
         path: "/", // allow everywhere
       });
 
