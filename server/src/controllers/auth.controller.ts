@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import type { Context } from "hono";
-import { setCookie } from "hono/cookie";
+import { deleteCookie, setCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
 import jwt from "jsonwebtoken";
 import { generateUniqueApiKey } from "../utils/apiKeyGenerator.js";
@@ -85,7 +85,21 @@ export const github = async (c: Context) => {
     }
   } catch (error: any) {
     throw new HTTPException(500, {
-      message: error.message || "An error from leader board update",
+      message: error.message || "An error occurred while logging in",
+    });
+  }
+};
+
+export const signout = (c: Context) => {
+  try {
+    deleteCookie(c, "access_token");
+    return c.json({
+      status: 200,
+      msg: "Logged out successfully",
+    });
+  } catch (error: any) {
+    throw new HTTPException(500, {
+      message: error.message || "An error occurred while logging out",
     });
   }
 };
