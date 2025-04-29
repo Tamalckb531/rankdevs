@@ -12,6 +12,10 @@ import { Github } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
+import { useRecoilState } from "recoil";
+import { userState } from "@/store/atom";
+import { User } from "@/lib/type";
+import { useRouter } from "next/navigation";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -22,9 +26,12 @@ export function LoginForm({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const { data: session, status }: any = useSession();
+  const router = useRouter();
+
+  const [user, setUser] = useRecoilState<User | null>(userState);
 
   useEffect(() => {
-    if (status === "authenticated" && session?.user) {
+    if (status === "authenticated" && session?.user && !user) {
       const sendToBackend = async () => {
         try {
           const githubUserName = session.user.githubUsername;
@@ -42,8 +49,20 @@ export function LoginForm({
             setLoading(false);
           }
 
-          const data = await res.json();
-          console.log(data);
+          const data: User = await res.json();
+          const newUser: User = {
+            id: data.id,
+            apiKey: data.apiKey,
+            githubUserName: data.githubUserName,
+            email: data.email,
+            twitterUsername: data.twitterUsername,
+            linkedIn: data.linkedIn,
+            peerlistLink: data.peerlistLink,
+            leetcodeLink: data.leetcodeLink,
+            codeforcesLink: data.codeforcesLink,
+          };
+          setUser(newUser);
+          router.push("/info");
         } catch (err) {
           setError("Error occurred during server login : " + err);
         } finally {

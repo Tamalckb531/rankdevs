@@ -12,10 +12,17 @@ import {
 import { Button } from "../ui/button";
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useRecoilState } from "recoil";
+import { User } from "@/lib/type";
+import { userState } from "@/store/atom";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export function LogoutDialog() {
+  const router = useRouter();
+
+  const [user, setUser] = useRecoilState<User | null>(userState);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -34,23 +41,21 @@ export function LogoutDialog() {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={async () => {
-              console.log("Working");
+              if (!user) return;
 
               const res = await fetch(`${backendUrl}/api/auth/signout`, {
                 method: "POST",
                 credentials: "include",
               });
 
-              const data = await res.json();
-
-              console.log("Response of log out : ", data);
+              if (res.ok) {
+                setUser(null);
+              }
 
               await signOut({
                 callbackUrl: "http://localhost:3000",
                 redirect: false,
               });
-
-              console.log("This also worked");
             }}
           >
             Continue

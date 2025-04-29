@@ -7,9 +7,13 @@ import { AvatorDropDown } from "./header/AvatorDropDown";
 import { useRouter } from "next/navigation";
 import Login from "./LoginButton";
 import { LogoutDialog } from "./header/LogoutDialog";
+import { userState } from "@/store/atom";
+import { User } from "@/lib/type";
+import { useRecoilState } from "recoil";
 
 const Header = () => {
   const router = useRouter();
+  const [user, setUser] = useRecoilState<User | null>(userState);
   return (
     <div className=" flex items-center justify-between p-2 mt-1 md:mx-3">
       <div className=" logo flex justify-start items-center">
@@ -24,9 +28,16 @@ const Header = () => {
           <Trophy size={20} />
         </div>
         <ModeToggle />
-        <AvatorDropDown />
-        <LogoutDialog />
-        {/* <Login /> */}
+        {user ? (
+          <>
+            <AvatorDropDown />
+            <LogoutDialog />
+          </>
+        ) : (
+          <>
+            <Login />{" "}
+          </>
+        )}
       </nav>
     </div>
   );
