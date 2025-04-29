@@ -22,7 +22,7 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
       authorization: {
         params: {
-          prompt: "login",
+          prompt: "consent",
         },
       },
     }),

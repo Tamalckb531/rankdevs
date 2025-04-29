@@ -51,7 +51,7 @@ export function LogoutDialog() {
 
               await signOut({
                 callbackUrl: "http://localhost:3000",
-                redirect: false,
+                redirect: true,
               });
             }}
           >

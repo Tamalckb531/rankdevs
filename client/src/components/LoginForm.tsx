@@ -30,6 +30,8 @@ export function LoginForm({
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
 
+  if (user) router.push("/info");
+
   useEffect(() => {
     if (status === "authenticated" && session?.user && !user) {
       const sendToBackend = async () => {
@@ -49,19 +51,22 @@ export function LoginForm({
             setLoading(false);
           }
 
-          const data: User = await res.json();
+          const data = await res.json();
+          console.log("Data : ", data);
+
           const newUser: User = {
-            id: data.id,
-            apiKey: data.apiKey,
-            githubUserName: data.githubUserName,
-            email: data.email,
-            twitterUsername: data.twitterUsername,
-            linkedIn: data.linkedIn,
-            peerlistLink: data.peerlistLink,
-            leetcodeLink: data.leetcodeLink,
-            codeforcesLink: data.codeforcesLink,
+            id: data.user.id,
+            apiKey: data.user.apiKey,
+            githubUserName: data.user.githubUserName,
+            email: data.user.email,
+            twitterUsername: data.user.twitterUsername,
+            linkedIn: data.user.linkedIn,
+            peerlistLink: data.user.peerlistLink,
+            leetcodeLink: data.user.leetcodeLink,
+            codeforcesLink: data.user.codeforcesLink,
           };
           setUser(newUser);
+
           router.push("/info");
         } catch (err) {
           setError("Error occurred during server login : " + err);
@@ -79,7 +84,10 @@ export function LoginForm({
     setError(null);
 
     try {
-      const response = await signIn("github", { redirect: false });
+      const response = await signIn("github", {
+        redirect: false,
+        prompt: "consent",
+      });
 
       if (response?.error) setError("Github login failed. Please try again");
     } catch (error) {
@@ -104,7 +112,7 @@ export function LoginForm({
                 variant="default"
                 className="w-full"
                 onClick={handleLogin}
-                disabled={loading}
+                disabled={loading || !!user}
               >
                 {loading ? (
                   <div className=" flex items-center justify-center gap-2">
