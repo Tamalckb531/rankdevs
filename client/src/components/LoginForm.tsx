@@ -28,7 +28,6 @@ export function LoginForm({
       const sendToBackend = async () => {
         try {
           const githubUserName = session.user.githubUsername;
-          console.log(backendUrl);
 
           const res = await fetch(`${backendUrl}/api/auth/github`, {
             method: "POST",

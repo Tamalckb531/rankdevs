@@ -6,6 +6,7 @@ import { Trophy } from "lucide-react";
 import { AvatorDropDown } from "./header/AvatorDropDown";
 import { useRouter } from "next/navigation";
 import Login from "./LoginButton";
+import { LogoutDialog } from "./header/LogoutDialog";
 
 const Header = () => {
   const router = useRouter();
@@ -24,6 +25,7 @@ const Header = () => {
         </div>
         <ModeToggle />
         <AvatorDropDown />
+        <LogoutDialog />
         {/* <Login /> */}
       </nav>
     </div>

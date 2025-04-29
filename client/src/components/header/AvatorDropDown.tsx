@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
-
 export function AvatorDropDown() {
   const router = useRouter();
   return (
@@ -22,7 +21,6 @@ export function AvatorDropDown() {
         <DropdownMenuItem onClick={() => router.push("/dashboard")}>
           Dashboard
         </DropdownMenuItem>
-        <DropdownMenuItem>Logout</DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push("/info")}>
           change info
         </DropdownMenuItem>
