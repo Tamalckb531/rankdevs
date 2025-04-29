@@ -11,6 +11,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "../ui/button";
 import { LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
+
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export function LogoutDialog() {
   return (
     <AlertDialog>
@@ -28,7 +32,29 @@ export function LogoutDialog() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction
+            onClick={async () => {
+              console.log("Working");
+
+              const res = await fetch(`${backendUrl}/api/auth/signout`, {
+                method: "POST",
+                credentials: "include",
+              });
+
+              const data = await res.json();
+
+              console.log("Response of log out : ", data);
+
+              await signOut({
+                callbackUrl: "http://localhost:3000",
+                redirect: false,
+              });
+
+              console.log("This also worked");
+            }}
+          >
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
