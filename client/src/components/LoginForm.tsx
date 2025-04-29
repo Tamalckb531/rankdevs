@@ -30,8 +30,6 @@ export function LoginForm({
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
 
-  if (user) router.push("/info");
-
   useEffect(() => {
     if (status === "authenticated" && session?.user && !user) {
       const sendToBackend = async () => {
@@ -57,6 +55,7 @@ export function LoginForm({
           const newUser: User = {
             id: data.user.id,
             apiKey: data.user.apiKey,
+            portfolio: data.user.portfolio,
             githubUserName: data.user.githubUserName,
             email: data.user.email,
             twitterUsername: data.user.twitterUsername,

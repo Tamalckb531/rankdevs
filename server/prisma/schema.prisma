@@ -18,6 +18,7 @@ model User {
   githubUserName  String  @unique
   apiKey          String  @unique
   email           String?
+  portfolio       String?
   twitterUsername String?
   linkedIn        String?
   peerlistLink    String?

@@ -2,6 +2,7 @@ export interface User {
   id: string;
   githubUserName: string;
   apiKey: string;
+  portfolio: string | null;
   email: string | null;
   twitterUsername: string | null;
   peerlistLink: string | null;
