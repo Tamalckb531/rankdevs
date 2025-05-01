@@ -1,17 +1,18 @@
 import { User } from "@/lib/type";
 import useUserStore from "@/store/useUserStore";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 type InfoPayload = {
-  portfolio?: string;
-  email?: string;
-  twitterUsername?: string;
-  peerlistLink?: string;
-  leetcodeLink?: string;
-  codeforcesLink?: string;
-  linkedIn?: string;
+  twitterUsername?: string | null;
+  peerlistLink?: string | null;
+  leetcodeLink?: string | null;
+  codeforcesLink?: string | null;
+  portfolio?: string | null;
+  email?: string | null;
+  linkedIn?: string | null;
 };
 
 const useInfo = () => {
@@ -47,6 +48,12 @@ const useInfo = () => {
       };
 
       setUser(newUser);
+      toast("Information updated", {
+        action: {
+          label: "Undo",
+          onClick: () => console.log("Undo"),
+        },
+      });
       return newUser;
     },
   });

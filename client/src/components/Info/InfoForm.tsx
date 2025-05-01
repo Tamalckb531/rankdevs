@@ -17,13 +17,15 @@ import { Input } from "@/components/ui/input";
 import { Copy } from "lucide-react";
 import useUserStore from "@/store/useUserStore";
 import useInfo from "@/hooks/useInfo";
+import Spinner from "../Spinner";
+import { useEffect } from "react";
 
 const FormSchema = z.object({
   apiKey: z.string().min(8),
-  twitter: z.string().optional(),
-  peerlist: z.string().optional(),
-  leetcode: z.string().optional(),
-  codeforce: z.string().optional(),
+  twitterUsername: z.string().optional(),
+  peerlistLink: z.string().optional(),
+  leetcodeLink: z.string().optional(),
+  codeforcesLink: z.string().optional(),
   portfolio: z.string().optional(),
   email: z.string().email().optional(),
   linkedIn: z.string().optional(),
@@ -36,21 +38,48 @@ export function InfoForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      twitter: user?.twitterUsername || "",
-      peerlist: user?.peerlistLink || "",
-      leetcode: user?.leetcodeLink || "",
-      codeforce: user?.codeforcesLink || "",
-      portfolio: user?.portfolio || "",
-      email: user?.email || "",
-      linkedIn: user?.linkedIn || "",
-    },
-    values: {
-      apiKey: user?.apiKey || "",
+      apiKey: "",
+      twitterUsername: "",
+      peerlistLink: "",
+      leetcodeLink: "",
+      codeforcesLink: "",
+      portfolio: "",
+      email: "",
+      linkedIn: "",
     },
   });
 
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        apiKey: user.apiKey || "",
+        twitterUsername: user.twitterUsername || "",
+        peerlistLink: user.peerlistLink || "",
+        leetcodeLink: user.leetcodeLink || "",
+        codeforcesLink: user.codeforcesLink || "",
+        portfolio: user.portfolio || "",
+        email: user.email || "",
+        linkedIn: user.linkedIn || "",
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!isError && !isPending) {
+    }
+  }, [isPending, isError]);
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    mutate(data);
+    const { apiKey, ...rest } = data;
+
+    // Convert empty strings to null
+    const sanitizedData = Object.fromEntries(
+      Object.entries(rest).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
+    mutate(sanitizedData);
   }
 
   return (
@@ -80,7 +109,7 @@ export function InfoForm() {
         />
         <FormField
           control={form.control}
-          name="twitter"
+          name="twitterUsername"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Twitter : </FormLabel>
@@ -94,7 +123,7 @@ export function InfoForm() {
         />
         <FormField
           control={form.control}
-          name="peerlist"
+          name="peerlistLink"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Peerlist : </FormLabel>
@@ -108,7 +137,7 @@ export function InfoForm() {
         />
         <FormField
           control={form.control}
-          name="leetcode"
+          name="leetcodeLink"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Leetcode : </FormLabel>
@@ -122,7 +151,7 @@ export function InfoForm() {
         />
         <FormField
           control={form.control}
-          name="codeforce"
+          name="codeforcesLink"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Code-Force </FormLabel>
@@ -166,7 +195,7 @@ export function InfoForm() {
         />
         <FormField
           control={form.control}
-          name="portfolio"
+          name="linkedIn"
           render={({ field }) => (
             <FormItem>
               <FormLabel>LinkedIn : </FormLabel>
@@ -181,8 +210,14 @@ export function InfoForm() {
         {isError && (
           <div className=" block p-2 text-red-400 my-3">{error.message}</div>
         )}
-        <Button type="submit" disabled={isPending}>
-          Submit
+        <Button type="submit" disabled={isPending || !user}>
+          {isPending ? (
+            <div className=" flex items-center justify-center gap-2">
+              <Spinner /> <span>Please Wait....</span>
+            </div>
+          ) : (
+            <>Submit</>
+          )}
         </Button>
       </form>
     </Form>
