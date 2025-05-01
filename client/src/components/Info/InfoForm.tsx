@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Copy } from "lucide-react";
 import useUserStore from "@/store/useUserStore";
+import useInfo from "@/hooks/useInfo";
 
 const FormSchema = z.object({
   apiKey: z.string().min(8),
@@ -30,7 +31,7 @@ const FormSchema = z.object({
 
 export function InfoForm() {
   const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
+  const { mutate, isPending, isError, error } = useInfo();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -48,7 +49,9 @@ export function InfoForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {}
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    mutate(data);
+  }
 
   return (
     <Form {...form}>
@@ -175,7 +178,12 @@ export function InfoForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        {isError && (
+          <div className=" block p-2 text-red-400 my-3">{error.message}</div>
+        )}
+        <Button type="submit" disabled={isPending}>
+          Submit
+        </Button>
       </form>
     </Form>
   );
