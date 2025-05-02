@@ -19,6 +19,7 @@ import useUserStore from "@/store/useUserStore";
 import useInfo from "@/hooks/useInfo";
 import Spinner from "../Spinner";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 const FormSchema = z.object({
   apiKey: z.string().min(8),
@@ -98,11 +99,20 @@ export function InfoForm() {
               <FormControl>
                 <div className=" flex items-center justify-center w-full gap-2">
                   <Input readOnly {...field} />
-                  <div className=" cursor-pointer">
+                  <div
+                    className=" cursor-pointer"
+                    onClick={() => {
+                      navigator.clipboard.writeText(field.value);
+                      toast("apiKey copied to the clipboard");
+                    }}
+                  >
                     <Copy />
                   </div>
                 </div>
               </FormControl>
+              <FormDescription>
+                Copy this apiKey and paste it in your code editor
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
