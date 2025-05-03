@@ -1,19 +1,9 @@
-import { User } from "@/lib/type";
+import { InfoPayload, User } from "@/lib/type";
 import useUserStore from "@/store/useUserStore";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-
-type InfoPayload = {
-  twitterUsername?: string | null;
-  peerlistLink?: string | null;
-  leetcodeLink?: string | null;
-  codeforcesLink?: string | null;
-  portfolio?: string | null;
-  email?: string | null;
-  linkedIn?: string | null;
-};
 
 const useInfo = () => {
   const setUser = useUserStore((state) => state.setUser);
