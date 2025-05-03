@@ -10,6 +10,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { LanguageWrapper } from "./LanguageWrapper";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import TableRowSkeleton from "../Skeletons/TableRowSkeleton";
 
 export function DataTable() {
   const invoices = [
@@ -76,28 +77,32 @@ export function DataTable() {
           </TableHeader>
           <TableBody>
             {invoices.map((invoice) => (
-              <TableRow
-                key={invoice.invoice}
-                className=" border-none py-4 mb-4"
-              >
-                <TableCell className="font-medium text-lg text-slate-400">
-                  #1
-                </TableCell>
-                <TableCell>
-                  <UserInfo />
-                </TableCell>
-                <TableCell className="text-[16px] dark:text-slate-300 font-bold ">
-                  10 Hr 29 Min
-                </TableCell>
-                <TableCell>
-                  <LanguageWrapper />
-                </TableCell>
-              </TableRow>
+              // <TableRow
+              //   key={invoice.invoice}
+              //   className=" border-none py-4 mb-4"
+              // >
+              //   <TableCell className="font-medium text-lg text-slate-400">
+              //     #1
+              //   </TableCell>
+              //   <TableCell>
+              //     <UserInfo />
+              //   </TableCell>
+              //   <TableCell className="text-[16px] dark:text-slate-300 font-bold ">
+              //     10 Hr 29 Min
+              //   </TableCell>
+              //   <TableCell>
+              //     <LanguageWrapper />
+              //   </TableCell>
+              // </TableRow>
+              <TableRowSkeleton key={invoice.invoice} />
             ))}
           </TableBody>
         </Table> */}
-        <div className=" p-5 md:text-xl text-lg text-center">
+        {/* <div className=" p-5 md:text-xl text-lg text-center">
           No Data to show right now :)
+        </div> */}
+        <div className=" p-5 md:text-xl text-lg text-center text-red-400">
+          Error encountered during fetching the data
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
