@@ -10,3 +10,5 @@ export interface User {
   codeforcesLink: string | null;
   linkedIn: string | null;
 }
+
+export type TabType = "daily" | "weekly" | "monthly";
