@@ -11,6 +11,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { LanguageWrapper } from "./LanguageWrapper";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import TableRowSkeleton from "../Skeletons/TableRowSkeleton";
+import useLeaderboard from "@/hooks/useLeaderboard";
+import useLSSTore from "@/store/useLeaderboardStatsStore";
 
 export function DataTable() {
   const invoices = [
@@ -58,10 +60,13 @@ export function DataTable() {
     },
   ];
 
+  const { isPending, isError, error } = useLeaderboard();
+  const ls = useLSSTore((state) => state.ls);
+
   return (
     <div className="w-full rounded-md border shadow-md dark:shadow-amber-50">
       <ScrollArea className=" w-full rounded-md">
-        {/* <Table className="border-separate border-spacing-y-2 w-full px-2">
+        <Table className="border-separate border-spacing-y-2 w-full px-2">
           <TableHeader>
             <TableRow className=" font-bold text-lg border-b border-slate-400">
               <TableHead className="w-[100px] min-w-[100px]">#Rank</TableHead>
@@ -76,34 +81,39 @@ export function DataTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.map((invoice) => (
-              // <TableRow
-              //   key={invoice.invoice}
-              //   className=" border-none py-4 mb-4"
-              // >
-              //   <TableCell className="font-medium text-lg text-slate-400">
-              //     #1
-              //   </TableCell>
-              //   <TableCell>
-              //     <UserInfo />
-              //   </TableCell>
-              //   <TableCell className="text-[16px] dark:text-slate-300 font-bold ">
-              //     10 Hr 29 Min
-              //   </TableCell>
-              //   <TableCell>
-              //     <LanguageWrapper />
-              //   </TableCell>
-              // </TableRow>
-              <TableRowSkeleton key={invoice.invoice} />
-            ))}
+            {ls.length > 0 &&
+              ls.map((data, Index) => (
+                <TableRow key={data.id} className=" border-none py-4 mb-4">
+                  <TableCell className="font-medium text-lg text-slate-400">
+                    {Index}
+                  </TableCell>
+                  <TableCell>
+                    <UserInfo />
+                  </TableCell>
+                  <TableCell className="text-[16px] dark:text-slate-300 font-bold ">
+                    {data.Stats.total}
+                  </TableCell>
+                  <TableCell>
+                    <LanguageWrapper />
+                  </TableCell>
+                </TableRow>
+              ))}
+            {isPending &&
+              Array.from({ length: 10 }).map((_, i) => (
+                <TableRowSkeleton key={i} />
+              ))}
           </TableBody>
-        </Table> */}
-        {/* <div className=" p-5 md:text-xl text-lg text-center">
-          No Data to show right now :)
-        </div> */}
-        <div className=" p-5 md:text-xl text-lg text-center text-red-400">
-          Error encountered during fetching the data
-        </div>
+        </Table>
+        {!isPending && !isError && ls.length == 0 && (
+          <div className=" p-5 md:text-xl text-lg text-center">
+            No Data to show right now :)
+          </div>
+        )}
+        {isError && !isPending && (
+          <div className=" p-5 md:text-xl text-lg text-center text-red-400">
+            Error encountered during fetching the data
+          </div>
+        )}
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>
