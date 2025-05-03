@@ -84,6 +84,8 @@ export function DataTable() {
           </TableHeader>
           <TableBody>
             {ls.length > 0 &&
+              !isError &&
+              !isPending &&
               ls.map((data, Index) => (
                 <TableRow key={data.id} className=" border-none py-4 mb-4">
                   <TableCell className="font-medium text-lg text-slate-400">
@@ -116,7 +118,7 @@ export function DataTable() {
         )}
         {isError && !isPending && (
           <div className=" p-5 md:text-xl text-lg text-center text-red-400">
-            {error.message}
+            Some Issue in the server : {error.message}
           </div>
         )}
         <ScrollBar orientation="horizontal" />
