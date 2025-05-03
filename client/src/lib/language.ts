@@ -118,3 +118,14 @@ export const getLanguageType = (language: string) => {
       return language;
   }
 };
+
+export const msToHM = (ms: number): string => {
+  const totalMinutes = Math.ceil(ms / (1000 * 60));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (totalMinutes <= 1) return "1M";
+  if (hours === 0) return `${totalMinutes}M`;
+  if (minutes === 0) return `${hours}H`;
+  return `${hours}H ${minutes}M`;
+};

@@ -13,5 +13,5 @@ const useLSSTore = create<LeaderboardStatsState>((set) => ({
 
 export default useLSSTore;
 
-//? const ls = useTabStore((state) => state.ls);
-//? const setLs = useTabStore((state) => state.setLs);
+//? const ls = useLSSTore((state) => state.ls);
+//? const setLs = useLSSTore((state) => state.setLs);

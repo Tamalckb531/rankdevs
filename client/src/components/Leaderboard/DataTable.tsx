@@ -13,6 +13,8 @@ import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import TableRowSkeleton from "../Skeletons/TableRowSkeleton";
 import useLeaderboard from "@/hooks/useLeaderboard";
 import useLSSTore from "@/store/useLeaderboardStatsStore";
+import { msToHM } from "@/lib/language";
+import { userInfo } from "@/lib/type";
 
 export function DataTable() {
   const invoices = [
@@ -85,16 +87,19 @@ export function DataTable() {
               ls.map((data, Index) => (
                 <TableRow key={data.id} className=" border-none py-4 mb-4">
                   <TableCell className="font-medium text-lg text-slate-400">
-                    {Index}
+                    {Index + 1}
                   </TableCell>
                   <TableCell>
-                    <UserInfo />
+                    <UserInfo
+                      githubUserName={data.githubUserName}
+                      twitterUsername={data.twitterUsername}
+                    />
                   </TableCell>
                   <TableCell className="text-[16px] dark:text-slate-300 font-bold ">
-                    {data.Stats.total}
+                    {msToHM(data.Stats.total)}
                   </TableCell>
                   <TableCell>
-                    <LanguageWrapper />
+                    <LanguageWrapper stats={data.Stats} />
                   </TableCell>
                 </TableRow>
               ))}
@@ -111,7 +116,7 @@ export function DataTable() {
         )}
         {isError && !isPending && (
           <div className=" p-5 md:text-xl text-lg text-center text-red-400">
-            Error encountered during fetching the data
+            {error.message}
           </div>
         )}
         <ScrollBar orientation="horizontal" />
@@ -119,15 +124,19 @@ export function DataTable() {
     </div>
   );
 }
-const UserInfo = () => {
+const UserInfo = ({ githubUserName, twitterUsername }: userInfo) => {
   return (
-    <div className=" flex items-center justify-between">
+    <div className=" flex items-start justify-start gap-2">
       <RankCardImg />
       <div className="flex flex-col">
-        <p className=" text-[15px] font-bold cursor-pointer">TamalCkb531</p>
-        <p className="text-center text-xs text-slate-400 cursor-pointer">
-          @TamalCDip
+        <p className=" text-[15px] font-bold cursor-pointer">
+          {githubUserName}
         </p>
+        {twitterUsername && (
+          <p className=" text-xs text-slate-400 cursor-pointer">
+            {twitterUsername}
+          </p>
+        )}
       </div>
     </div>
   );

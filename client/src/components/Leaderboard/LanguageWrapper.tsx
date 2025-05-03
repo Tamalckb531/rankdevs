@@ -3,30 +3,23 @@ import {
   getLanguageType,
   languages,
 } from "@/lib/language";
+import { Stats } from "@/lib/type";
 import React from "react";
+import { msToHM } from "@/lib/language";
 
 interface lang {
   language: string;
   time: string;
 }
 
-export const LanguageWrapper = () => {
+export const LanguageWrapper = ({ stats }: { stats: Stats }) => {
   return (
     <div className=" flex items-center justify-start gap-2">
-      <LanguageCard language="typescript" time="1H" />
-      <LanguageCard language="javascript" time="1H" />
-      <LanguageCard language="typescriptreact" time="29M" />
-      <LanguageCard language="css" time="2H 31M " />
-      <LanguageCard language="prisma" time="35M" />
-      <LanguageCard language="dockerfile" time="1H 2M" />
-      <LanguageCard language="rust" time="59M" />
-      <LanguageCard language="git-commit" time="23M" />
-      <LanguageCard language="fortran-modern" time="23M" />
-      <LanguageCard language="env" time="1M" />
-      <LanguageCard language="tailwindcss" time="45M" />
-      <LanguageCard language="jsonc" time="25M" />
-      <LanguageCard language="lua" time="25M" />
-      <LanguageCard language="terraform" time="25M" />
+      {Object.entries(stats)
+        .filter(([key]) => key !== "total")
+        .map(([language, ms]) => (
+          <LanguageCard key={language} language={language} time={msToHM(ms)} />
+        ))}
     </div>
   );
 };

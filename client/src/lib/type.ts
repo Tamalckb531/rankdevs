@@ -27,3 +27,8 @@ export type statPayload = {
   twitterUsername: string | null;
   Stats: Stats;
 };
+
+export type userInfo = {
+  githubUserName: string;
+  twitterUsername?: string | null;
+};
