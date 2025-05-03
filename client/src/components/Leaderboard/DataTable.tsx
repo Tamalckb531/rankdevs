@@ -60,7 +60,7 @@ export function DataTable() {
   return (
     <div className="w-full rounded-md border shadow-md dark:shadow-amber-50">
       <ScrollArea className=" w-full rounded-md">
-        <Table className="border-separate border-spacing-y-2 w-full px-2">
+        {/* <Table className="border-separate border-spacing-y-2 w-full px-2">
           <TableHeader>
             <TableRow className=" font-bold text-lg border-b border-slate-400">
               <TableHead className="w-[100px] min-w-[100px]">#Rank</TableHead>
@@ -95,7 +95,10 @@ export function DataTable() {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </Table> */}
+        <div className=" p-5 md:text-xl text-lg text-center">
+          No Data to show right now :)
+        </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>

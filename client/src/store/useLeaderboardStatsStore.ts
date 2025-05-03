@@ -2,12 +2,12 @@ import { statPayload } from "@/lib/type";
 import { create } from "zustand";
 
 type LeaderboardStatsState = {
-  ls: statPayload[] | null;
-  setLs: (ls: statPayload[] | null) => void;
+  ls: statPayload[];
+  setLs: (ls: statPayload[]) => void;
 };
 
 const useLSSTore = create<LeaderboardStatsState>((set) => ({
-  ls: null,
+  ls: [],
   setLs: (ls) => set({ ls }),
 }));
 
