@@ -12,3 +12,15 @@ export interface User {
 }
 
 export type TabType = "daily" | "weekly" | "monthly";
+
+export type Stats = {
+  total: number;
+  [key: string]: number;
+};
+
+export type statPayload = {
+  id: string;
+  githubUserName: string;
+  twitterUsername: string | null;
+  Stats: Stats;
+};
