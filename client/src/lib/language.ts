@@ -1,3 +1,5 @@
+import { Stats } from "./type";
+
 type LanguageColor = {
   color: string;
 };
@@ -128,4 +130,8 @@ export const msToHM = (ms: number): string => {
   if (hours === 0) return `${totalMinutes}M`;
   if (minutes === 0) return `${hours}H`;
   return `${hours}H ${minutes}M`;
+};
+
+export const countLanguages = (stats: Stats): number => {
+  return Object.keys(stats).filter((key) => key !== "total").length;
 };

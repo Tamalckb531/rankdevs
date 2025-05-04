@@ -2,6 +2,9 @@ import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import useLSSTore from "@/store/useLeaderboardStatsStore";
+import RankCardSkeleton from "../Skeletons/RankCardSkeleton";
+import { countLanguages, msToHM } from "@/lib/language";
 
 interface Props {
   rank: number;
@@ -21,23 +24,33 @@ const RankCard = ({ rank }: Props) => {
     img = "/bronze.svg";
   }
 
+  const ls = useLSSTore((state) => state.ls);
+
+  if (!ls[rank - 1]) return <RankCardSkeleton />;
+
   return (
     <Card className="bg-transparent border-none flex flex-col items-start w-[250px] shadow-none p-0 relative overflow-hidden">
       <CardHeader>
         <div className="flex items-center justify-between gap-3">
           <RankCardImg />
           <div className="flex flex-col">
-            <p className="text-lg font-bold cursor-pointer">TamalCkb531</p>
+            <p className="text-lg font-bold cursor-pointer">
+              {ls[rank - 1].githubUserName}
+            </p>
             <p className="text-center text-sm text-slate-400 cursor-pointer">
-              @TamalCDip
+              {ls[rank - 1].twitterUsername}
             </p>
           </div>
           <RankSvg img={img} />
         </div>
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-between w-full -mt-5">
-        <h1 className={`${color} text-xl font-bold`}>10 Hour 29 Minute</h1>
-        <h2 className="text-sm text-slate-400">9+ Language</h2>
+        <h1 className={`${color} text-xl font-bold`}>
+          {msToHM(ls[rank - 1].Stats.total)}
+        </h1>
+        <h2 className="text-sm text-slate-400">
+          {countLanguages(ls[rank - 1].Stats)} Languages
+        </h2>
       </CardContent>
     </Card>
   );
