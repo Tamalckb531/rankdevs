@@ -4,9 +4,10 @@ import RankPodium from "./RankPodium";
 
 interface Props {
   rank: string;
+  isPending: boolean;
 }
 
-const TopRanks = ({ rank }: Props) => {
+const TopRanks = ({ rank, isPending }: Props) => {
   return (
     <div
       className={` ${

@@ -14,10 +14,9 @@ import TableRowSkeleton from "../Skeletons/TableRowSkeleton";
 import useLeaderboard from "@/hooks/useLeaderboard";
 import useLSSTore from "@/store/useLeaderboardStatsStore";
 import { msToHM } from "@/lib/language";
-import { userInfo } from "@/lib/type";
+import { Status, userInfo } from "@/lib/type";
 
-export function DataTable() {
-  const { isPending, isError, error } = useLeaderboard();
+export function DataTable({ isPending, isError, error }: Status) {
   const ls = useLSSTore((state) => state.ls);
 
   return (
@@ -73,7 +72,7 @@ export function DataTable() {
         )}
         {isError && !isPending && (
           <div className=" p-5 md:text-xl text-lg text-center text-red-400">
-            Some Issue in the server : {error.message}
+            Some Issue in the server : {error?.message}
           </div>
         )}
         <ScrollBar orientation="horizontal" />

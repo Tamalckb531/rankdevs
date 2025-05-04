@@ -32,3 +32,9 @@ export type userInfo = {
   githubUserName: string;
   twitterUsername?: string | null;
 };
+
+export type Status = {
+  isPending: boolean;
+  isError: boolean;
+  error: Error | null;
+}
