@@ -29,9 +29,9 @@ const RankCard = ({ rank }: Props) => {
   if (!ls[rank - 1]) return <RankCardSkeleton />;
 
   return (
-    <Card className="bg-transparent border-none flex flex-col items-start w-[250px] shadow-none p-0 relative overflow-hidden">
-      <CardHeader>
-        <div className="flex items-center justify-between gap-3">
+    <Card className="bg-transparent border-none flex flex-col items-start w-[250px] shadow-none py-2 relative overflow-hidden">
+      <CardHeader className=" w-full">
+        <div className="flex items-center justify-around gap-3">
           <RankCardImg />
           <div className="flex flex-col">
             <p className="text-lg font-bold cursor-pointer">
@@ -58,7 +58,7 @@ const RankCard = ({ rank }: Props) => {
 
 const RankCardImg = () => {
   return (
-    <div className="w-[45px] h-[45px]">
+    <div className="w-[45px] h-[45px] mt-2">
       <AspectRatio ratio={3 / 4}>
         <Image
           src="/ghibili.jpg"
