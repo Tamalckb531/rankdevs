@@ -4,16 +4,16 @@ import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface Props {
-  rank: string;
+  rank: number;
 }
 
 const RankCard = ({ rank }: Props) => {
   let color, img;
 
-  if (rank === "1") {
+  if (rank === 1) {
     color = "text-amber-400";
     img = "/golden.svg";
-  } else if (rank === "2") {
+  } else if (rank === 2) {
     color = "text-sky-400";
     img = "/silver.svg";
   } else {

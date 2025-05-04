@@ -1,10 +1,14 @@
 import React from "react";
 
-const RankPodium = ({ position }: any) => {
-  const heights: any = {
-    "1": "h-[210px]",
-    "2": "h-[190px]",
-    "3": "h-[170px]",
+interface ps {
+  position: number;
+}
+
+const RankPodium = ({ position }: ps) => {
+  const heights: Record<number, string> = {
+    1: "h-[210px]",
+    2: "h-[190px]",
+    3: "h-[170px]",
   };
 
   return (
@@ -48,9 +52,9 @@ const RankPodium = ({ position }: any) => {
           {/* Center Text */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-6xl font-bold bg-gradient-to-r from-zinc-500 to-slate-200 dark:from-zinc-800 dark:to-slate-300 bg-clip-text text-transparent">
-              {position === "1" && "1st"}
-              {position === "2" && "2nd"}
-              {position === "3" && "3rd"}
+              {position === 1 && "1st"}
+              {position === 2 && "2nd"}
+              {position === 3 && "3rd"}
             </div>
           </div>
         </div>
