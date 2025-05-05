@@ -142,12 +142,15 @@ export const getDashboard = async (c: Context) => {
     if (!user) throw new HTTPException(404, { message: "User not found" });
 
     //? other info's :
-    const { lastTime, ...currentStats } = inMemoryStats[userId].todaysStats;
+    const { lastTime, ...currentStats } = inMemoryStats[userId]
+      ?.todaysStats || {
+      total: 0,
+    };
     const currDate = new Date(lastTime);
 
-    const dailyTotal = inMemoryStats[userId].dailyStats.total;
-    const weeklyTotal = inMemoryStats[userId].weeklyStats.total;
-    const monthlyTotal = inMemoryStats[userId].monthlyStats.total;
+    const dailyTotal = inMemoryStats[userId]?.dailyStats.total || 0;
+    const weeklyTotal = inMemoryStats[userId]?.weeklyStats.total || 0;
+    const monthlyTotal = inMemoryStats[userId]?.monthlyStats.total || 0;
 
     const dailyRank = leaderboards.daily.findIndex(
       (entry) => entry.userId === userId
