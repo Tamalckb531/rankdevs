@@ -187,8 +187,11 @@ export const getDashboard = async (c: Context) => {
 
     //? Add current data in total :
     const newTotalStats = user.totalStats as TotalStats;
+
     const yearName = currDate.getFullYear(); // 1971
-    newTotalStats[yearName] = sumStats(newTotalStats[yearName], currentStats);
+    newTotalStats[yearName] = newTotalStats[yearName]
+      ? sumStats(newTotalStats[yearName], currentStats)
+      : currentStats;
     newTotalStats.sum = sumStats(newTotalStats.sum, currentStats);
 
     const data: DashBoardPayload = {

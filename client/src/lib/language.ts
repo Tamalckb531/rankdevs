@@ -25,6 +25,7 @@ export const languages: Record<string, LanguageColor> = {
   "fortran-modern": { color: "#4d41b1" },
   "git-commit": { color: "#F44D27" },
   "git-rebase": { color: "#F44D27" },
+  git: { color: "#F44D27" },
   go: { color: "#00ADD8" },
   graphql: { color: "#e10098" },
   groovy: { color: "#4298b8" },
