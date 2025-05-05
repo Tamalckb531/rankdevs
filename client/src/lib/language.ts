@@ -48,6 +48,7 @@ export const languages: Record<string, LanguageColor> = {
   lua: { color: "#000080" },
   makefile: { color: "#427819" },
   markdown: { color: "#083fa1" },
+  mdx: { color: "#F8B32C" },
   sql: { color: "#e38c00" },
   "objective-c": { color: "#438eff" },
   "objective-cpp": { color: "#6866fb" },
