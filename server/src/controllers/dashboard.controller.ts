@@ -2,7 +2,16 @@ import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClient } from "@prisma/client";
 import type { User } from "@prisma/client";
-import type { allStats, InfoPayload, Stats } from "../utils/types.js";
+import type {
+  allStats,
+  DashBoardPayload,
+  InfoPayload,
+  MonthlyStats,
+  Stats,
+  TotalStats,
+  WeeklyStats,
+  YearlyStats,
+} from "../utils/types.js";
 import {
   initializeMonthlyStats,
   initializeStats,
@@ -11,6 +20,7 @@ import {
   isNewWeek,
   sumStats,
 } from "../utils/dashboardTime.js";
+import { inMemoryStats, leaderboards } from "../utils/inMemoryStats.js";
 
 const prisma = new PrismaClient();
 
@@ -121,7 +131,7 @@ export const saveToDataBase = async (
 };
 
 export const getDashboard = async (c: Context) => {
-  const userId = c.get("user")?.id;
+  const userId = c.req.param("id");
 
   try {
     const user = await prisma.user.findUnique({
@@ -131,7 +141,77 @@ export const getDashboard = async (c: Context) => {
     });
     if (!user) throw new HTTPException(404, { message: "User not found" });
 
-    return c.json(user);
+    //? other info's :
+    const { lastTime, ...currentStats } = inMemoryStats[userId].todaysStats;
+    const currDate = new Date(lastTime);
+
+    const dailyTotal = inMemoryStats[userId].dailyStats.total;
+    const weeklyTotal = inMemoryStats[userId].weeklyStats.total;
+    const monthlyTotal = inMemoryStats[userId].monthlyStats.total;
+
+    const dailyRank = leaderboards.daily.findIndex(
+      (entry) => entry.userId === userId
+    );
+    const weeklyRank = leaderboards.weekly.findIndex(
+      (entry) => entry.userId === userId
+    );
+    const monthlyRank = leaderboards.monthly.findIndex(
+      (entry) => entry.userId === userId
+    );
+
+    //? Add current data in week :
+    const newWeekStats = user.weeklyStats as WeeklyStats;
+    const dayOfWeek = currDate
+      .toLocaleString("en-US", { weekday: "long" })
+      .toLowerCase(); // thursday
+    newWeekStats[dayOfWeek] = currentStats;
+    newWeekStats.sum = sumStats(newWeekStats.sum, currentStats);
+
+    //? Add current data in month :
+    const newMonthlyStats = user.monthlyStats as MonthlyStats;
+    const dayOfMonth = currDate.getDate(); // 16
+    newMonthlyStats[dayOfMonth] = currentStats;
+    newMonthlyStats.sum = sumStats(newMonthlyStats.sum, currentStats);
+
+    //? Add current data in year :
+    const newYearlyStats = user.yearlyStats as YearlyStats;
+    const monthName = currDate.toLocaleString("en-US", { month: "short" }); // Dec
+    newYearlyStats[monthName] = sumStats(
+      newYearlyStats[monthName],
+      currentStats
+    );
+    newYearlyStats.sum = sumStats(newYearlyStats.sum, currentStats);
+
+    //? Add current data in total :
+    const newTotalStats = user.totalStats as TotalStats;
+    const yearName = currDate.getFullYear(); // 1971
+    newTotalStats[yearName] = sumStats(newTotalStats[yearName], currentStats);
+    newTotalStats.sum = sumStats(newTotalStats.sum, currentStats);
+
+    const data: DashBoardPayload = {
+      id: user.id,
+      githubUserName: user.githubUserName,
+      email: user.email,
+      portfolio: user.portfolio,
+      twitterUsername: user.twitterUsername,
+      linkedIn: user.linkedIn,
+      peerlistLink: user.peerlistLink,
+      leetcodeLink: user.leetcodeLink,
+      codeforcesLink: user.codeforcesLink,
+      dailyTotal,
+      dailyRank,
+      weeklyTotal,
+      weeklyRank,
+      monthlyTotal,
+      monthlyRank,
+      weeklyStats: newWeekStats,
+      monthlyStats: newMonthlyStats,
+      yearlyStats: newYearlyStats,
+      totalStats: newTotalStats,
+      joinAt: user.createdAt,
+    };
+
+    return c.json(data);
   } catch (error: any) {
     throw new HTTPException(500, {
       message:

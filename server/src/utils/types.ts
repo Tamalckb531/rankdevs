@@ -95,3 +95,26 @@ export type InfoPayload = {
   codeforcesLink: string | null;
   linkedIn: string | null;
 };
+
+export type DashBoardPayload = {
+  id: string;
+  githubUserName: string;
+  email: string | null;
+  portfolio: string | null;
+  twitterUsername: string | null;
+  linkedIn: string | null;
+  peerlistLink: string | null;
+  leetcodeLink: string | null;
+  codeforcesLink: string | null;
+  dailyTotal: number;
+  weeklyTotal: number;
+  monthlyTotal: number;
+  dailyRank: number;
+  weeklyRank: number;
+  monthlyRank: number;
+  weeklyStats: WeeklyStats;
+  monthlyStats: MonthlyStats;
+  yearlyStats: YearlyStats;
+  totalStats: TotalStats;
+  joinAt: Date;
+};
