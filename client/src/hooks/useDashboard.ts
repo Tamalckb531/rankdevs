@@ -6,7 +6,6 @@ import { useMutation } from "@tanstack/react-query";
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const useDashboard = (userId: string) => {
-  const dashboard = useDashboardStore((state) => state.dashboard);
   const setDashboard = useDashboardStore((state) => state.setDashboard);
 
   const mutation = useMutation({
