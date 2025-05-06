@@ -20,7 +20,7 @@ const useDashboard = (userId: string) => {
       }
 
       const data: DashBoardPayload = await res.json();
-      setDashboard(dashboard);
+      setDashboard(data);
     },
   });
 
