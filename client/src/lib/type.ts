@@ -37,4 +37,68 @@ export type Status = {
   isPending: boolean;
   isError: boolean;
   error: Error | null;
-}
+};
+
+export type WeeklyStats = {
+  sum: {
+    total: number;
+    [key: string]: number;
+  };
+  [day: string]: {
+    total: number;
+    [key: string]: number;
+  };
+};
+export type MonthlyStats = {
+  sum: {
+    total: number;
+    [key: string]: number;
+  };
+  [day: number]: {
+    total: number;
+    [key: string]: number;
+  };
+};
+export type YearlyStats = {
+  sum: {
+    total: number;
+    [key: string]: number;
+  };
+  [month: string]: {
+    total: number;
+    [key: string]: number;
+  };
+};
+export type TotalStats = {
+  sum: {
+    total: number;
+    [key: string]: number;
+  };
+  [year: number]: {
+    total: number;
+    [key: string]: number;
+  };
+};
+
+export type DashBoardPayload = {
+  id: string;
+  githubUserName: string;
+  email: string | null;
+  portfolio: string | null;
+  twitterUsername: string | null;
+  linkedIn: string | null;
+  peerlistLink: string | null;
+  leetcodeLink: string | null;
+  codeforcesLink: string | null;
+  dailyTotal: number;
+  weeklyTotal: number;
+  monthlyTotal: number;
+  dailyRank: number;
+  weeklyRank: number;
+  monthlyRank: number;
+  weeklyStats: WeeklyStats;
+  monthlyStats: MonthlyStats;
+  yearlyStats: YearlyStats;
+  totalStats: TotalStats;
+  joinAt: Date;
+};
