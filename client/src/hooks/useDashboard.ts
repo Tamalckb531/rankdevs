@@ -1,3 +1,4 @@
+"use client";
 import { DashBoardPayload } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import { useMutation } from "@tanstack/react-query";
