@@ -44,7 +44,7 @@ const DashboardGridContainer = () => {
           <TotalStats />
           <CPStats />
           <GithubBox />
-          <GithubHeatMap />
+          <GithubHeatMap github={dashboard?.githubUserName || ""} />
           <WeeklyStats />
           <YearlyStats />
           <MonthlyStats />
