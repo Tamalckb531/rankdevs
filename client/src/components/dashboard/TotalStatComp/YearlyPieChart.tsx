@@ -27,7 +27,7 @@ const chartData = [
     fill: languages["dockercompose"].color,
   },
   {
-    languages: "git",
+    languages: "Git",
     minute: 173,
     fill: languages["git-commit"].color,
   },
@@ -42,30 +42,7 @@ const chartData = [
     fill: languages["typescript"].color,
   },
 ];
-const chartConfig = {
-  Rust: {
-    label: "Rust",
-  },
-
-  Tsx: {
-    label: "Tsx",
-  },
-
-  Docker: {
-    label: "Docker",
-  },
-
-  Git: {
-    label: "Git",
-  },
-
-  Prisma: {
-    label: "Prisma",
-  },
-  Typescript: {
-    label: "Typescript",
-  },
-} satisfies ChartConfig;
+const chartConfig = {} satisfies ChartConfig;
 
 export function YearlyPieChart() {
   return (

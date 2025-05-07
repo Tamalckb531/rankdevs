@@ -125,6 +125,8 @@ export const getLanguageType = (language: string) => {
 };
 
 export const msToHM = (ms: number): string => {
+  if (ms === 0) return "0M";
+
   const totalMinutes = Math.ceil(ms / (1000 * 60));
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
