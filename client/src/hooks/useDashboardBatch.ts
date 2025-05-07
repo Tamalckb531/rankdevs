@@ -1,10 +1,13 @@
 "use client";
 
 import { languages } from "@/lib/language";
-import { DashBoardPayload, Stats, TotalChartData } from "@/lib/type";
+import { Stats, TotalChartData } from "@/lib/type";
+import useDashboardStore from "@/store/useDashboardStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
 
-const useDashboardBatch = (dashboard: DashBoardPayload | null) => {
+const useDashboardBatch = () => {
+  const dashboard = useDashboardStore((state) => state.dashboard);
+
   //? Calculate Total Stats
   const setTotalStats = useTotalStateStore((state) => state.setTotalStats);
   const setLoading = useTotalStateStore((state) => state.setLoading);
@@ -27,7 +30,7 @@ const useDashboardBatch = (dashboard: DashBoardPayload | null) => {
 
       setTotalStats(chartData);
     } catch (err: any) {
-      setError(err.message);
+      setError(true);
       console.error("Total Stats Error:", err);
     } finally {
       setLoading(false);

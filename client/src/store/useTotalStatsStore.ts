@@ -5,7 +5,7 @@ type TotalStateStore = {
   totalStats: TotalStatsPayload;
   setTotalStats: (data: TotalChartData[]) => void;
   setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
+  setError: (error: boolean) => void;
   setMode: (mode: string) => void;
 };
 
@@ -39,8 +39,7 @@ const useTotalStateStore = create<TotalStateStore>((set) => ({
     set((state) => ({
       totalStats: {
         ...state.totalStats,
-        isError: !!error,
-        error,
+        isError: error,
       },
     })),
 

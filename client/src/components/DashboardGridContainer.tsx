@@ -25,7 +25,7 @@ const DashboardGridContainer = () => {
   if (isError)
     return (
       <div className=" w-full h-[80vh] flex items-center justify-center  text-2xl md:text-4xl text-red-400">
-        Invalid UserId or Server is down
+        {error.message}
       </div>
     );
 
