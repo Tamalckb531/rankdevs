@@ -102,3 +102,18 @@ export type DashBoardPayload = {
   totalStats: TotalStats;
   joinAt: Date;
 };
+
+export type TotalChartData = {
+  languages: string;
+  time: number;
+  fill: string;
+};
+
+export type TotalStatsPayload = {
+  mode: string;
+  data: TotalChartData[];
+  total: number;
+  isLoading: boolean;
+  isError: boolean;
+  error: string | null;
+};
