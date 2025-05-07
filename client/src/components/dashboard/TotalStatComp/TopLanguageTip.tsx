@@ -1,6 +1,7 @@
 import { getLanguageType, msToHM } from "@/lib/language";
+import { TotalChartData } from "@/lib/type";
 import useTotalStateStore from "@/store/useTotalStatsStore";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface slide {
   language: string;
@@ -12,11 +13,12 @@ const TopLanguageTip = () => {
   const todaysStats = useTotalStateStore((state) => state.totalStats);
 
   const chartData = todaysStats.data.slice(0, 5);
+
   return (
     <div className=" flex flex-col items-center justify-center gap-1 w-full">
       {chartData.map((data) => (
         <LanguageSlide
-          key={data.time}
+          key={data.languages}
           language={data.languages}
           time={data.time}
           fill={data.fill}

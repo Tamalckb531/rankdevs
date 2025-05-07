@@ -20,6 +20,8 @@ const useDashboardBatch = () => {
 
       if (!data) return;
 
+      setLoading(true);
+
       const chartData: TotalChartData[] = Object.entries(data)
         .filter(([key]) => key !== "total")
         .map(([key, time]) => ({
