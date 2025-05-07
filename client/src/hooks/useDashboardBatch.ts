@@ -26,7 +26,8 @@ const useDashboardBatch = () => {
           languages: key,
           time,
           fill: languages[key]?.color || "#000",
-        }));
+        }))
+        .sort((a, b) => b.time - a.time);
 
       setTotalStats(chartData);
     } catch (err: any) {

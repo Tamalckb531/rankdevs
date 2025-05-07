@@ -9,43 +9,16 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { languages } from "@/lib/language";
+import { getLanguageType, languages } from "@/lib/language";
 import ChartToolTip from "@/components/ChartToolTip";
-const chartData = [
-  {
-    languages: "Typescript",
-    time: 4900000,
-    fill: languages["typescript"].color,
-  },
-  {
-    languages: "Docker",
-    time: 2870000,
-    fill: languages["dockercompose"].color,
-  },
-  {
-    languages: "Rust",
-    time: 2750000,
-    fill: languages["rust"].color,
-  },
-  {
-    languages: "Tsx",
-    time: 2000000,
-    fill: languages["typescriptreact"].color,
-  },
-  {
-    languages: "Prisma",
-    time: 1900000,
-    fill: languages["prisma"].color,
-  },
-  {
-    languages: "Git",
-    time: 1730000,
-    fill: languages["git-commit"].color,
-  },
-];
+import useTotalStateStore from "@/store/useTotalStatsStore";
+
 const chartConfig = {} satisfies ChartConfig;
 
 export function YearlyPieChart() {
+  const todaysStats = useTotalStateStore((state) => state.totalStats);
+
+  const chartData = todaysStats.data;
   return (
     <ChartContainer
       config={chartConfig}
@@ -62,7 +35,7 @@ export function YearlyPieChart() {
                 return (
                   <ChartToolTip
                     fill={entry.payload.fill}
-                    language={entry.payload.languages}
+                    language={getLanguageType(entry.payload.languages)}
                     time={ms}
                   />
                 );
