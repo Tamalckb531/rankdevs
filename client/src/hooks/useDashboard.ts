@@ -34,7 +34,7 @@ const useDashboard = (userId: string) => {
 
     onSuccess: async () => {
       const queue = [
-        () => CalculateTotal(),
+        () => CalculateTotal("sum"),
         () => CalculateWeekly(),
         () => CalculateYearly(),
         () => CalculateMonthly(),

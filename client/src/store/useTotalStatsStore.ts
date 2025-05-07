@@ -6,6 +6,7 @@ type TotalStateStore = {
   setTotalStats: (totalStats: TotalStatsPayload) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
+  setMode: (mode: string) => void;
 };
 
 const init: TotalStatsPayload = {
@@ -34,6 +35,14 @@ const useTotalStateStore = create<TotalStateStore>((set) => ({
         ...state.totalStats,
         isError: !!error,
         error,
+      },
+    })),
+
+  setMode: (mode) =>
+    set((state) => ({
+      totalStats: {
+        ...state.totalStats,
+        mode,
       },
     })),
 }));

@@ -1,6 +1,9 @@
 "use client";
 
+import useDashboardStore from "@/store/useDashboardStore";
+
 const useDashboardBatch = () => {
+  const dashboard = useDashboardStore((state) => state.dashboard);
   const CalculateTotal = async () => {
     try {
       // TODO: add total calculation logic
