@@ -8,6 +8,8 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const useDashboard = (userId: string) => {
   const setDashboard = useDashboardStore((state) => state.setDashboard);
+  const dashboard = useDashboardStore((state) => state.dashboard);
+
   const {
     CalculateTotal,
     CalculateWeekly,
@@ -15,7 +17,7 @@ const useDashboard = (userId: string) => {
     CalculateYearly,
     FetchLeetCode,
     FetchGithub,
-  } = useDashboardBatch();
+  } = useDashboardBatch(dashboard);
 
   const mutation = useMutation({
     mutationFn: async () => {

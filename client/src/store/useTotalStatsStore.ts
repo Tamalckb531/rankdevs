@@ -1,9 +1,9 @@
-import { TotalStatsPayload } from "@/lib/type";
+import { TotalChartData, TotalStatsPayload } from "@/lib/type";
 import { create } from "zustand";
 
 type TotalStateStore = {
   totalStats: TotalStatsPayload;
-  setTotalStats: (totalStats: TotalStatsPayload) => void;
+  setTotalStats: (data: TotalChartData[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   setMode: (mode: string) => void;
@@ -20,7 +20,13 @@ const init: TotalStatsPayload = {
 
 const useTotalStateStore = create<TotalStateStore>((set) => ({
   totalStats: init,
-  setTotalStats: (totalStats) => set({ totalStats }),
+  setTotalStats: (data) =>
+    set((state) => ({
+      totalStats: {
+        ...state.totalStats,
+        data: data,
+      },
+    })),
   setLoading: (loading) =>
     set((state) => ({
       totalStats: {

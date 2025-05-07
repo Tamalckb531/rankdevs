@@ -1,16 +1,39 @@
 "use client";
 
-import useDashboardStore from "@/store/useDashboardStore";
+import { languages } from "@/lib/language";
+import { DashBoardPayload, Stats, TotalChartData } from "@/lib/type";
+import useTotalStateStore from "@/store/useTotalStatsStore";
 
-const useDashboardBatch = () => {
-  const dashboard = useDashboardStore((state) => state.dashboard);
-  const CalculateTotal = async () => {
+const useDashboardBatch = (dashboard: DashBoardPayload | null) => {
+  //? Calculate Total Stats
+  const setTotalStats = useTotalStateStore((state) => state.setTotalStats);
+  const setLoading = useTotalStateStore((state) => state.setLoading);
+  const setError = useTotalStateStore((state) => state.setError);
+
+  const CalculateTotal = async (mode: any) => {
+    console.log("Run");
     try {
-      // TODO: add total calculation logic
-    } catch (err) {
+      const data: Stats | undefined = dashboard?.totalStats[mode];
+
+      if (!data) return;
+
+      const chartData: TotalChartData[] = Object.entries(data)
+        .filter(([key]) => key !== "total")
+        .map(([key, time]) => ({
+          languages: key,
+          time,
+          fill: languages[key]?.color || "#000",
+        }));
+
+      setTotalStats(chartData);
+    } catch (err: any) {
+      setError(err.message);
       console.error("Total Stats Error:", err);
+    } finally {
+      setLoading(false);
     }
   };
+
   const CalculateYearly = async () => {
     try {
       // TODO: add yearly calculation logic
