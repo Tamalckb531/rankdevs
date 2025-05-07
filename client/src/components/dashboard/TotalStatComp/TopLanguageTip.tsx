@@ -1,37 +1,37 @@
-import { languages } from "@/lib/language";
+import { languages, msToHM } from "@/lib/language";
 import React from "react";
 
 const chartData = [
   {
+    languages: "Typescript",
+    time: 4900000,
+    fill: languages["typescript"].color,
+  },
+  {
+    languages: "Docker",
+    time: 2870000,
+    fill: languages["dockercompose"].color,
+  },
+  {
     languages: "Rust",
-    time: "2H 24M",
+    time: 2750000,
     fill: languages["rust"].color,
   },
   {
     languages: "Tsx",
-    time: "2H 15M",
+    time: 2000000,
     fill: languages["typescriptreact"].color,
   },
   {
-    languages: "Docker",
-    time: "30M",
-    fill: languages["dockercompose"].color,
-  },
-  {
-    languages: "git",
-    time: "15M",
-    fill: languages["git-commit"].color,
-  },
-  {
     languages: "Prisma",
-    time: "2H 3M",
+    time: 1900000,
     fill: languages["prisma"].color,
   },
 ];
 
 interface slide {
   language: string;
-  time: string;
+  time: number;
   fill: string;
 }
 
@@ -57,7 +57,7 @@ const LanguageSlide = ({ language, time, fill }: slide) => {
         <div className=" h-2 w-2" style={{ backgroundColor: fill }}></div>
         <p className=" text-slate-400">{language}</p>
       </div>
-      <p className="font-bold lg:ml-3 lg:text-md text-[15px]">{time}</p>
+      <p className="font-bold lg:ml-3 lg:text-md text-[15px]">{msToHM(time)}</p>
     </div>
   );
 };
