@@ -14,13 +14,12 @@ const useDashboardBatch = () => {
   const setError = useTotalStateStore((state) => state.setError);
 
   const CalculateTotal = async (mode: any) => {
-    console.log("Run");
+    console.log("CalculateTotal Run");
+    setLoading(true);
     try {
       const data: Stats | undefined = dashboard?.totalStats[mode];
 
       if (!data) return;
-
-      setLoading(true);
 
       const chartData: TotalChartData[] = Object.entries(data)
         .filter(([key]) => key !== "total")
@@ -41,6 +40,8 @@ const useDashboardBatch = () => {
   };
 
   const CalculateYearly = async () => {
+    console.log("CalculateYearly Run");
+
     try {
       // TODO: add yearly calculation logic
     } catch (err) {
@@ -48,6 +49,8 @@ const useDashboardBatch = () => {
     }
   };
   const CalculateWeekly = async () => {
+    console.log("CalculateWeekly Run");
+
     try {
       // TODO: add weekly calculation logic
     } catch (err) {
@@ -55,6 +58,8 @@ const useDashboardBatch = () => {
     }
   };
   const CalculateMonthly = async () => {
+    console.log("CalculateMonthly Run");
+
     try {
       // TODO: add Monthly calculation logic
     } catch (err) {
@@ -62,6 +67,8 @@ const useDashboardBatch = () => {
     }
   };
   const FetchLeetCode = async () => {
+    console.log("FetchLeetCode Run");
+
     try {
       // TODO: add fetch LeetCode logic
     } catch (err) {
@@ -69,6 +76,8 @@ const useDashboardBatch = () => {
     }
   };
   const FetchCodeForce = async () => {
+    console.log("FetchCodeForce Run");
+
     try {
       // TODO: add fetch CodeForce logic
     } catch (err) {
@@ -76,6 +85,8 @@ const useDashboardBatch = () => {
     }
   };
   const FetchGithub = async () => {
+    console.log("FetchGithub Run");
+
     try {
       // TODO: add fetch Github logic
     } catch (err) {
