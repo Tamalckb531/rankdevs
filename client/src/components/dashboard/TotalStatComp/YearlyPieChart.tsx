@@ -9,36 +9,37 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { languages } from "@/lib/language";
+import { languages, msToHM } from "@/lib/language";
+import ChartToolTip from "@/components/ChartToolTip";
 const chartData = [
   {
     languages: "Rust",
-    minute: 275,
+    minute: 2750000,
     fill: languages["rust"].color,
   },
   {
     languages: "Tsx",
-    minute: 200,
+    minute: 2000000,
     fill: languages["typescriptreact"].color,
   },
   {
     languages: "Docker",
-    minute: 287,
+    minute: 2870000,
     fill: languages["dockercompose"].color,
   },
   {
     languages: "Git",
-    minute: 173,
+    minute: 1730000,
     fill: languages["git-commit"].color,
   },
   {
     languages: "Prisma",
-    minute: 190,
+    minute: 1900000,
     fill: languages["prisma"].color,
   },
   {
     languages: "Typescript",
-    minute: 490,
+    minute: 4900000,
     fill: languages["typescript"].color,
   },
 ];
@@ -53,8 +54,23 @@ export function YearlyPieChart() {
       <PieChart>
         <ChartTooltip
           cursor={false}
-          content={<ChartTooltipContent hideLabel />}
+          content={
+            <ChartTooltipContent
+              hideLabel={false}
+              formatter={(value, name, entry, index, payload) => {
+                const ms = value as number;
+                return (
+                  <ChartToolTip
+                    fill={entry.payload.fill}
+                    language={entry.payload.languages}
+                    time={ms}
+                  />
+                );
+              }}
+            />
+          }
         />
+
         <Pie
           data={chartData}
           dataKey="minute"
