@@ -24,19 +24,19 @@ export const getWeeklyChartData = (
 ): ChartData[] => {
   if (mode === "time") {
     const monthOrder = [
-      "monmnt",
-      "tuesmnt",
-      "wednesmnt",
-      "thursmnt",
-      "frimnt",
-      "saturmnt",
-      "sunmnt",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday",
     ];
 
-    return monthOrder.map((mnt) => {
-      const time = data[mnt]?.total || 0;
+    return monthOrder.map((day) => {
+      const time = data[day]?.total || 0;
       return {
-        field: capitalize(mnt),
+        field: capitalize(day),
         time,
       };
     });
