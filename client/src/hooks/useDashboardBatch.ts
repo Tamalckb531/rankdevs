@@ -34,7 +34,7 @@ const useDashboardBatch = () => {
   const weeklyStore = useWeeklyStateStore();
 
   const CalculateWeekly = (mode: WeeklyMode) => {
-    console.log("CalculateWeekly Run");
+    console.log("CalculateWeekly Run: ", mode);
     if (mode === "stats") return;
 
     try {

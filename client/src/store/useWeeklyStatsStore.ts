@@ -1,4 +1,4 @@
-import { WeeklyChartData, WeeklyStatsPayload } from "@/lib/type";
+import { WeeklyChartData, WeeklyMode, WeeklyStatsPayload } from "@/lib/type";
 import { create } from "zustand";
 
 type WeeklyStateStore = {
@@ -6,7 +6,7 @@ type WeeklyStateStore = {
   setWeeklyStats: (data: WeeklyChartData[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: boolean) => void;
-  setMode: (mode: "time" | "language" | "stats") => void;
+  setMode: (mode: WeeklyMode) => void;
 };
 
 const init: WeeklyStatsPayload = {
