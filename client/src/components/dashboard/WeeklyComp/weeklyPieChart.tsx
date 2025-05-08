@@ -12,25 +12,7 @@ import {
 import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
 import ChartToolTip from "@/components/ChartToolTip";
 import { getLanguageType, languages } from "@/lib/language";
-// const chartData = [
-//   { field: "Monday", time: 237 },
-//   { field: "Tuesday", time: 73 },
-//   { field: "Wednesday", time: 209 },
-//   { field: "Thursday", time: 214 },
-//   { field: "Friday", time: 50 },
-//   { field: "Saturday", time: 186 },
-//   { field: "Sunday", time: 305 },
-// ];
 
-// const chartData = [
-//   { field: "c", time: 186 },
-//   { field: "cpp", time: 305 },
-//   { field: "js", time: 237 },
-//   { field: "tsx", time: 73 },
-//   { field: "php", time: 209 },
-//   { field: "prisma", time: 214 },
-//   { field: "", time: 50 },
-// ];
 const chartConfig = {} satisfies ChartConfig;
 
 export function WeeklyPieChart() {
