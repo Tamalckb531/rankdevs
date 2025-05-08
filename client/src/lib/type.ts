@@ -113,6 +113,8 @@ export type WeeklyChartData = {
   time: number;
 };
 
+export type WeeklyMode = "time" | "language" | "stats";
+
 export type TotalStatsPayload = {
   mode: string;
   data: TotalChartData[];
@@ -123,7 +125,7 @@ export type TotalStatsPayload = {
 };
 
 export type WeeklyStatsPayload = {
-  mode: "time" | "language" | "stats";
+  mode: WeeklyMode;
   data: WeeklyChartData[];
   isLoading: boolean;
   isError: boolean;

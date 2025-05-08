@@ -1,9 +1,10 @@
 "use client";
 
-import { getTotalChartData } from "@/lib/batchHelper";
-import { Stats } from "@/lib/type";
+import { getTotalChartData, getWeeklyChartData } from "@/lib/batchHelper";
+import { Stats, WeeklyMode, WeeklyStats } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
+import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
 
 const useDashboardBatch = () => {
   const dashboard = useDashboardStore((state) => state.dashboard);
@@ -29,6 +30,28 @@ const useDashboardBatch = () => {
     }
   };
 
+  //? Calculate Weekly Stats
+  const weeklyStore = useWeeklyStateStore();
+
+  const CalculateWeekly = (mode: WeeklyMode) => {
+    console.log("CalculateWeekly Run");
+    if (mode === "stats") return;
+
+    try {
+      const data: WeeklyStats | undefined = dashboard?.weeklyStats;
+      if (!data) return;
+
+      const chartData = getWeeklyChartData(data, mode);
+      weeklyStore.setWeeklyStats(chartData);
+      // TODO: add weekly calculation logic
+    } catch (err) {
+      weeklyStore.setError(true);
+      console.error("Weekly Stats Error:", err);
+    } finally {
+      weeklyStore.setLoading(false);
+    }
+  };
+
   const CalculateYearly = () => {
     console.log("CalculateYearly Run");
 
@@ -38,15 +61,7 @@ const useDashboardBatch = () => {
       console.error("Yearly Stats Error:", err);
     }
   };
-  const CalculateWeekly = () => {
-    console.log("CalculateWeekly Run");
 
-    try {
-      // TODO: add weekly calculation logic
-    } catch (err) {
-      console.error("Weekly Stats Error:", err);
-    }
-  };
   const CalculateMonthly = () => {
     console.log("CalculateMonthly Run");
 
