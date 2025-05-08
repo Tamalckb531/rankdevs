@@ -15,7 +15,6 @@ export const YearSelect = () => {
   const dashboard = useDashboardStore((state) => state.dashboard);
   const setMode = useTotalStateStore((state) => state.setMode);
   const totalStats = useTotalStateStore((state) => state.totalStats);
-  const setTotalStats = useTotalStateStore((state) => state.setTotalStats);
   const [firstRender, setFirstRender] = useState<boolean>(true);
 
   const { CalculateTotal } = useDashboardBatch();
@@ -26,7 +25,6 @@ export const YearSelect = () => {
 
   useEffect(() => {
     if (!firstRender) {
-      setTotalStats([]);
       CalculateTotal(totalStats.mode);
     }
     setFirstRender(false);

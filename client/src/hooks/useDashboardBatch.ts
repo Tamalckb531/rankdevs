@@ -14,9 +14,8 @@ const useDashboardBatch = () => {
   const setError = useTotalStateStore((state) => state.setError);
   const setTotal = useTotalStateStore((state) => state.setTotal);
 
-  const CalculateTotal = async (mode: any) => {
+  const CalculateTotal = (mode: any) => {
     console.log("CalculateTotal Run");
-    setLoading(true);
     try {
       const data: Stats | undefined = dashboard?.totalStats[mode];
 
@@ -41,7 +40,7 @@ const useDashboardBatch = () => {
     }
   };
 
-  const CalculateYearly = async () => {
+  const CalculateYearly = () => {
     console.log("CalculateYearly Run");
 
     try {
@@ -50,7 +49,7 @@ const useDashboardBatch = () => {
       console.error("Yearly Stats Error:", err);
     }
   };
-  const CalculateWeekly = async () => {
+  const CalculateWeekly = () => {
     console.log("CalculateWeekly Run");
 
     try {
@@ -59,7 +58,7 @@ const useDashboardBatch = () => {
       console.error("Weekly Stats Error:", err);
     }
   };
-  const CalculateMonthly = async () => {
+  const CalculateMonthly = () => {
     console.log("CalculateMonthly Run");
 
     try {

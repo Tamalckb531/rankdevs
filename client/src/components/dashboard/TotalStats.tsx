@@ -10,9 +10,6 @@ import { YearlyPieChartFullSkeleton } from "../Skeletons/YearlyComponentSkeleton
 
 const TotalStats = () => {
   const todaysStats = useTotalStateStore((state) => state.totalStats);
-
-  console.log(todaysStats);
-
   if (todaysStats.isError) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
