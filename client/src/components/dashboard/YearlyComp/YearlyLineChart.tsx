@@ -9,28 +9,16 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { field: "Jan", time: 1856 },
-  { field: "Feb", time: 3059 },
-  { field: "Mar", time: 2370 },
-  { field: "Apr", time: 783 },
-  { field: "May", time: 2109 },
-  { field: "Jun", time: 2154 },
-  { field: "Jul", time: 505 },
-  { field: "Aug", time: 1748 },
-  { field: "Sep", time: 2923 },
-  { field: "Oct", time: 3586 },
-  { field: "Nov", time: 4425 },
-  { field: "Dec", time: 2216 },
-];
-const chartConfig = {
-  time: {
-    label: "Total",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig;
+import useYearlyStateStore from "@/store/useYearlyStateStore";
+import ChartToolTip from "@/components/ChartToolTip";
+import { getLanguageType, languages } from "@/lib/language";
+
+const chartConfig = {} satisfies ChartConfig;
 
 export function YearlyLineChart() {
+  const yearlyStats = useYearlyStateStore((state) => state.yearlyStats);
+  const chartData = yearlyStats.data;
+
   return (
     <ChartContainer
       config={chartConfig}
@@ -42,6 +30,7 @@ export function YearlyLineChart() {
         margin={{
           left: 12,
           right: 12,
+          top: 5,
         }}
       >
         <CartesianGrid vertical={false} />
@@ -51,10 +40,25 @@ export function YearlyLineChart() {
           axisLine={false}
           tickMargin={10}
           tickFormatter={(value) => value.slice(0, 3)}
+          padding={{ left: 10, right: 10 }}
         />
         <ChartTooltip
           cursor={true}
-          content={<ChartTooltipContent indicator="dot" />}
+          content={
+            <ChartTooltipContent
+              hideLabel={false}
+              formatter={(value, name, entry, index, payload) => {
+                const ms = value as number;
+                return (
+                  <ChartToolTip
+                    fill={languages[entry.payload.field]?.color || "#dea584"}
+                    language={getLanguageType(entry.payload.field)}
+                    time={ms}
+                  />
+                );
+              }}
+            />
+          }
         />
         <Line
           dataKey="time"

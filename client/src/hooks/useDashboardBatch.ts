@@ -1,6 +1,10 @@
 "use client";
 
-import { getTotalChartData, getWeeklyChartData } from "@/lib/batchHelper";
+import {
+  getTotalChartData,
+  getWeeklyChartData,
+  getYearlyChartData,
+} from "@/lib/batchHelper";
 import { Stats, StatMode, WeeklyStats, YearlyStats } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
@@ -61,7 +65,7 @@ const useDashboardBatch = () => {
       const data: YearlyStats | undefined = dashboard?.yearlyStats;
       if (!data) return;
 
-      const chartData = getWeeklyChartData(data, mode);
+      const chartData = getYearlyChartData(data, mode);
       yearlyStore.setYearlyStats(chartData);
     } catch (err) {
       yearlyStore.setError(true);
