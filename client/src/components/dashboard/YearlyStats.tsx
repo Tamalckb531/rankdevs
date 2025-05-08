@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import StatSelect from "./StatsComp/StatSelect";
 import { YearlyLineChart } from "./YearlyComp/YearlyLineChart";
 import useYearlyStateStore from "@/store/useYearlyStateStore";
 import { Skeleton } from "../ui/skeleton";
+import StatSelectYearly from "./YearlyComp/StatSelectYearly";
 
 const YearlyStats = () => {
   const yearlyStats = useYearlyStateStore((state) => state.yearlyStats);
@@ -47,7 +47,7 @@ const Header = () => {
   return (
     <CardHeader className="w-full flex items-center justify-between -mt-1">
       <CardTitle className="text-xl font-bold">Yearly Stats</CardTitle>
-      {/* <StatSelect /> */}
+      <StatSelectYearly />
     </CardHeader>
   );
 };
