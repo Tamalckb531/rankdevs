@@ -10,13 +10,13 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 const chartData = [
-  { field: "Saturday", time: 186 },
-  { field: "Sunday", time: 305 },
   { field: "Monday", time: 237 },
   { field: "Tuesday", time: 73 },
   { field: "Wednesday", time: 209 },
   { field: "Thursday", time: 214 },
   { field: "Friday", time: 50 },
+  { field: "Saturday", time: 186 },
+  { field: "Sunday", time: 305 },
 ];
 
 // const chartData = [
