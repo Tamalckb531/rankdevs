@@ -9,15 +9,18 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { field: "Monday", time: 237 },
-  { field: "Tuesday", time: 73 },
-  { field: "Wednesday", time: 209 },
-  { field: "Thursday", time: 214 },
-  { field: "Friday", time: 50 },
-  { field: "Saturday", time: 186 },
-  { field: "Sunday", time: 305 },
-];
+import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
+import ChartToolTip from "@/components/ChartToolTip";
+import { getLanguageType, languages } from "@/lib/language";
+// const chartData = [
+//   { field: "Monday", time: 237 },
+//   { field: "Tuesday", time: 73 },
+//   { field: "Wednesday", time: 209 },
+//   { field: "Thursday", time: 214 },
+//   { field: "Friday", time: 50 },
+//   { field: "Saturday", time: 186 },
+//   { field: "Sunday", time: 305 },
+// ];
 
 // const chartData = [
 //   { field: "c", time: 186 },
@@ -28,14 +31,11 @@ const chartData = [
 //   { field: "prisma", time: 214 },
 //   { field: "", time: 50 },
 // ];
-const chartConfig = {
-  time: {
-    label: "Total",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig;
+const chartConfig = {} satisfies ChartConfig;
 
 export function WeeklyPieChart() {
+  const weeklyStats = useWeeklyStateStore((state) => state.weeklyStats);
+  const chartData = weeklyStats.data;
   return (
     <ChartContainer
       config={chartConfig}
@@ -59,8 +59,22 @@ export function WeeklyPieChart() {
           padding={{ left: 10, right: 10 }}
         />
         <ChartTooltip
-          cursor={true}
-          content={<ChartTooltipContent indicator="dot" />}
+          cursor={false}
+          content={
+            <ChartTooltipContent
+              hideLabel={false}
+              formatter={(value, name, entry, index, payload) => {
+                const ms = value as number;
+                return (
+                  <ChartToolTip
+                    fill={languages[entry.payload.field]?.color || "#3178c6"}
+                    language={getLanguageType(entry.payload.field)}
+                    time={ms}
+                  />
+                );
+              }}
+            />
+          }
         />
         <Line
           dataKey="time"

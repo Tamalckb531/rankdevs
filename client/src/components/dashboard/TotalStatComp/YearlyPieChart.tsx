@@ -16,9 +16,9 @@ import useTotalStateStore from "@/store/useTotalStatsStore";
 const chartConfig = {} satisfies ChartConfig;
 
 export function YearlyPieChart() {
-  const todaysStats = useTotalStateStore((state) => state.totalStats);
+  const totalStats = useTotalStateStore((state) => state.totalStats);
 
-  const chartData = todaysStats.data;
+  const chartData = totalStats.data;
   return (
     <ChartContainer
       config={chartConfig}
@@ -61,16 +61,14 @@ export function YearlyPieChart() {
                       y={viewBox.cy}
                       className="fill-foreground text-xl font-bold"
                     >
-                      {msToHM(todaysStats.total)}
+                      {msToHM(totalStats.total)}
                     </tspan>
                     <tspan
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + 24}
                       className="fill-muted-foreground text-xs"
                     >
-                      {todaysStats.mode == "sum"
-                        ? "All Time"
-                        : todaysStats.mode}
+                      {totalStats.mode == "sum" ? "All Time" : totalStats.mode}
                     </tspan>
                   </text>
                 );
