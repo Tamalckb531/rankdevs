@@ -18,25 +18,65 @@ export const getTotalChartData = (data: Stats): TotalChartData[] => {
     .sort((a, b) => b.time - a.time);
 };
 
-export const getChartData = (
+export const getWeeklyChartData = (
   data: WeeklyStats,
   mode: StatMode
 ): ChartData[] => {
   if (mode === "time") {
-    const daysOrder = [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
+    const monthOrder = [
+      "monmnt",
+      "tuesmnt",
+      "wednesmnt",
+      "thursmnt",
+      "frimnt",
+      "saturmnt",
+      "sunmnt",
     ];
 
-    return daysOrder.map((day) => {
-      const time = data[day]?.total || 0;
+    return monthOrder.map((mnt) => {
+      const time = data[mnt]?.total || 0;
       return {
-        field: capitalize(day),
+        field: capitalize(mnt),
+        time,
+      };
+    });
+  } else if (mode === "language") {
+    const sum = data.sum;
+    return Object.entries(sum)
+      .filter(([key]) => key !== "total")
+      .map(([field, time]) => ({
+        field,
+        time,
+      }));
+  }
+
+  return [];
+};
+
+export const getYearlyChartData = (
+  data: WeeklyStats,
+  mode: StatMode
+): ChartData[] => {
+  if (mode === "time") {
+    const monthOrder = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    return monthOrder.map((mnt) => {
+      const time = data[mnt]?.total || 0;
+      return {
+        field: mnt,
         time,
       };
     });

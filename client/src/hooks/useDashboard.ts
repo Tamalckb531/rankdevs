@@ -37,7 +37,7 @@ const useDashboard = (userId: string) => {
       const queue = [
         () => CalculateTotal("sum"),
         () => CalculateWeekly("time"),
-        () => CalculateYearly(),
+        () => CalculateYearly("time"),
         () => CalculateMonthly(),
         () => FetchLeetCode(),
         () => FetchGithub(),
