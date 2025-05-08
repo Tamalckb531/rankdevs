@@ -1,7 +1,7 @@
 "use client";
 
-import { languages } from "@/lib/language";
-import { Stats, TotalChartData } from "@/lib/type";
+import { getTotalChartData } from "@/lib/batchHelper";
+import { Stats } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
 
@@ -9,10 +9,7 @@ const useDashboardBatch = () => {
   const dashboard = useDashboardStore((state) => state.dashboard);
 
   //? Calculate Total Stats
-  const setTotalStats = useTotalStateStore((state) => state.setTotalStats);
-  const setLoading = useTotalStateStore((state) => state.setLoading);
-  const setError = useTotalStateStore((state) => state.setError);
-  const setTotal = useTotalStateStore((state) => state.setTotal);
+  const totalStore = useTotalStateStore();
 
   const CalculateTotal = (mode: any) => {
     console.log("CalculateTotal Run");
@@ -21,22 +18,14 @@ const useDashboardBatch = () => {
 
       if (!data) return;
 
-      const chartData: TotalChartData[] = Object.entries(data)
-        .filter(([key]) => key !== "total")
-        .map(([key, time]) => ({
-          languages: key,
-          time,
-          fill: languages[key]?.color || "#1a1919",
-        }))
-        .sort((a, b) => b.time - a.time);
-
-      setTotalStats(chartData);
-      setTotal(dashboard?.totalStats[mode].total || 0);
+      const chartData = getTotalChartData(data);
+      totalStore.setTotalStats(chartData);
+      totalStore.setTotal(data.total || 0);
     } catch (err: any) {
-      setError(true);
+      totalStore.setError(true);
       console.error("Total Stats Error:", err);
     } finally {
-      setLoading(false);
+      totalStore.setLoading(false);
     }
   };
 
