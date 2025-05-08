@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
 import useDashboardBatch from "@/hooks/useDashboardBatch";
-import { WeeklyMode } from "@/lib/type";
+import { StatMode } from "@/lib/type";
 
 const StatSelect = () => {
   const setMode = useWeeklyStateStore((state) => state.setMode);
@@ -28,7 +28,7 @@ const StatSelect = () => {
   }, [weeklyStats.mode]);
 
   return (
-    <Select onValueChange={(value: WeeklyMode) => setMode(value)}>
+    <Select onValueChange={(value: StatMode) => setMode(value)}>
       <SelectTrigger className="w-[150px]">
         <SelectValue placeholder="Select Mode" />
       </SelectTrigger>

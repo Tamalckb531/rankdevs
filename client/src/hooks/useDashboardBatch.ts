@@ -1,7 +1,7 @@
 "use client";
 
-import { getTotalChartData, getWeeklyChartData } from "@/lib/batchHelper";
-import { Stats, WeeklyMode, WeeklyStats } from "@/lib/type";
+import { getTotalChartData, getChartData } from "@/lib/batchHelper";
+import { Stats, StatMode, WeeklyStats } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
 import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
@@ -33,7 +33,7 @@ const useDashboardBatch = () => {
   //? Calculate Weekly Stats
   const weeklyStore = useWeeklyStateStore();
 
-  const CalculateWeekly = (mode: WeeklyMode) => {
+  const CalculateWeekly = (mode: StatMode) => {
     console.log("CalculateWeekly Run: ", mode);
     if (mode === "stats") return;
 
@@ -41,7 +41,7 @@ const useDashboardBatch = () => {
       const data: WeeklyStats | undefined = dashboard?.weeklyStats;
       if (!data) return;
 
-      const chartData = getWeeklyChartData(data, mode);
+      const chartData = getChartData(data, mode);
       weeklyStore.setWeeklyStats(chartData);
       // TODO: add weekly calculation logic
     } catch (err) {

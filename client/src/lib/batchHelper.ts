@@ -2,8 +2,8 @@ import { languages } from "./language";
 import {
   Stats,
   TotalChartData,
-  WeeklyChartData,
-  WeeklyMode,
+  ChartData,
+  StatMode,
   WeeklyStats,
 } from "./type";
 
@@ -18,10 +18,10 @@ export const getTotalChartData = (data: Stats): TotalChartData[] => {
     .sort((a, b) => b.time - a.time);
 };
 
-export const getWeeklyChartData = (
+export const getChartData = (
   data: WeeklyStats,
-  mode: WeeklyMode
-): WeeklyChartData[] => {
+  mode: StatMode
+): ChartData[] => {
   if (mode === "time") {
     const daysOrder = [
       "monday",
