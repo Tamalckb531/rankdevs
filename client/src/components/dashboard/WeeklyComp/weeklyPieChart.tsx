@@ -29,6 +29,7 @@ export function WeeklyPieChart() {
         margin={{
           left: 12,
           right: 12,
+          top: 5,
         }}
       >
         <CartesianGrid vertical={false} />
