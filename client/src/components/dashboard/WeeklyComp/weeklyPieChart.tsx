@@ -26,7 +26,7 @@ const chartData = [
 //   { field: "tsx", time: 73 },
 //   { field: "php", time: 209 },
 //   { field: "prisma", time: 214 },
-//   { field: "rust", time: 50 },
+//   { field: "", time: 50 },
 // ];
 const chartConfig = {
   time: {
@@ -56,6 +56,7 @@ export function WeeklyPieChart() {
           axisLine={false}
           tickMargin={10}
           tickFormatter={(value) => value.slice(0, 3)}
+          padding={{ left: 10, right: 10 }}
         />
         <ChartTooltip
           cursor={true}

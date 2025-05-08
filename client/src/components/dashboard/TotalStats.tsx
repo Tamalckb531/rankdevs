@@ -9,8 +9,8 @@ import useTotalStateStore from "@/store/useTotalStatsStore";
 import { YearlyPieChartFullSkeleton } from "../Skeletons/YearlyComponentSkeleton";
 
 const TotalStats = () => {
-  const todaysStats = useTotalStateStore((state) => state.totalStats);
-  if (todaysStats.isError) {
+  const totalStats = useTotalStateStore((state) => state.totalStats);
+  if (totalStats.isError) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
@@ -20,7 +20,7 @@ const TotalStats = () => {
     );
   }
 
-  if (!todaysStats.isLoading && todaysStats.data.length === 0) {
+  if (!totalStats.isLoading && totalStats.data.length === 0) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
         <Header />
@@ -35,7 +35,7 @@ const TotalStats = () => {
     <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
       <Header />
 
-      {!todaysStats.isLoading ? <Content /> : <YearlyPieChartFullSkeleton />}
+      {!totalStats.isLoading ? <Content /> : <YearlyPieChartFullSkeleton />}
     </Card>
   );
 };
