@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { MonthlyPieChart } from "./MonthlyComp/monthlyPieChart";
 import useMonthlyStatsStore from "@/store/useMonthlyStatsStore";
 import { Skeleton } from "../ui/skeleton";
+import StatSelectMonthly from "./MonthlyComp/StatSelectMonthly";
 
 const MonthlyStats = () => {
   const monthlyStats = useMonthlyStatsStore((state) => state.monthlyStats);
@@ -46,7 +47,7 @@ const Header = () => {
   return (
     <CardHeader className="w-full flex items-center justify-between -mt-1">
       <CardTitle className="text-xl font-bold">Monthly Stats</CardTitle>
-      {/* <StatSelect /> */}
+      <StatSelectMonthly />
     </CardHeader>
   );
 };
