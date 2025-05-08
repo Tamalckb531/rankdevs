@@ -58,8 +58,10 @@ const useDashboardBatch = () => {
 
   //? Calculate Yearly Stats
   const yearlyStore = useYearlyStateStore();
+
   const CalculateYearly = (mode: StatMode) => {
     console.log("CalculateYearly Run");
+    if (mode === "stats") return;
 
     try {
       const data: YearlyStats | undefined = dashboard?.yearlyStats;
