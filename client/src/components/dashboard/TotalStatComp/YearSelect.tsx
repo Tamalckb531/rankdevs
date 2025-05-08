@@ -10,12 +10,13 @@ import {
 import useDashboardBatch from "@/hooks/useDashboardBatch";
 import useDashboardStore from "@/store/useDashboardStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 export const YearSelect = () => {
   const dashboard = useDashboardStore((state) => state.dashboard);
   const setMode = useTotalStateStore((state) => state.setMode);
   const totalStats = useTotalStateStore((state) => state.totalStats);
   const setTotalStats = useTotalStateStore((state) => state.setTotalStats);
+  const [firstRender, setFirstRender] = useState<boolean>(true);
 
   const { CalculateTotal } = useDashboardBatch();
 
@@ -24,8 +25,11 @@ export const YearSelect = () => {
   );
 
   useEffect(() => {
-    setTotalStats([]);
-    CalculateTotal(totalStats.mode);
+    if (!firstRender) {
+      setTotalStats([]);
+      CalculateTotal(totalStats.mode);
+    }
+    setFirstRender(false);
   }, [totalStats.mode]);
 
   return (
