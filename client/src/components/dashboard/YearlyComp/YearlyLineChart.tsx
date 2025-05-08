@@ -10,21 +10,21 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 const chartData = [
-  { month: "Jan", sum: 1856 },
-  { month: "Feb", sum: 3059 },
-  { month: "Mar", sum: 2370 },
-  { month: "Apr", sum: 783 },
-  { month: "May", sum: 2109 },
-  { month: "Jun", sum: 2154 },
-  { month: "Jul", sum: 505 },
-  { month: "Aug", sum: 1748 },
-  { month: "Sep", sum: 2923 },
-  { month: "Oct", sum: 3586 },
-  { month: "Nov", sum: 4425 },
-  { month: "Dec", sum: 2216 },
+  { field: "Jan", time: 1856 },
+  { field: "Feb", time: 3059 },
+  { field: "Mar", time: 2370 },
+  { field: "Apr", time: 783 },
+  { field: "May", time: 2109 },
+  { field: "Jun", time: 2154 },
+  { field: "Jul", time: 505 },
+  { field: "Aug", time: 1748 },
+  { field: "Sep", time: 2923 },
+  { field: "Oct", time: 3586 },
+  { field: "Nov", time: 4425 },
+  { field: "Dec", time: 2216 },
 ];
 const chartConfig = {
-  sum: {
+  time: {
     label: "Total",
     color: "hsl(var(--chart-1))",
   },
@@ -46,7 +46,7 @@ export function YearlyLineChart() {
       >
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey="month"
+          dataKey="field"
           tickLine={false}
           axisLine={false}
           tickMargin={10}
@@ -57,7 +57,7 @@ export function YearlyLineChart() {
           content={<ChartTooltipContent indicator="dot" />}
         />
         <Line
-          dataKey="sum"
+          dataKey="time"
           type="natural"
           stroke="#dea584"
           strokeWidth={2}
