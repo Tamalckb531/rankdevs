@@ -9,7 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { getLanguageType, languages } from "@/lib/language";
+import { getLanguageType, languages, msToHM } from "@/lib/language";
 import ChartToolTip from "@/components/ChartToolTip";
 import useTotalStateStore from "@/store/useTotalStatsStore";
 
@@ -61,14 +61,16 @@ export function YearlyPieChart() {
                       y={viewBox.cy}
                       className="fill-foreground text-xl font-bold"
                     >
-                      8H 30M
+                      {msToHM(todaysStats.total)}
                     </tspan>
                     <tspan
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + 24}
                       className="fill-muted-foreground text-xs"
                     >
-                      Total Typing
+                      {todaysStats.mode == "sum"
+                        ? "All Time"
+                        : todaysStats.mode}
                     </tspan>
                   </text>
                 );

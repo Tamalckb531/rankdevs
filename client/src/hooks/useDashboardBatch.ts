@@ -12,6 +12,7 @@ const useDashboardBatch = () => {
   const setTotalStats = useTotalStateStore((state) => state.setTotalStats);
   const setLoading = useTotalStateStore((state) => state.setLoading);
   const setError = useTotalStateStore((state) => state.setError);
+  const setTotal = useTotalStateStore((state) => state.setTotal);
 
   const CalculateTotal = async (mode: any) => {
     console.log("CalculateTotal Run");
@@ -26,11 +27,12 @@ const useDashboardBatch = () => {
         .map(([key, time]) => ({
           languages: key,
           time,
-          fill: languages[key]?.color || "#000",
+          fill: languages[key]?.color || "#1a1919",
         }))
         .sort((a, b) => b.time - a.time);
 
       setTotalStats(chartData);
+      setTotal(dashboard?.totalStats[mode].total || 0);
     } catch (err: any) {
       setError(true);
       console.error("Total Stats Error:", err);

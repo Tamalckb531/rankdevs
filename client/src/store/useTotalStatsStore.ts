@@ -7,6 +7,7 @@ type TotalStateStore = {
   setLoading: (loading: boolean) => void;
   setError: (error: boolean) => void;
   setMode: (mode: string) => void;
+  setTotal: (total: number) => void;
 };
 
 const init: TotalStatsPayload = {
@@ -48,6 +49,14 @@ const useTotalStateStore = create<TotalStateStore>((set) => ({
       totalStats: {
         ...state.totalStats,
         mode,
+      },
+    })),
+
+  setTotal: (total) =>
+    set((state) => ({
+      totalStats: {
+        ...state.totalStats,
+        total,
       },
     })),
 }));
