@@ -10,16 +10,26 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 const chartData = [
-  { week: "Saturday", sum: 186 },
-  { week: "Sunday", sum: 305 },
-  { week: "Monday", sum: 237 },
-  { week: "Tuesday", sum: 73 },
-  { week: "Wednesday", sum: 209 },
-  { week: "Thursday", sum: 214 },
-  { week: "Friday", sum: 50 },
+  { field: "Saturday", time: 186 },
+  { field: "Sunday", time: 305 },
+  { field: "Monday", time: 237 },
+  { field: "Tuesday", time: 73 },
+  { field: "Wednesday", time: 209 },
+  { field: "Thursday", time: 214 },
+  { field: "Friday", time: 50 },
 ];
+
+// const chartData = [
+//   { field: "c", time: 186 },
+//   { field: "cpp", time: 305 },
+//   { field: "js", time: 237 },
+//   { field: "tsx", time: 73 },
+//   { field: "php", time: 209 },
+//   { field: "prisma", time: 214 },
+//   { field: "rust", time: 50 },
+// ];
 const chartConfig = {
-  sum: {
+  time: {
     label: "Total",
     color: "hsl(var(--chart-1))",
   },
@@ -41,7 +51,7 @@ export function WeeklyPieChart() {
       >
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey="week"
+          dataKey="field"
           tickLine={false}
           axisLine={false}
           tickMargin={10}
@@ -52,7 +62,7 @@ export function WeeklyPieChart() {
           content={<ChartTooltipContent indicator="dot" />}
         />
         <Line
-          dataKey="sum"
+          dataKey="time"
           type="natural"
           stroke="#3178c6"
           strokeWidth={2}
