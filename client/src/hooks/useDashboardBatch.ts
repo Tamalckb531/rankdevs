@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  getMonthlyChartData,
   getTotalChartData,
   getWeeklyChartData,
   getYearlyChartData,
@@ -95,7 +96,7 @@ const useDashboardBatch = () => {
       const data: MonthlyStats | undefined = dashboard?.monthlyStats;
       if (!data) return;
 
-      const chartData = getYearlyChartData(data, mode);
+      const chartData = getMonthlyChartData(data, mode);
       monthlyStats.setMonthlyStats(chartData);
     } catch (err) {
       monthlyStats.setError(true);

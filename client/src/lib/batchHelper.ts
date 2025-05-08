@@ -5,6 +5,8 @@ import {
   ChartData,
   StatMode,
   WeeklyStats,
+  YearlyStats,
+  MonthlyStats,
 } from "./type";
 
 export const getTotalChartData = (data: Stats): TotalChartData[] => {
@@ -54,7 +56,7 @@ export const getWeeklyChartData = (
 };
 
 export const getYearlyChartData = (
-  data: WeeklyStats,
+  data: YearlyStats,
   mode: StatMode
 ): ChartData[] => {
   if (mode === "time") {
@@ -80,6 +82,30 @@ export const getYearlyChartData = (
         time,
       };
     });
+  } else if (mode === "language") {
+    const sum = data.sum;
+    return Object.entries(sum)
+      .filter(([key]) => key !== "total")
+      .map(([field, time]) => ({
+        field,
+        time,
+      }));
+  }
+
+  return [];
+};
+
+export const getMonthlyChartData = (
+  data: MonthlyStats,
+  mode: StatMode
+): ChartData[] => {
+  if (mode === "time") {
+    return Object.entries(data)
+      .filter(([key]) => key !== "sum" && key !== "NaN")
+      .map(([field, value]) => ({
+        field,
+        time: value.total,
+      }));
   } else if (mode === "language") {
     const sum = data.sum;
     return Object.entries(sum)
