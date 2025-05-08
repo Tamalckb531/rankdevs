@@ -1,9 +1,9 @@
 import { ChartData, StatMode, StatsPayload } from "@/lib/type";
 import { create } from "zustand";
 
-type WeeklyStateStore = {
-  weeklyStats: StatsPayload;
-  setWeeklyStats: (data: ChartData[]) => void;
+type YearlyStateStore = {
+  yearlyStats: StatsPayload;
+  setYearlyStats: (data: ChartData[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: boolean) => void;
   setMode: (mode: StatMode) => void;
@@ -16,36 +16,36 @@ const init: StatsPayload = {
   isError: false,
 };
 
-const useWeeklyStateStore = create<WeeklyStateStore>((set) => ({
-  weeklyStats: init,
-  setWeeklyStats: (data) =>
+const useYearlyStateStore = create<YearlyStateStore>((set) => ({
+  yearlyStats: init,
+  setYearlyStats: (data) =>
     set((state) => ({
-      weeklyStats: {
-        ...state.weeklyStats,
+      yearlyStats: {
+        ...state.yearlyStats,
         data: data,
       },
     })),
   setLoading: (loading) =>
     set((state) => ({
-      weeklyStats: {
-        ...state.weeklyStats,
+      yearlyStats: {
+        ...state.yearlyStats,
         isLoading: loading,
       },
     })),
   setError: (error) =>
     set((state) => ({
-      weeklyStats: {
-        ...state.weeklyStats,
+      yearlyStats: {
+        ...state.yearlyStats,
         isError: error,
       },
     })),
   setMode: (mode) =>
     set((state) => ({
-      weeklyStats: {
-        ...state.weeklyStats,
+      yearlyStats: {
+        ...state.yearlyStats,
         mode,
       },
     })),
 }));
 
-export default useWeeklyStateStore;
+export default useYearlyStateStore;

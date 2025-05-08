@@ -124,7 +124,7 @@ export type TotalStatsPayload = {
   error: string | null;
 };
 
-export type WeeklyStatsPayload = {
+export type StatsPayload = {
   mode: StatMode;
   data: ChartData[];
   isLoading: boolean;
