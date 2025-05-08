@@ -5,8 +5,15 @@ import {
   getWeeklyChartData,
   getYearlyChartData,
 } from "@/lib/batchHelper";
-import { Stats, StatMode, WeeklyStats, YearlyStats } from "@/lib/type";
+import {
+  Stats,
+  StatMode,
+  WeeklyStats,
+  YearlyStats,
+  MonthlyStats,
+} from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
+import useMonthlyStatsStore from "@/store/useMonthlyStatsStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
 import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
 import useYearlyStateStore from "@/store/useYearlyStateStore";
@@ -77,13 +84,24 @@ const useDashboardBatch = () => {
     }
   };
 
-  const CalculateMonthly = () => {
+  //? Calculate Yearly Stats
+  const monthlyStats = useMonthlyStatsStore();
+
+  const CalculateMonthly = (mode: StatMode) => {
     console.log("CalculateMonthly Run");
+    if (mode === "stats") return;
 
     try {
-      // TODO: add Monthly calculation logic
+      const data: MonthlyStats | undefined = dashboard?.monthlyStats;
+      if (!data) return;
+
+      const chartData = getYearlyChartData(data, mode);
+      monthlyStats.setMonthlyStats(chartData);
     } catch (err) {
-      console.error("Monthly Stats Error:", err);
+      monthlyStats.setError(true);
+      console.error("Yearly Stats Error:", err);
+    } finally {
+      monthlyStats.setLoading(false);
     }
   };
   const FetchLeetCode = async () => {

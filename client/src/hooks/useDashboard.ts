@@ -38,7 +38,7 @@ const useDashboard = (userId: string) => {
         () => CalculateTotal("sum"),
         () => CalculateWeekly("time"),
         () => CalculateYearly("time"),
-        () => CalculateMonthly(),
+        () => CalculateMonthly("time"),
         () => FetchLeetCode(),
         () => FetchGithub(),
       ];
