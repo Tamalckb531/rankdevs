@@ -29,7 +29,7 @@ const WeeklyDataCardWrapper = () => {
         />
         <StatCard
           stat={(dashboard?.weeklyStats.sum.total || 0) / 7}
-          label="Average"
+          label="Average (Day)"
         />
       </div>
       <div className="flex items-center justify-around w-full">

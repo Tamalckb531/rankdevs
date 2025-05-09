@@ -29,7 +29,7 @@ const YearlyDataCardWrapper = () => {
         />
         <StatCard
           stat={(dashboard?.yearlyStats.sum.total || 0) / 12}
-          label="Average"
+          label="Average (Mon)"
         />
       </div>
       <div className="flex items-center justify-around w-full">
