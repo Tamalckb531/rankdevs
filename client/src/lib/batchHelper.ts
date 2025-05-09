@@ -7,6 +7,7 @@ import {
   WeeklyStats,
   YearlyStats,
   MonthlyStats,
+  GenStats,
 } from "./type";
 
 export const getTotalChartData = (data: Stats): TotalChartData[] => {
@@ -119,11 +120,11 @@ export const getMonthlyChartData = (
   return [];
 };
 
-export const MostActive = (data: WeeklyStats): string => {
+export const MostActive = (data: GenStats): string => {
   let mostActive: string = "";
   let maxTotal = 0;
   for (const [key, value] of Object.entries(data)) {
-    if (key === "sum" || key === "invalid date") continue;
+    if (key === "sum" || key === "invalid date" || key === "NaN") continue;
     if (value.total > maxTotal) {
       mostActive = capitalize(key);
       maxTotal = value.total;

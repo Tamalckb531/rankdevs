@@ -69,6 +69,16 @@ export type YearlyStats = {
     [key: string]: number;
   };
 };
+export type GenStats = {
+  sum: {
+    total: number;
+    [key: string]: number;
+  };
+  [field: string | number]: {
+    total: number;
+    [key: string]: number;
+  };
+};
 export type TotalStats = {
   sum: {
     total: number;
