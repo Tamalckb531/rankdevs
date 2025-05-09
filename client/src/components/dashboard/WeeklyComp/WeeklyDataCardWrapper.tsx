@@ -1,5 +1,5 @@
 import { LanguageCard } from "@/components/Leaderboard/LanguageCard";
-import { MostActive, MostTyped } from "@/lib/batchHelper";
+import { avgNumber, MostActive, MostTyped } from "@/lib/batchHelper";
 import { msToHM } from "@/lib/language";
 import useDashboardStore from "@/store/useDashboardStore";
 import React from "react";
@@ -20,6 +20,7 @@ const WeeklyDataCardWrapper = () => {
   if (!dashboard) return;
 
   const langOutput = MostTyped(dashboard.weeklyStats.sum);
+  const average = avgNumber(dashboard.weeklyStats);
   return (
     <div className=" min-h-[220px] w-full flex flex-col items-center justify-around">
       <div className=" flex items-center justify-around w-full">
@@ -28,8 +29,8 @@ const WeeklyDataCardWrapper = () => {
           label="Total Typed"
         />
         <StatCard
-          stat={(dashboard?.weeklyStats.sum.total || 0) / 7}
-          label="Average (Day)"
+          stat={(dashboard?.weeklyStats.sum.total || 0) / average}
+          label={`Average (Day) ${average}`}
         />
       </div>
       <div className="flex items-center justify-around w-full">

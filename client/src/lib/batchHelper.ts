@@ -155,4 +155,13 @@ export const MostTyped = (data: Stats): MostTypedOutput => {
   return output;
 };
 
+export const avgNumber = (data: GenStats): number => {
+  let num: number = 0;
+  for (const [key, value] of Object.entries(data)) {
+    if (key === "sum" || key === "invalid date" || key === "NaN") continue;
+    if (value.total > 0) num++;
+  }
+  return num !== 0 ? num : 1;
+};
+
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
