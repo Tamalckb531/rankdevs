@@ -4,11 +4,12 @@ import { MonthlyPieChart } from "./MonthlyComp/monthlyPieChart";
 import useMonthlyStatsStore from "@/store/useMonthlyStatsStore";
 import { Skeleton } from "../ui/skeleton";
 import StatSelectMonthly from "./MonthlyComp/StatSelectMonthly";
+import MonthlyDataCardWrapper from "./MonthlyComp/MonthlyDataCardWrapper";
 
 const MonthlyStats = () => {
   const monthlyStats = useMonthlyStatsStore((state) => state.monthlyStats);
 
-  if (monthlyStats.isError) {
+  if (monthlyStats.isError || !monthlyStats) {
     return (
       <Card className="flex flex-col md:col-span-2 lg:col-span-3 bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
@@ -33,7 +34,7 @@ const MonthlyStats = () => {
     <Card className="flex flex-col md:col-span-2 lg:col-span-3 bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2 min-h-[300px]">
       <Header />
       {!monthlyStats.isLoading ? (
-        <Content />
+        <Content mode={monthlyStats.mode} />
       ) : (
         <Skeleton className="w-full h-[90%]" />
       )}
@@ -52,10 +53,10 @@ const Header = () => {
   );
 };
 
-const Content = () => {
+const Content = ({ mode }: { mode: string }) => {
   return (
     <CardContent>
-      <MonthlyPieChart />
+      {mode === "stats" ? <MonthlyDataCardWrapper /> : <MonthlyPieChart />}
     </CardContent>
   );
 };
