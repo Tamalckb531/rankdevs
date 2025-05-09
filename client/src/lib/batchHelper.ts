@@ -1,4 +1,4 @@
-import { languages } from "./language";
+import { languages, msToHM } from "./language";
 import {
   Stats,
   TotalChartData,
@@ -131,6 +131,28 @@ export const MostActive = (data: GenStats): string => {
     }
   }
   return mostActive;
+};
+
+interface MostTypedOutput {
+  language: string;
+  time: string;
+}
+
+export const MostTyped = (data: Stats): MostTypedOutput => {
+  let mostTyped: string = "";
+  let maxTotal: number = 0;
+
+  for (const [key, value] of Object.entries(data)) {
+    if (key === "total") continue;
+    if (value > maxTotal) {
+      mostTyped = key;
+      maxTotal = value;
+    }
+  }
+
+  let output: MostTypedOutput = { language: mostTyped, time: msToHM(maxTotal) };
+
+  return output;
 };
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
