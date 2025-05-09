@@ -54,9 +54,11 @@ const Header = () => {
 };
 
 const Content = () => {
+  const weeklyStats = useWeeklyStateStore((state) => state.weeklyStats);
+
   return (
     <CardContent>
-      <WeeklyPieChart />
+      {weeklyStats.mode === "stats" ? <div>Hello</div> : <WeeklyPieChart />}
     </CardContent>
   );
 };
