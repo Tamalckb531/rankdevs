@@ -4,6 +4,7 @@ import StatSelect from "./WeeklyComp/StatSelect";
 import { WeeklyPieChart } from "./WeeklyComp/weeklyPieChart";
 import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
 import { Skeleton } from "../ui/skeleton";
+import WeeklyDataCardWrapper from "./WeeklyComp/WeeklyDataCardWrapper";
 
 const WeeklyStats = () => {
   const weeklyStats = useWeeklyStateStore((state) => state.weeklyStats);
@@ -58,7 +59,11 @@ const Content = () => {
 
   return (
     <CardContent>
-      {weeklyStats.mode === "stats" ? <div>Hello</div> : <WeeklyPieChart />}
+      {weeklyStats.mode === "stats" ? (
+        <WeeklyDataCardWrapper />
+      ) : (
+        <WeeklyPieChart />
+      )}
     </CardContent>
   );
 };
