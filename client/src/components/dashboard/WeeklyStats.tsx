@@ -9,7 +9,7 @@ import WeeklyDataCardWrapper from "./WeeklyComp/WeeklyDataCardWrapper";
 const WeeklyStats = () => {
   const weeklyStats = useWeeklyStateStore((state) => state.weeklyStats);
 
-  if (weeklyStats.isError) {
+  if (weeklyStats.isError || !weeklyStats) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
@@ -35,7 +35,7 @@ const WeeklyStats = () => {
       <Header />
 
       {!weeklyStats.isLoading ? (
-        <Content />
+        <Content mode={weeklyStats.mode} />
       ) : (
         <Skeleton className="w-full h-[90%]" />
       )}
@@ -54,16 +54,10 @@ const Header = () => {
   );
 };
 
-const Content = () => {
-  const weeklyStats = useWeeklyStateStore((state) => state.weeklyStats);
-
+const Content = ({ mode }: { mode: string }) => {
   return (
     <CardContent>
-      {weeklyStats.mode === "stats" ? (
-        <WeeklyDataCardWrapper />
-      ) : (
-        <WeeklyPieChart />
-      )}
+      {mode === "stats" ? <WeeklyDataCardWrapper /> : <WeeklyPieChart />}
     </CardContent>
   );
 };

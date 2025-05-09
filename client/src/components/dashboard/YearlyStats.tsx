@@ -9,7 +9,7 @@ import YearlyDataCardWrapper from "./YearlyComp/YearlyDataCardWrapper";
 const YearlyStats = () => {
   const yearlyStats = useYearlyStateStore((state) => state.yearlyStats);
 
-  if (yearlyStats.isError) {
+  if (yearlyStats.isError || !yearlyStats) {
     return (
       <Card className="flex flex-col lg:col-span-2 bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2 ">
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
@@ -34,7 +34,7 @@ const YearlyStats = () => {
     <Card className="flex flex-col lg:col-span-2 bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2 ">
       <Header />
       {!yearlyStats.isLoading ? (
-        <Content />
+        <Content mode={yearlyStats.mode} />
       ) : (
         <Skeleton className="w-full h-[90%]" />
       )}
@@ -53,16 +53,10 @@ const Header = () => {
   );
 };
 
-const Content = () => {
-  const yearlyStats = useYearlyStateStore((state) => state.yearlyStats);
-
+const Content = ({ mode }: { mode: string }) => {
   return (
     <CardContent>
-      {yearlyStats.mode === "stats" ? (
-        <YearlyDataCardWrapper />
-      ) : (
-        <YearlyLineChart />
-      )}
+      {mode === "stats" ? <YearlyDataCardWrapper /> : <YearlyLineChart />}
     </CardContent>
   );
 };
