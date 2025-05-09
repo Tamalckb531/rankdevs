@@ -1,4 +1,5 @@
 import { LanguageCard } from "@/components/Leaderboard/LanguageCard";
+import { MostActive } from "@/lib/batchHelper";
 import { msToHM } from "@/lib/language";
 import useDashboardStore from "@/store/useDashboardStore";
 import React from "react";
@@ -16,6 +17,7 @@ interface Lang {
 
 const WeeklyDataCardWrapper = () => {
   const dashboard = useDashboardStore((state) => state.dashboard);
+  if (!dashboard) return;
   return (
     <div className=" min-h-[200px] w-full flex flex-col items-center justify-around">
       <div className=" flex items-center justify-around w-full">
@@ -29,7 +31,10 @@ const WeeklyDataCardWrapper = () => {
         />
       </div>
       <div className="flex items-center justify-around w-full">
-        <StatCard stat={"Friday"} label="Most active" />
+        <StatCard
+          stat={MostActive(dashboard?.weeklyStats)}
+          label="Most active"
+        />
         <MostLangCard language="typescript" time="10H" label="Most Typed" />
       </div>
     </div>

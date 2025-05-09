@@ -119,4 +119,17 @@ export const getMonthlyChartData = (
   return [];
 };
 
+export const MostActive = (data: WeeklyStats): string => {
+  let mostActive: string = "";
+  let maxTotal = 0;
+  for (const [key, value] of Object.entries(data)) {
+    if (key === "sum" || key === "invalid date") continue;
+    if (value.total > maxTotal) {
+      mostActive = capitalize(key);
+      maxTotal = value.total;
+    }
+  }
+  return mostActive;
+};
+
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
