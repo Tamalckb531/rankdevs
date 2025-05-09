@@ -35,7 +35,7 @@ const MonthlyDataCardWrapper = () => {
       </div>
       <div className="flex items-center justify-around w-full">
         <StatCard
-          stat={MostActive(dashboard?.monthlyStats)}
+          stat={`Day ${MostActive(dashboard.monthlyStats)}`}
           label="Most active"
         />
         <MostLangCard
