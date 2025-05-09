@@ -4,6 +4,7 @@ import { YearlyLineChart } from "./YearlyComp/YearlyLineChart";
 import useYearlyStateStore from "@/store/useYearlyStateStore";
 import { Skeleton } from "../ui/skeleton";
 import StatSelectYearly from "./YearlyComp/StatSelectYearly";
+import YearlyDataCardWrapper from "./YearlyComp/YearlyDataCardWrapper";
 
 const YearlyStats = () => {
   const yearlyStats = useYearlyStateStore((state) => state.yearlyStats);
@@ -53,9 +54,15 @@ const Header = () => {
 };
 
 const Content = () => {
+  const yearlyStats = useYearlyStateStore((state) => state.yearlyStats);
+
   return (
     <CardContent>
-      <YearlyLineChart />
+      {yearlyStats.mode === "stats" ? (
+        <YearlyDataCardWrapper />
+      ) : (
+        <YearlyLineChart />
+      )}
     </CardContent>
   );
 };

@@ -15,26 +15,26 @@ interface Lang {
   label: string;
 }
 
-const WeeklyDataCardWrapper = () => {
+const YearlyDataCardWrapper = () => {
   const dashboard = useDashboardStore((state) => state.dashboard);
   if (!dashboard) return;
 
-  const langOutput = MostTyped(dashboard.weeklyStats.sum);
+  const langOutput = MostTyped(dashboard.yearlyStats.sum);
   return (
-    <div className=" min-h-[220px] w-full flex flex-col items-center justify-around">
+    <div className=" min-h-[220px] w-full flex flex-col lg:flex-row items-center justify-around">
       <div className=" flex items-center justify-around w-full">
         <StatCard
-          stat={dashboard?.weeklyStats.sum.total || 0}
+          stat={dashboard?.yearlyStats.sum.total || 0}
           label="Total Typed"
         />
         <StatCard
-          stat={(dashboard?.weeklyStats.sum.total || 0) / 7}
+          stat={(dashboard?.yearlyStats.sum.total || 0) / 12}
           label="Average"
         />
       </div>
       <div className="flex items-center justify-around w-full">
         <StatCard
-          stat={MostActive(dashboard?.weeklyStats)}
+          stat={MostActive(dashboard?.yearlyStats)}
           label="Most active"
         />
         <MostLangCard
@@ -67,4 +67,4 @@ const MostLangCard = ({ language, time, label }: Lang) => {
   );
 };
 
-export default WeeklyDataCardWrapper;
+export default YearlyDataCardWrapper;
