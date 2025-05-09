@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import StatSelect from "./StatsComp/StatSelect";
+import StatSelect from "./WeeklyComp/StatSelect";
 import { WeeklyPieChart } from "./WeeklyComp/weeklyPieChart";
 import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
 import { Skeleton } from "../ui/skeleton";
