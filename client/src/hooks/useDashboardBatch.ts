@@ -105,11 +105,30 @@ const useDashboardBatch = () => {
       monthlyStats.setLoading(false);
     }
   };
+
+  //? Fetch user LeetCode data
   const FetchLeetCode = async () => {
     console.log("FetchLeetCode Run");
 
     try {
-      // TODO: add fetch LeetCode logic
+      const username = dashboard?.githubUserName;
+      if (!username) throw new Error("Leetcode username not found");
+
+      const response = await fetch("https://leetcode.com/graphql/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          variables: { username },
+        }),
+      });
+
+      const { data } = await response.json();
+
+      if (!data) throw new Error("Invalid response from leetcode");
+
+      console.log(data);
     } catch (err) {
       console.error("Fetch LeetCode Error:", err);
     }
