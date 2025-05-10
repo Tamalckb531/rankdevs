@@ -2,9 +2,9 @@ import { leetcodeQuery } from "@/lib/graphqlQuery";
 
 export async function GET(
   req: Request,
-  { params }: { params: { username: string } }
+  context: { params: { username: string } }
 ) {
-  const { username } = params;
+  const { username } = await context.params;
 
   const body = {
     query: leetcodeQuery,
