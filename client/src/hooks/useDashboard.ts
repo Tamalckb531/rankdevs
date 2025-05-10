@@ -33,7 +33,7 @@ const useDashboard = (userId: string) => {
       setDashboard(data);
     },
 
-    onSuccess: () => {
+    onSuccess: async () => {
       const queue = [
         () => CalculateTotal("sum"),
         () => CalculateWeekly("time"),
@@ -45,7 +45,7 @@ const useDashboard = (userId: string) => {
 
       for (const fn of queue) {
         try {
-          fn();
+          await Promise.resolve(fn());
         } catch (err) {
           console.log("Batch failed: ", err);
         }
