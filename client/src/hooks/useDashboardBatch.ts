@@ -6,7 +6,7 @@ import {
   getWeeklyChartData,
   getYearlyChartData,
 } from "@/lib/batchHelper";
-import { query } from "@/lib/graphqlQuery";
+import { leetcodeQuery } from "@/lib/graphqlQuery";
 import {
   Stats,
   StatMode,
@@ -121,7 +121,7 @@ const useDashboardBatch = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query,
+          leetcodeQuery,
           variables: { username },
         }),
       });
