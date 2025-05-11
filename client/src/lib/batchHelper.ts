@@ -8,6 +8,9 @@ import {
   YearlyStats,
   MonthlyStats,
   GenStats,
+  LeetCodeStats,
+  LeetCodeData,
+  Problems,
 } from "./type";
 
 export const getTotalChartData = (data: Stats): TotalChartData[] => {
@@ -162,6 +165,39 @@ export const avgNumber = (data: GenStats): number => {
     if (value.total > 0) num++;
   }
   return num !== 0 ? num : 1;
+};
+
+export const formatLeetCodeData = (
+  ltPayload: LeetCodeStats,
+  username: string
+): LeetCodeData => {
+  const { matchedUser, allQuestionsCount, userContestRanking } = ltPayload.data;
+
+  const getProblemStats = (
+    difficulty: "All" | "Easy" | "Medium" | "Hard"
+  ): Problems => {
+    const total =
+      allQuestionsCount.find((d) => d.difficulty === difficulty)?.count || 0;
+    const solved =
+      matchedUser.submitStatsGlobal.acSubmissionNum.find(
+        (d) => d.difficulty === difficulty
+      )?.count || 0;
+
+    return { total, solved };
+  };
+
+  return {
+    username,
+    rank: matchedUser.profile.ranking,
+    contributionPoints: matchedUser.contributions.points,
+    contestAttended: userContestRanking?.attendedContestsCount || 0,
+    contestRating: userContestRanking?.rating || 0,
+    topPercentage: userContestRanking?.topPercentage || 0,
+    all: getProblemStats("All"),
+    easy: getProblemStats("Easy"),
+    medium: getProblemStats("Medium"),
+    hard: getProblemStats("Hard"),
+  };
 };
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);

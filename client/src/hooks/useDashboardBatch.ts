@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  formatLeetCodeData,
   getMonthlyChartData,
   getTotalChartData,
   getWeeklyChartData,
@@ -14,6 +15,7 @@ import {
   YearlyStats,
   MonthlyStats,
   LeetCodeStats,
+  LeetCodeData,
 } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useMonthlyStatsStore from "@/store/useMonthlyStatsStore";
@@ -123,11 +125,7 @@ const useDashboardBatch = () => {
       }
 
       const payload: LeetCodeStats = await res.json();
-      console.log("LeetCode Data:", payload.data.allQuestionsCount);
-      console.log("LeetCode Data:", payload.data.matchedUser.contributions);
-      console.log("LeetCode Data:", payload.data.matchedUser.profile);
-      console.log("LeetCode Data:", payload.data.matchedUser.submitStatsGlobal);
-      console.log("LeetCode Data:", payload.data.userContestRanking);
+      const data: LeetCodeData = formatLeetCodeData(payload, username);
     } catch (err) {
       console.error("Fetch LeetCode Error:", err);
     }
