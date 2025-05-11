@@ -7,7 +7,6 @@ import {
   getWeeklyChartData,
   getYearlyChartData,
 } from "@/lib/batchHelper";
-import { leetcodeQuery } from "@/lib/graphqlQuery";
 import {
   Stats,
   StatMode,
@@ -18,6 +17,7 @@ import {
   LeetCodeData,
 } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
+import useLeetCodeStatsStore from "@/store/useLeetcodeStatsStore";
 import useMonthlyStatsStore from "@/store/useMonthlyStatsStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
 import useWeeklyStateStore from "@/store/useWeeklyStatsStore";
@@ -111,12 +111,14 @@ const useDashboardBatch = () => {
   };
 
   //? Fetch user LeetCode data
+  const lcStats = useLeetCodeStatsStore();
   const FetchLeetCode = async () => {
     console.log("FetchLeetCode Run");
 
     try {
       const username = dashboard?.leetcodeLink;
       if (!username) throw new Error("Leetcode username not found");
+      if (lcStats.leetCodeStats.data?.username === username) return;
 
       const res = await fetch(`/api/leetcode/${username}`);
 
@@ -126,8 +128,13 @@ const useDashboardBatch = () => {
 
       const payload: LeetCodeStats = await res.json();
       const data: LeetCodeData = formatLeetCodeData(payload, username);
+
+      lcStats.setLeetCodeStats(data);
     } catch (err) {
+      lcStats.setError(true);
       console.error("Fetch LeetCode Error:", err);
+    } finally {
+      lcStats.setLoading(false);
     }
   };
 
