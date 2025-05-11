@@ -14,7 +14,17 @@ const LeetcodeStats = ({ loading }: { loading: boolean }) => {
     <>
       <div className="info-rank flex items-center justify-between">
         <div className="info flex flex-col items-start h-full mt-10 leading-8">
-          <p className=" font-bold">{leetCodeStats?.username}</p>
+          <div
+            className=" font-bold cursor-pointer"
+            onClick={() =>
+              window.open(
+                `https://leetcode.com/${leetCodeStats?.username}/`,
+                "_blank"
+              )
+            }
+          >
+            {leetCodeStats?.username}
+          </div>
           <p className=" text-sm text-slate-400">
             Contest Rating :{" "}
             <span className=" dark:text-green-400 font-bold text-green-600">
