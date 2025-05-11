@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import UserProfile from "./dashboard/UserProfile";
 import TotalStats from "./dashboard/TotalStats";
-import CPStats from "./dashboard/CPStats";
 import GithubBox from "./dashboard/GithubBox";
 import GithubHeatMap from "./dashboard/GithubHeatMap";
 import WeeklyStats from "./dashboard/WeeklyStats";
@@ -11,6 +10,7 @@ import YearlyStats from "./dashboard/YearlyStats";
 import useDashboard from "@/hooks/useDashboard";
 import DashboardSkeleton from "./Skeletons/DashboardSkeleton";
 import useDashboardStore from "@/store/useDashboardStore";
+import CPStats from "./dashboard/CPStats";
 
 const DashboardGridContainer = () => {
   const { mutate, isPending, isError, error } = useDashboard(
