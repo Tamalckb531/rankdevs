@@ -46,13 +46,32 @@ const LeetcodeStats = ({ loading }: { loading: boolean }) => {
       </div>
       <p className="total text-sm font-bold gap-1 mt-1 flex items-center justify-center">
         {" "}
-        Total <span className=" text-blue-400 text-[16px]">182</span>/
-        <span className=" text-[16px] text-blue-600">3511</span> problem solved
+        Total{" "}
+        <span className=" text-blue-400 text-[16px]">
+          {leetCodeStats?.all.solved || 0}
+        </span>
+        /
+        <span className=" text-[16px] text-blue-600">
+          {leetCodeStats?.all.total || 100}
+        </span>{" "}
+        problem solved
       </p>
       <div className="problem-pie-chart flex items-center justify-between">
-        <ModePieChart mode="Easy" solved={46} total={871} />
-        <ModePieChart mode="Med." solved={111} total={1821} />
-        <ModePieChart mode="Hard" solved={25} total={819} />
+        <ModePieChart
+          mode="Easy"
+          solved={leetCodeStats?.easy.solved || 0}
+          total={leetCodeStats?.easy.total || 100}
+        />
+        <ModePieChart
+          mode="Med."
+          solved={leetCodeStats?.medium.solved || 0}
+          total={leetCodeStats?.medium.total || 100}
+        />
+        <ModePieChart
+          mode="Hard"
+          solved={leetCodeStats?.hard.solved || 0}
+          total={leetCodeStats?.hard.total || 100}
+        />
       </div>
     </>
   );
