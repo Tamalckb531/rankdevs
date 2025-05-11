@@ -13,6 +13,7 @@ import {
   WeeklyStats,
   YearlyStats,
   MonthlyStats,
+  LeetCodeStats,
 } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useMonthlyStatsStore from "@/store/useMonthlyStatsStore";
@@ -121,8 +122,12 @@ const useDashboardBatch = () => {
         throw new Error("Failed to fetch data");
       }
 
-      const data = await res.json();
-      console.log("LeetCode Data:", data);
+      const payload: LeetCodeStats = await res.json();
+      console.log("LeetCode Data:", payload.data.allQuestionsCount);
+      console.log("LeetCode Data:", payload.data.matchedUser.contributions);
+      console.log("LeetCode Data:", payload.data.matchedUser.profile);
+      console.log("LeetCode Data:", payload.data.matchedUser.submitStatsGlobal);
+      console.log("LeetCode Data:", payload.data.userContestRanking);
     } catch (err) {
       console.error("Fetch LeetCode Error:", err);
     }

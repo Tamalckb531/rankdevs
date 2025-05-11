@@ -49,6 +49,7 @@ export type WeeklyStats = {
     [key: string]: number;
   };
 };
+
 export type MonthlyStats = {
   sum: {
     total: number;
@@ -59,6 +60,7 @@ export type MonthlyStats = {
     [key: string]: number;
   };
 };
+
 export type YearlyStats = {
   sum: {
     total: number;
@@ -69,6 +71,7 @@ export type YearlyStats = {
     [key: string]: number;
   };
 };
+
 export type GenStats = {
   sum: {
     total: number;
@@ -79,6 +82,7 @@ export type GenStats = {
     [key: string]: number;
   };
 };
+
 export type TotalStats = {
   sum: {
     total: number;
@@ -118,6 +122,7 @@ export type TotalChartData = {
   time: number;
   fill: string;
 };
+
 export type ChartData = {
   field: string;
   time: number;
@@ -139,4 +144,50 @@ export type StatsPayload = {
   data: ChartData[];
   isLoading: boolean;
   isError: boolean;
+};
+
+export type LeetCodeStats = {
+  data: {
+    allQuestionsCount: {
+      difficulty: "All" | "Easy" | "Medium" | "Hard";
+      count: number;
+    }[];
+    userContestRanking: {
+      attendedContestsCount: number;
+      rating: number;
+      topPercentage: number;
+    } | null; // in case user hasn't attended any contest
+    matchedUser: {
+      contributions: {
+        points: number;
+      };
+      profile: {
+        ranking: number;
+      };
+      submitStatsGlobal: {
+        acSubmissionNum: {
+          difficulty: "All" | "Easy" | "Medium" | "Hard";
+          count: number;
+        }[];
+      };
+    };
+  };
+};
+
+export type Problems = {
+  total: number;
+  solved: number;
+};
+
+export type LeetCodeData = {
+  username: string;
+  rank: number;
+  contributionPoints: number;
+  contestAttended: number;
+  contestRating: number;
+  topPercentage: number;
+  all: Problems;
+  easy: Problems;
+  medium: Problems;
+  hard: Problems;
 };
