@@ -146,6 +146,12 @@ export type StatsPayload = {
   isError: boolean;
 };
 
+export type LCPayload = {
+  data: LeetCodeData | null;
+  isLoading: boolean;
+  isError: boolean;
+};
+
 export type LeetCodeStats = {
   data: {
     allQuestionsCount: {
