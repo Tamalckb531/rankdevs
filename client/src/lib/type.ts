@@ -174,6 +174,12 @@ export type LeetCodeStats = {
         acSubmissionNum: {
           difficulty: "All" | "Easy" | "Medium" | "Hard";
           count: number;
+          submissions: number;
+        }[];
+        totalSubmissionNum: {
+          difficulty: "All" | "Easy" | "Medium" | "Hard";
+          count: number;
+          submissions: number;
         }[];
       };
     };
@@ -192,6 +198,7 @@ export type LeetCodeData = {
   contestAttended: number;
   contestRating: number;
   topPercentage: number;
+  acRate: number;
   all: Problems;
   easy: Problems;
   medium: Problems;

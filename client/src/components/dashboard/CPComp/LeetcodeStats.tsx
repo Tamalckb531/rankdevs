@@ -38,7 +38,10 @@ const LeetcodeStats = ({ loading }: { loading: boolean }) => {
             stat={leetCodeStats?.contestAttended || 0}
           />
           <StatCard topic="Top" stat={leetCodeStats?.topPercentage || 0} />
-          <StatCard topic="Acceptance" stat={0} />
+          <StatCard
+            topic="Acceptance"
+            stat={`${leetCodeStats?.acRate || 0}%`}
+          />
         </div>
       </div>
       <p className="total text-sm font-bold gap-1 mt-1 flex items-center justify-center">
@@ -57,7 +60,7 @@ const LeetcodeStats = ({ loading }: { loading: boolean }) => {
 
 interface stat {
   topic: string;
-  stat: number;
+  stat: number | string;
 }
 
 const StatCard = ({ topic, stat }: stat) => {

@@ -186,6 +186,14 @@ export const formatLeetCodeData = (
     return { total, solved };
   };
 
+  const acceptanceRate = parseFloat(
+    (
+      (matchedUser.submitStatsGlobal.acSubmissionNum[0].submissions /
+        matchedUser.submitStatsGlobal.totalSubmissionNum[0].submissions) *
+      100
+    ).toFixed(2)
+  );
+
   return {
     username,
     rank: matchedUser.profile.ranking,
@@ -193,6 +201,7 @@ export const formatLeetCodeData = (
     contestAttended: userContestRanking?.attendedContestsCount || 0,
     contestRating: userContestRanking?.rating || 0,
     topPercentage: userContestRanking?.topPercentage || 0,
+    acRate: acceptanceRate,
     all: getProblemStats("All"),
     easy: getProblemStats("Easy"),
     medium: getProblemStats("Medium"),
