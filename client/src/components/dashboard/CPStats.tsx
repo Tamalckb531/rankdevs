@@ -27,7 +27,7 @@ const CPStats = () => {
   return (
     <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
       <Header />
-      <Content />
+      <Content loading={leetCodeStats.isLoading} />
     </Card>
   );
 };
@@ -43,10 +43,10 @@ const Header = () => {
   );
 };
 
-const Content = () => {
+const Content = ({ loading }: { loading: boolean }) => {
   return (
     <CardContent className=" flex flex-col gap-2 -mt-3">
-      <LeetcodeStats />
+      <LeetcodeStats loading={loading} />
     </CardContent>
   );
 };

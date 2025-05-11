@@ -1,7 +1,9 @@
 import React from "react";
 import { ModePieChart } from "./ModePieChart";
+import LeetCodeStatsSkeleton from "@/components/Skeletons/LeetCodeSkeleton";
 
-const LeetcodeStats = () => {
+const LeetcodeStats = ({ loading }: { loading: boolean }) => {
+  if (loading) return <LeetCodeStatsSkeleton />;
   return (
     <>
       <div className="info-rank flex items-center justify-between">
