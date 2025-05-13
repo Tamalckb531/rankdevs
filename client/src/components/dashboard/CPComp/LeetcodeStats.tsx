@@ -1,12 +1,12 @@
 import React from "react";
 import { ModePieChart } from "./ModePieChart";
 import LeetCodeStatsSkeleton from "@/components/Skeletons/LeetCodeSkeleton";
-import useLeetCodeStatsStore from "@/store/useCPStatsStore";
+import useCPStatsStore from "@/store/useCPStatsStore";
 
 const LeetcodeStats = ({ loading }: { loading: boolean }) => {
   if (loading) return <LeetCodeStatsSkeleton />;
 
-  const leetCodeStats = useLeetCodeStatsStore((state) => state.cpStats.lcData);
+  const leetCodeStats = useCPStatsStore((state) => state.cpStats.lcData);
 
   return (
     <>

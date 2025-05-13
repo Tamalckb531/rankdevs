@@ -155,9 +155,7 @@ const useDashboardBatch = () => {
       if (!username) throw new Error("Codeforce username not found");
 
       const res = await fetch(`/api/codeforce/${username}`);
-
       const data: CodeForceData = await res.json();
-      console.log("CodeForce Payload : ", data);
 
       cp.setCodeForceStats(data);
     } catch (err) {

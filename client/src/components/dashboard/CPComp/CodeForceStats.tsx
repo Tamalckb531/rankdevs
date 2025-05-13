@@ -2,11 +2,15 @@ import { getRankInfo } from "@/lib/language";
 import React from "react";
 import { CFRankCard } from "./CFRankCard";
 import LeetCodeStatsSkeleton from "@/components/Skeletons/LeetCodeSkeleton";
+import useCPStatsStore from "@/store/useCPStatsStore";
 
 const CodeForceStats = ({ loading }: { loading: boolean }) => {
   if (loading) return <LeetCodeStatsSkeleton />;
-  const primeRank = getRankInfo("legendary grandmaster");
-  const newRank = getRankInfo("specialist");
+  const codeForceStats = useCPStatsStore((state) => state.cpStats.cfData);
+  if (!codeForceStats) return;
+
+  const primeRank = getRankInfo(codeForceStats.maxRank);
+  const newRank = getRankInfo(codeForceStats.rank);
   return (
     <>
       <div className="info-rank flex items-center justify-between">
@@ -14,54 +18,57 @@ const CodeForceStats = ({ loading }: { loading: boolean }) => {
         <div className="info flex flex-col items-start h-full mt-10 leading-8">
           <div
             className=" font-bold cursor-pointer"
-            // onClick={() =>
-            //   window.open(
-            //     `https://leetcode.com/${leetCodeStats?.username}/`,
-            //     "_blank"
-            //   )
-            // }
+            onClick={() =>
+              window.open(
+                `https://codeforces.com/profile/${codeForceStats.username}/`,
+                "_blank"
+              )
+            }
           >
-            TamalCDip
+            {codeForceStats.username}
           </div>
           <p className=" text-sm text-slate-400">
             Last Active
             <span className=" dark:text-green-400 font-bold text-green-600 ml-1">
-              13/5/25
+              {codeForceStats.lastActive}
             </span>
           </p>
           <p className=" text-sm text-slate-400">
             Rating:
             <span className=" dark:text-green-400 font-bold text-green-600 ml-1">
-              2602
+              {codeForceStats.rating}
             </span>
           </p>
           <p className=" text-sm text-slate-400">
             Max Rating:
             <span className=" dark:text-green-400 font-bold text-green-600 ml-1">
-              2902
+              {codeForceStats.maxRating}
             </span>
           </p>
         </div>
-        <div className="stat flex flex-col items-center justify-between gap-2 w-[40%] text-slate-400 text-lg">
+        <div className="stat flex flex-col items-center justify-between gap-2 w-[40%] text-slate-400 text-lg cursor-pointer">
           <div
             className=" flex items-center justify-between w-full"
-            title="legendary grandmaster"
+            title={codeForceStats.maxRank}
           >
             On Prime :{" "}
             {<CFRankCard rank={primeRank.name} color={primeRank.color} />}
           </div>
           <div
             className="flex items-center justify-between w-full"
-            title="specialist"
+            title={codeForceStats.rank}
           >
             Now : {<CFRankCard rank={newRank.name} color={newRank.color} />}
           </div>
         </div>
       </div>
       <div className="stat flex items-center justify-between mt-2">
-        <StatCard topic="Contest Attended" stat={15} />
-        <StatCard topic="Friends" stat={3} />
-        <StatCard topic="Contributions" stat={9} />
+        <StatCard
+          topic="Contest Attended"
+          stat={codeForceStats.contestAttended}
+        />
+        <StatCard topic="Friends" stat={codeForceStats.friend} />
+        <StatCard topic="Contributions" stat={codeForceStats.contribution} />
       </div>
     </>
   );
