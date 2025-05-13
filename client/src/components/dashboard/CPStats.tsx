@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import PlatfromSelect from "./CPComp/PlatfromSelect";
 import LeetcodeStats from "./CPComp/LeetcodeStats";
 import useLeetCodeStatsStore from "@/store/useCPStatsStore";
-import { CodeForceData, LeetCodeData } from "@/lib/type";
+import { CodeForceData, CPMode, LeetCodeData } from "@/lib/type";
+import CodeForceStats from "./CPComp/CodeForceStats";
 
 const CPStats = () => {
   const cpStats = useLeetCodeStatsStore((state) => state.cpStats);
@@ -48,7 +49,7 @@ const CPStats = () => {
   return (
     <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
       <Header />
-      <Content loading={cpStats.isLoading} />
+      <Content loading={cpStats.isLoading} mode={cpStats.mode} />
     </Card>
   );
 };
@@ -64,10 +65,19 @@ const Header = () => {
   );
 };
 
-const Content = ({ loading }: { loading: boolean }) => {
+interface content {
+  loading: boolean;
+  mode: CPMode;
+}
+
+const Content = ({ loading, mode }: content) => {
   return (
     <CardContent className=" flex flex-col gap-2 -mt-3">
-      <LeetcodeStats loading={loading} />
+      {mode === "leetcode" ? (
+        <LeetcodeStats loading={loading} />
+      ) : (
+        <CodeForceStats />
+      )}
     </CardContent>
   );
 };
