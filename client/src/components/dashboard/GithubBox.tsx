@@ -9,31 +9,36 @@ import {
 import { LanguagePieChart } from "./GithubComp/languagePieChart";
 import { Badge } from "../ui/badge";
 import useGithubStatsStore from "@/store/useGithbuStatsStore";
+import { GithubSkeleton } from "../Skeletons/GithubSkeleton";
 
 const GithubBox = () => {
   const githubStats = useGithubStatsStore((state) => state.githubStats);
 
   if (!githubStats || githubStats.isError) {
-    <Card className=" flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
-      <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
-        Can't show Github Stats
-      </div>
-    </Card>;
+    return (
+      <Card className=" flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
+        <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
+          Can't show Github Stats
+        </div>
+      </Card>
+    );
   }
 
   if (!githubStats.isLoading && !githubStats.data) {
-    <Card className=" flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
-      <Header />
-      <div className=" h-full w-full flex items-center justify-center text-xl text-blue-400">
-        Data is empty
-      </div>
-    </Card>;
+    return (
+      <Card className=" flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
+        <Header />
+        <div className=" h-full w-full flex items-center justify-center text-xl text-blue-400">
+          Data is empty
+        </div>
+      </Card>
+    );
   }
 
   return (
     <Card className=" flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
       <Header />
-      <Content />
+      {!githubStats.isLoading ? <Content /> : <GithubSkeleton />}
     </Card>
   );
 };
