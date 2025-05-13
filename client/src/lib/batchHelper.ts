@@ -11,6 +11,8 @@ import {
   LeetCodeStats,
   LeetCodeData,
   Problems,
+  GitHubUserStats,
+  GithubData,
 } from "./type";
 
 export const getTotalChartData = (data: Stats): TotalChartData[] => {
@@ -206,6 +208,67 @@ export const formatLeetCodeData = (
     easy: getProblemStats("Easy"),
     medium: getProblemStats("Medium"),
     hard: getProblemStats("Hard"),
+  };
+};
+
+export const formatGithubData = (
+  gtPayload: GitHubUserStats,
+  username: string
+): GithubData => {
+  const {
+    contributionsCollection,
+    pullRequests,
+    reposForStarFork,
+    reposForLang,
+    latestRepoActivity,
+    pinnedItems,
+  } = gtPayload;
+
+  const totalContributions =
+    contributionsCollection.contributionCalendar.totalContributions;
+  const prCount = pullRequests.totalCount;
+  const repoCount = reposForStarFork.nodes.length;
+  const starCount = reposForStarFork.nodes.reduce(
+    (sum, repo) => sum + repo.stargazerCount,
+    0
+  );
+  const forkCount = reposForStarFork.nodes.reduce(
+    (sum, repo) => sum + repo.forkCount,
+    0
+  );
+
+  // Sum all language sizes
+  const languageMap: Record<string, number> = {};
+  reposForLang.nodes.forEach((repo) => {
+    repo.languages.edges.forEach((lang) => {
+      const name = lang.node.name;
+      const size = lang.size;
+      languageMap[name] = (languageMap[name] || 0) + size;
+    });
+  });
+
+  // Get top 3 languages by size
+  const language = Object.entries(languageMap)
+    .sort((a, b) => b[1] - a[1]) // sort descending
+    .slice(0, 3) // pick top 3
+    .map(([name, size]) => ({ name, size }));
+
+  const pinnedRepo = pinnedItems.nodes.map((item) => ({
+    name: item.name,
+  }));
+
+  const lastActive = latestRepoActivity.nodes[0]?.pushedAt.slice(0, 10) || "";
+
+  return {
+    username,
+    lastActive,
+    contribution: totalContributions,
+    repo: repoCount,
+    fork: forkCount,
+    star: starCount,
+    pr: prCount,
+    language,
+    pinnedRepo,
   };
 };
 

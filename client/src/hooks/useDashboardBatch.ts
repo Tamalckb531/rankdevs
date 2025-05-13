@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  formatGithubData,
   formatLeetCodeData,
   getMonthlyChartData,
   getTotalChartData,
@@ -15,6 +16,7 @@ import {
   MonthlyStats,
   LeetCodeStats,
   LeetCodeData,
+  GitHubUserStats,
 } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useLeetCodeStatsStore from "@/store/useLeetcodeStatsStore";
@@ -157,14 +159,19 @@ const useDashboardBatch = () => {
       const username = dashboard?.githubUserName;
       if (!username) throw new Error("Github username not found");
 
-      const res = await fetch(`/api/github/${username}?date=${Date.now()}`);
+      const res = await fetch(`/api/github/${"hkirat"}?date=${Date.now()}`);
 
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }
 
-      const payload = await res.json();
+      const payload: GitHubUserStats = await res.json();
+
       console.log("Github payload: ", payload);
+
+      const data = formatGithubData(payload, "hkirat");
+
+      console.log("Github data: ", data);
     } catch (err) {
       console.error("fetch Github Error:", err);
     }
