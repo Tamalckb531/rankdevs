@@ -153,6 +153,7 @@ const useDashboardBatch = () => {
     try {
       const username = dashboard?.codeforcesLink;
       if (!username) throw new Error("Codeforce username not found");
+      if (cp.cpStats.cfData?.username === username) return;
 
       const res = await fetch(`/api/codeforce/${username}`);
       const data: CodeForceData = await res.json();
