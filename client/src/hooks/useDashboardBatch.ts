@@ -17,6 +17,7 @@ import {
   LeetCodeStats,
   LeetCodeData,
   GitHubUserStats,
+  CodeForceData,
 } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useGithubStatsStore from "@/store/useGithbuStatsStore";
@@ -145,11 +146,23 @@ const useDashboardBatch = () => {
 
   const FetchCodeForce = async () => {
     console.log("FetchCodeForce Run");
+    cp.setLoading(true);
 
     try {
-      // TODO: add fetch CodeForce logic
+      const username = dashboard?.codeforcesLink;
+      if (!username) throw new Error("Codeforce username not found");
+
+      const res = await fetch(`/api/codeforce/${username}`);
+
+      const data: CodeForceData = await res.json();
+      console.log("CodeForce Payload : ", data);
+
+      cp.setCodeForceStats(data);
     } catch (err) {
+      cp.setError(true);
       console.error("fetch CodeForce Error:", err);
+    } finally {
+      cp.setLoading(false);
     }
   };
 
