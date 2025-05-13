@@ -28,6 +28,7 @@ const CPStats = () => {
   if (!cpStats || cpStats.isError) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
+        <Header />
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
           Can't show {text} Stats
         </div>
@@ -73,10 +74,10 @@ interface content {
 const Content = ({ loading, mode }: content) => {
   return (
     <CardContent className=" flex flex-col gap-2 -mt-3">
-      {mode !== "leetcode" ? (
+      {mode === "leetcode" ? (
         <LeetcodeStats loading={loading} />
       ) : (
-        <CodeForceStats />
+        <CodeForceStats loading={loading} />
       )}
     </CardContent>
   );

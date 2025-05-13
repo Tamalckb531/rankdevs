@@ -1,8 +1,10 @@
 import { getRankInfo } from "@/lib/language";
 import React from "react";
 import { CFRankCard } from "./CFRankCard";
+import LeetCodeStatsSkeleton from "@/components/Skeletons/LeetCodeSkeleton";
 
-const CodeForceStats = () => {
+const CodeForceStats = ({ loading }: { loading: boolean }) => {
+  if (loading) return <LeetCodeStatsSkeleton />;
   const primeRank = getRankInfo("legendary grandmaster");
   const newRank = getRankInfo("specialist");
   return (

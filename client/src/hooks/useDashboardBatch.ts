@@ -120,6 +120,7 @@ const useDashboardBatch = () => {
   const FetchLeetCode = async () => {
     console.log("FetchLeetCode Run");
     cp.setLoading(true);
+    cp.setError(false);
 
     try {
       const username = dashboard?.leetcodeLink;
@@ -147,6 +148,7 @@ const useDashboardBatch = () => {
   const FetchCodeForce = async () => {
     console.log("FetchCodeForce Run");
     cp.setLoading(true);
+    cp.setError(false);
 
     try {
       const username = dashboard?.codeforcesLink;

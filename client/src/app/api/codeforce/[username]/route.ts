@@ -12,7 +12,7 @@ export async function GET(
   try {
     const [ratingRes, statusRes] = await Promise.all([
       fetch(`https://codeforces.com/api/user.rating?handle=${username}`),
-      fetch(`https://codeforces.com/api/user.status?handle=${username}`),
+      fetch(`https://codeforces.com/api/user.info?handles=${username}`),
     ]);
 
     if (!ratingRes.ok || !statusRes.ok) {
@@ -20,22 +20,33 @@ export async function GET(
     }
 
     const ratingData = await ratingRes.json();
-    const statusData = await statusRes.json();
+    const statData = await statusRes.json();
 
-    if (ratingData.status !== "OK" || statusData.status !== "OK") return null;
+    if (ratingData.status !== "OK" || statData.status !== "OK") return null;
+
+    const statusData = statData.result[0];
+
+    if (!statusData) {
+      return new Response(
+        JSON.stringify({ error: "No status data found for this user" }),
+        {
+          status: 404,
+        }
+      );
+    }
 
     const contests = ratingData.result.length;
 
     data = {
       username: username,
       lastActive: formatLastActive(statusData.lastOnlineTimeSeconds),
-      rank: statusData.rank,
-      maxRank: statusData.maxRank,
-      rating: statusData.rating,
-      maxRating: statusData.maxRating,
-      contribution: statusData.contribution,
-      contestAttended: contests,
-      friend: statusData.friendOfCount,
+      rank: statusData.rank || "no-rank",
+      maxRank: statusData.maxRank || "no-rank",
+      rating: statusData.rating || 0,
+      maxRating: statusData.maxRating || 0,
+      contribution: statusData.contribution || 0,
+      contestAttended: contests || 0,
+      friend: statusData.friendOfCount || 0,
     };
     return new Response(JSON.stringify(data), {
       status: 200,

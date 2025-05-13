@@ -135,6 +135,7 @@ export const validLanguage = (language: string) => {
 
 export const getRankInfo = (rank: string): { name: string; color: string } => {
   const rankMap: { [key: string]: { name: string; color: string } } = {
+    "no-rank": { name: "NR", color: "#212020" }, // Black
     newbie: { name: "NB", color: "#808080" }, // Gray
     pupil: { name: "PU", color: "#008000" }, // Green
     specialist: { name: "SP", color: "#03A89E" }, // Cyan
