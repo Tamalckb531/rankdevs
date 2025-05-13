@@ -12,18 +12,18 @@ import {
 import { languages } from "@/lib/language";
 const chartData = [
   {
-    languages: "Rust",
-    minute: 275,
+    name: "Rust",
+    size: 275,
     fill: languages["rust"].color,
   },
   {
-    languages: "Typescript",
-    minute: 490,
+    name: "Typescript",
+    size: 490,
     fill: languages["typescript"].color,
   },
   {
-    languages: "C++",
-    minute: 310,
+    name: "C++",
+    size: 310,
     fill: languages["cpp"].color,
   },
 ];
@@ -52,8 +52,8 @@ export function LanguagePieChart() {
         />
         <Pie
           data={chartData}
-          dataKey="minute"
-          nameKey="languages"
+          dataKey="size"
+          nameKey="name"
           innerRadius={45}
           strokeWidth={5}
         >
@@ -74,7 +74,7 @@ export function LanguagePieChart() {
                       y={(viewBox.cy || 0) + 24}
                       className="fill-muted-foreground text-xs"
                     >
-                      Languages
+                      Name
                     </tspan>
                   </text>
                 );
