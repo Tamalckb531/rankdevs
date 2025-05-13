@@ -28,7 +28,7 @@ const CPStats = () => {
   if (!cpStats || cpStats.isError) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
-        <Header />
+        <Header text={text} />
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
           Can't show {text} Stats
         </div>
@@ -39,7 +39,7 @@ const CPStats = () => {
   if (!cpStats.isLoading && !data) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
-        <Header />
+        <Header text={text} />
         <div className=" h-full w-full flex items-center justify-center text-xl text-blue-400">
           Data is empty
         </div>
@@ -49,7 +49,7 @@ const CPStats = () => {
 
   return (
     <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
-      <Header />
+      <Header text={text} />
       <Content loading={cpStats.isLoading} mode={cpStats.mode} />
     </Card>
   );
@@ -57,10 +57,10 @@ const CPStats = () => {
 
 export default CPStats;
 
-const Header = () => {
+const Header = ({ text }: { text: string }) => {
   return (
     <CardHeader className="w-full flex items-center justify-between -mt-1">
-      <CardTitle className="text-xl font-bold">Leetcode</CardTitle>
+      <CardTitle className="text-xl font-bold">{text}</CardTitle>
       <PlatfromSelect />
     </CardHeader>
   );
