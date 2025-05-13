@@ -214,8 +214,8 @@ export type CodeForceData = {
   lastActive: string;
   rank: string;
   maxRank: string;
-  rating: string;
-  maxRating: string;
+  rating: number;
+  maxRating: number;
   contribution: number;
   contestAttended: number;
   friend: number;
