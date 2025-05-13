@@ -250,18 +250,24 @@ export type GitHubUserStats = {
 };
 
 export type GithubData = {
-  username: string; //? username
-  lastActive: string; //? latestRepoActivity -> nodes -> pushedAt
-  contribution: number; //? totalContributions
-  repo: number; //? reposForStarFork -> nodes : length
-  fork: number; //? sum of all reposForStarFork -> nodes -> forkCount
-  star: number; //? sum of all reposForStarFork -> nodes -> stargazerCount
-  pr: number; //? pullRequests -> totalCount
+  username: string;
+  lastActive: string;
+  contribution: number;
+  repo: number;
+  fork: number;
+  star: number;
+  pr: number;
   language: {
-    name: string; //? reposForLang -> nodes -> languages -> edges -> node -> name
-    size: number; //? reposForLang -> nodes -> languages -> edges -> size
+    name: string;
+    size: number;
   }[];
   pinnedRepo: {
-    name: string; //? pinnedItems -> nodes -> name
+    name: string;
   }[];
+};
+
+export type GHPayload = {
+  data: GithubData | null;
+  isLoading: boolean;
+  isError: boolean;
 };
