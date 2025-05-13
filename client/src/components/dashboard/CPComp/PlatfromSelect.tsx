@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -8,9 +8,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useCPStatsStore from "@/store/useCPStatsStore";
+import useDashboardBatch from "@/hooks/useDashboardBatch";
+import { CPMode } from "@/lib/type";
 const PlatfromSelect = () => {
+  const setMode = useCPStatsStore((state) => state.setMode);
+  const mode = useCPStatsStore((state) => state.cpStats.mode);
+  const [firstRender, setFirstRender] = useState<boolean>(true);
+
+  const { FetchLeetCode, FetchCodeForce } = useDashboardBatch();
+
+  useEffect(() => {
+    if (!firstRender) {
+      switch (mode) {
+        case "leetcode":
+          FetchLeetCode();
+          break;
+        case "codeforce":
+          FetchCodeForce();
+          break;
+        default:
+          break;
+      }
+    }
+    setFirstRender(false);
+    console.log("Run from the select comp");
+  }, [mode]);
+
   return (
-    <Select>
+    <Select onValueChange={(value: CPMode) => setMode(value)}>
       <SelectTrigger className="w-[150px]">
         <SelectValue placeholder="Select Platform" />
       </SelectTrigger>
@@ -19,7 +45,6 @@ const PlatfromSelect = () => {
           <SelectLabel>CP Platform</SelectLabel>
           <SelectItem value="leetcode">Leetcode</SelectItem>
           <SelectItem value="codeforce">Codeforce</SelectItem>
-          <SelectItem value="gfg">GFG</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
