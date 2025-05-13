@@ -169,7 +169,7 @@ const useDashboardBatch = () => {
       }
 
       const payload: GitHubUserStats = await res.json();
-      const data = formatGithubData(payload, "hkirat");
+      const data = formatGithubData(payload, username);
 
       ghStats.setGithubStats(data);
     } catch (err) {
