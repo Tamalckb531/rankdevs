@@ -204,3 +204,64 @@ export type LeetCodeData = {
   medium: Problems;
   hard: Problems;
 };
+
+export type GitHubUserStats = {
+  contributionsCollection: {
+    contributionCalendar: {
+      totalContributions: number;
+    };
+  };
+  pullRequests: {
+    totalCount: number;
+  };
+  reposForStarFork: {
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: string;
+    };
+    nodes: {
+      stargazerCount: number;
+      forkCount: number;
+    }[];
+  };
+  reposForLang: {
+    nodes: {
+      languages: {
+        edges: {
+          size: number;
+          node: {
+            name: string;
+          };
+        }[];
+      };
+    }[];
+  };
+  latestRepoActivity: {
+    nodes: {
+      pushedAt: string;
+      name: string;
+    }[];
+  };
+  pinnedItems: {
+    nodes: {
+      name: string;
+    }[];
+  };
+};
+
+export type GithubData = {
+  username: string; //? username
+  lastActive: string; //? latestRepoActivity -> nodes -> pushedAt
+  contribution: number; //? totalContributions
+  repo: number; //? reposForStarFork -> nodes : length
+  fork: number; //? sum of all reposForStarFork -> nodes -> forkCount
+  star: number; //? sum of all reposForStarFork -> nodes -> stargazerCount
+  pr: number; //? pullRequests -> totalCount
+  language: {
+    name: string; //? reposForLang -> nodes -> languages -> edges -> node -> name
+    size: number; //? reposForLang -> nodes -> languages -> edges -> size
+  }[];
+  pinnedRepo: {
+    name: string; //? pinnedItems -> nodes -> name
+  }[];
+};
