@@ -12,23 +12,6 @@ import {
 import { getLanguageType, languages, validLanguage } from "@/lib/language";
 import { Language, LanguageForChart } from "@/lib/type";
 import LanguageToolTip from "@/components/LanguageToolTip";
-// const chartData = [
-//   {
-//     name: "Rust",
-//     size: 275,
-//     fill: languages["rust"].color,
-//   },
-//   {
-//     name: "Typescript",
-//     size: 490,
-//     fill: languages["typescript"].color,
-//   },
-//   {
-//     name: "C++",
-//     size: 310,
-//     fill: languages["cpp"].color,
-//   },
-// ];
 const chartConfig = {} satisfies ChartConfig;
 
 export function LanguagePieChart({ language }: { language: Language[] }) {
