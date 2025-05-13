@@ -20,7 +20,7 @@ import {
 } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
 import useGithubStatsStore from "@/store/useGithbuStatsStore";
-import useLeetCodeStatsStore from "@/store/useLeetcodeStatsStore";
+import useLeetCodeStatsStore from "@/store/useCPStatsStore";
 import useMonthlyStatsStore from "@/store/useMonthlyStatsStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
 import useWeeklyStateStore from "@/store/useWeeklyStatsStore";

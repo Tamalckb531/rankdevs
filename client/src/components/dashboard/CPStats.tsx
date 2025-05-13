@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import PlatfromSelect from "./CPComp/PlatfromSelect";
 import LeetcodeStats from "./CPComp/LeetcodeStats";
-import useLeetCodeStatsStore from "@/store/useLeetcodeStatsStore";
+import useLeetCodeStatsStore from "@/store/useCPStatsStore";
 
 const CPStats = () => {
   const leetCodeStats = useLeetCodeStatsStore((state) => state.leetCodeStats);

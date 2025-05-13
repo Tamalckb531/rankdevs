@@ -147,7 +147,8 @@ export type StatsPayload = {
 };
 
 export type LCPayload = {
-  data: LeetCodeData | null;
+  lcData: LeetCodeData | null;
+  cfData: CodeForceData | null;
   isLoading: boolean;
   isError: boolean;
 };
@@ -203,6 +204,18 @@ export type LeetCodeData = {
   easy: Problems;
   medium: Problems;
   hard: Problems;
+};
+
+export type CodeForceData = {
+  username: string;
+  lastActive: string;
+  rank: string;
+  maxRank: string;
+  rating: string;
+  maxRating: string;
+  contribution: number;
+  contestAttended: number;
+  friend: number;
 };
 
 export type GitHubUserStats = {
