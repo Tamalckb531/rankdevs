@@ -10,11 +10,8 @@ interface Info {
 const LanguageToolTip = ({ fill, name, size }: Info) => {
   return (
     <div className="flex items-center justify-between gap-2 w-full text-nowrap">
-      {/* Color Dot */}
       <div className="h-3 w-3 rounded-xs" style={{ backgroundColor: fill }} />
-      {/* Language Name */}
       <span className="text-muted-foreground">{name}</span>
-      {/* Time */}
       <span className="text-foreground font-mono font-medium tabular-nums ml-auto">
         {formatSize(size)}
       </span>
