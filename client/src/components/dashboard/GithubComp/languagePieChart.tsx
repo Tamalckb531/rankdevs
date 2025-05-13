@@ -9,37 +9,42 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { languages } from "@/lib/language";
-const chartData = [
-  {
-    name: "Rust",
-    size: 275,
-    fill: languages["rust"].color,
-  },
-  {
-    name: "Typescript",
-    size: 490,
-    fill: languages["typescript"].color,
-  },
-  {
-    name: "C++",
-    size: 310,
-    fill: languages["cpp"].color,
-  },
-];
-const chartConfig = {
-  Rust: {
-    label: "Rust",
-  },
-  Typescript: {
-    label: "Typescript",
-  },
-  "C++": {
-    label: "C++",
-  },
-} satisfies ChartConfig;
+import { getLanguageType, languages, validLanguage } from "@/lib/language";
+import { Language, LanguageForChart } from "@/lib/type";
+import LanguageToolTip from "@/components/LanguageToolTip";
+// const chartData = [
+//   {
+//     name: "Rust",
+//     size: 275,
+//     fill: languages["rust"].color,
+//   },
+//   {
+//     name: "Typescript",
+//     size: 490,
+//     fill: languages["typescript"].color,
+//   },
+//   {
+//     name: "C++",
+//     size: 310,
+//     fill: languages["cpp"].color,
+//   },
+// ];
+const chartConfig = {} satisfies ChartConfig;
 
-export function LanguagePieChart() {
+export function LanguagePieChart({ language }: { language: Language[] }) {
+  let chartData: LanguageForChart[] = [];
+
+  language.map((lang, index) => {
+    const langName = validLanguage(lang.name);
+
+    const obj: LanguageForChart = {
+      name: langName,
+      size: lang.size,
+      fill: languages[langName.toLowerCase()]?.color || "#000",
+    };
+    chartData.push(obj);
+  });
+
   return (
     <ChartContainer
       config={chartConfig}
@@ -48,7 +53,21 @@ export function LanguagePieChart() {
       <PieChart>
         <ChartTooltip
           cursor={false}
-          content={<ChartTooltipContent hideLabel />}
+          content={
+            <ChartTooltipContent
+              hideLabel={false}
+              formatter={(value, name, entry, index, payload) => {
+                const size = value as number;
+                return (
+                  <LanguageToolTip
+                    fill={entry.payload.fill}
+                    name={getLanguageType(entry.payload.name)}
+                    size={size}
+                  />
+                );
+              }}
+            />
+          }
         />
         <Pie
           data={chartData}
@@ -74,7 +93,7 @@ export function LanguagePieChart() {
                       y={(viewBox.cy || 0) + 24}
                       className="fill-muted-foreground text-xs"
                     >
-                      Name
+                      Languages
                     </tspan>
                   </text>
                 );

@@ -249,6 +249,17 @@ export type GitHubUserStats = {
   };
 };
 
+export type Language = {
+  name: string;
+  size: number;
+};
+
+export type LanguageForChart = {
+  name: string;
+  size: number;
+  fill: string;
+};
+
 export type GithubData = {
   username: string;
   lastActive: string;
@@ -257,10 +268,7 @@ export type GithubData = {
   fork: number;
   star: number;
   pr: number;
-  language: {
-    name: string;
-    size: number;
-  }[];
+  language: Language[];
   pinnedRepo: {
     name: string;
   }[];

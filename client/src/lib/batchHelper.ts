@@ -283,7 +283,7 @@ export const formatSize = (size: number): string => {
     unitIndex++;
   } while (formattedSize >= 1024 && unitIndex < units.length - 1);
 
-  return `${formattedSize.toFixed(2)} ${units[unitIndex]}`;
+  return `${formattedSize.toFixed(0)} ${units[unitIndex]}`;
 };
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);

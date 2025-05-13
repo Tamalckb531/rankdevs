@@ -122,7 +122,7 @@ const Content = () => {
               </span>
             </p>
           </div>
-          <LanguagePieChart />
+          <LanguagePieChart language={githubStats.data?.language || []} />
         </div>
         <div className="stat flex items-center justify-between pr-10 -mt-2">
           <StatCard topic="Repository" stat={githubStats.data?.repo || 0} />

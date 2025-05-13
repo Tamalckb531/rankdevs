@@ -124,6 +124,15 @@ export const getLanguageType = (language: string) => {
   }
 };
 
+export const validLanguage = (language: string) => {
+  switch (language) {
+    case "C++":
+      return "Cpp";
+    default:
+      return language;
+  }
+};
+
 export const msToHM = (ms: number): string => {
   if (ms === 0) return "0M";
 
