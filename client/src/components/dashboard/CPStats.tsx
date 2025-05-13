@@ -3,21 +3,38 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import PlatfromSelect from "./CPComp/PlatfromSelect";
 import LeetcodeStats from "./CPComp/LeetcodeStats";
 import useLeetCodeStatsStore from "@/store/useCPStatsStore";
+import { CodeForceData, LeetCodeData } from "@/lib/type";
 
 const CPStats = () => {
-  const leetCodeStats = useLeetCodeStatsStore((state) => state.leetCodeStats);
+  const cpStats = useLeetCodeStatsStore((state) => state.cpStats);
+  let text: string;
+  let data: LeetCodeData | CodeForceData | null;
+  switch (cpStats.mode) {
+    case "leetcode":
+      text = "LeetCode";
+      data = cpStats.lcData;
+      break;
+    case "codeforce":
+      text = "CodeForce";
+      data = cpStats.cfData;
+      break;
+    default:
+      text = "";
+      data = null;
+      break;
+  }
 
-  if (!leetCodeStats || leetCodeStats.isError) {
+  if (!cpStats || cpStats.isError) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
-          Can't show Leetcode Stats
+          Can't show {text} Stats
         </div>
       </Card>
     );
   }
 
-  if (!leetCodeStats.isLoading && !leetCodeStats.data) {
+  if (!cpStats.isLoading && !data) {
     return (
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
         <Header />
@@ -31,7 +48,7 @@ const CPStats = () => {
   return (
     <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
       <Header />
-      <Content loading={leetCodeStats.isLoading} />
+      <Content loading={cpStats.isLoading} />
     </Card>
   );
 };

@@ -6,9 +6,7 @@ import useLeetCodeStatsStore from "@/store/useCPStatsStore";
 const LeetcodeStats = ({ loading }: { loading: boolean }) => {
   if (loading) return <LeetCodeStatsSkeleton />;
 
-  const leetCodeStats = useLeetCodeStatsStore(
-    (state) => state.leetCodeStats.data
-  );
+  const leetCodeStats = useLeetCodeStatsStore((state) => state.cpStats.lcData);
 
   return (
     <>

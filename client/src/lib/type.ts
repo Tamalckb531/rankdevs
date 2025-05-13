@@ -130,6 +130,8 @@ export type ChartData = {
 
 export type StatMode = "time" | "language" | "stats";
 
+export type CPMode = "leetcode" | "codeforce";
+
 export type TotalStatsPayload = {
   mode: string;
   data: TotalChartData[];
@@ -146,7 +148,8 @@ export type StatsPayload = {
   isError: boolean;
 };
 
-export type LCPayload = {
+export type CPPayload = {
+  mode: CPMode;
   lcData: LeetCodeData | null;
   cfData: CodeForceData | null;
   isLoading: boolean;

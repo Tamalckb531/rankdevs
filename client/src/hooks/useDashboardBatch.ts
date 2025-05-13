@@ -113,15 +113,17 @@ const useDashboardBatch = () => {
     }
   };
 
+  const cp = useLeetCodeStatsStore();
+
   //! Fetch user LeetCode data
-  const lcStats = useLeetCodeStatsStore();
   const FetchLeetCode = async () => {
     console.log("FetchLeetCode Run");
+    cp.setLoading(true);
 
     try {
       const username = dashboard?.leetcodeLink;
       if (!username) throw new Error("Leetcode username not found");
-      if (lcStats.leetCodeStats.data?.username === username) return;
+      if (cp.cpStats.lcData?.username === username) return;
 
       const res = await fetch(`/api/leetcode/${username}`);
 
@@ -132,12 +134,12 @@ const useDashboardBatch = () => {
       const payload: LeetCodeStats = await res.json();
       const data: LeetCodeData = formatLeetCodeData(payload, username);
 
-      lcStats.setLeetCodeStats(data);
+      cp.setLeetCodeStats(data);
     } catch (err) {
-      lcStats.setError(true);
+      cp.setError(true);
       console.error("Fetch LeetCode Error:", err);
     } finally {
-      lcStats.setLoading(false);
+      cp.setLoading(false);
     }
   };
 
