@@ -19,6 +19,7 @@ import {
   GitHubUserStats,
 } from "@/lib/type";
 import useDashboardStore from "@/store/useDashboardStore";
+import useGithubStatsStore from "@/store/useGithbuStatsStore";
 import useLeetCodeStatsStore from "@/store/useLeetcodeStatsStore";
 import useMonthlyStatsStore from "@/store/useMonthlyStatsStore";
 import useTotalStateStore from "@/store/useTotalStatsStore";
@@ -151,6 +152,7 @@ const useDashboardBatch = () => {
   };
 
   //! Fetch user LeetCode data
+  const ghStats = useGithubStatsStore();
 
   const FetchGithub = async () => {
     console.log("FetchGithub Run");
@@ -158,22 +160,23 @@ const useDashboardBatch = () => {
     try {
       const username = dashboard?.githubUserName;
       if (!username) throw new Error("Github username not found");
+      if (ghStats.githubStats.data?.username === username) return;
 
-      const res = await fetch(`/api/github/${"hkirat"}?date=${Date.now()}`);
+      const res = await fetch(`/api/github/${username}?date=${Date.now()}`);
 
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }
 
       const payload: GitHubUserStats = await res.json();
-
-      console.log("Github payload: ", payload);
-
       const data = formatGithubData(payload, "hkirat");
 
-      console.log("Github data: ", data);
+      ghStats.setGithubStats(data);
     } catch (err) {
+      ghStats.setError(true);
       console.error("fetch Github Error:", err);
+    } finally {
+      ghStats.setLoading(false);
     }
   };
 
