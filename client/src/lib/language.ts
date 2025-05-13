@@ -133,6 +133,23 @@ export const validLanguage = (language: string) => {
   }
 };
 
+export const getRankInfo = (rank: string): { name: string; color: string } => {
+  const rankMap: { [key: string]: { name: string; color: string } } = {
+    newbie: { name: "NB", color: "#808080" }, // Gray
+    pupil: { name: "PU", color: "#008000" }, // Green
+    specialist: { name: "SP", color: "#03A89E" }, // Cyan
+    expert: { name: "EX", color: "#0000FF" }, // Blue
+    "candidate master": { name: "CM", color: "#AA00AA" }, // Violet
+    master: { name: "M", color: "#FF8C00" }, // Orange
+    "international master": { name: "IM", color: "#FF8C00" }, // Orange
+    grandmaster: { name: "GM", color: "#FF0000" }, // Red
+    "international grandmaster": { name: "IGM", color: "#FF0000" }, // Red
+    "legendary grandmaster": { name: "LGM", color: "#FF3333" }, // Bright Red
+  };
+
+  return rankMap[rank.toLowerCase()] || { name: "??", color: "#000000" };
+};
+
 export const msToHM = (ms: number): string => {
   if (ms === 0) return "0M";
 
