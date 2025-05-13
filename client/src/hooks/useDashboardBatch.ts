@@ -26,7 +26,7 @@ import useYearlyStateStore from "@/store/useYearlyStateStore";
 const useDashboardBatch = () => {
   const dashboard = useDashboardStore((state) => state.dashboard);
 
-  //? Calculate Total Stats
+  //! Calculate Total Stats
   const totalStore = useTotalStateStore();
 
   const CalculateTotal = (mode: any) => {
@@ -47,7 +47,7 @@ const useDashboardBatch = () => {
     }
   };
 
-  //? Calculate Weekly Stats
+  //! Calculate Weekly Stats
   const weeklyStore = useWeeklyStateStore();
 
   const CalculateWeekly = (mode: StatMode) => {
@@ -68,7 +68,7 @@ const useDashboardBatch = () => {
     }
   };
 
-  //? Calculate Yearly Stats
+  //! Calculate Yearly Stats
   const yearlyStore = useYearlyStateStore();
 
   const CalculateYearly = (mode: StatMode) => {
@@ -89,7 +89,7 @@ const useDashboardBatch = () => {
     }
   };
 
-  //? Calculate Yearly Stats
+  //! Calculate Yearly Stats
   const monthlyStats = useMonthlyStatsStore();
 
   const CalculateMonthly = (mode: StatMode) => {
@@ -110,7 +110,7 @@ const useDashboardBatch = () => {
     }
   };
 
-  //? Fetch user LeetCode data
+  //! Fetch user LeetCode data
   const lcStats = useLeetCodeStatsStore();
   const FetchLeetCode = async () => {
     console.log("FetchLeetCode Run");
@@ -147,11 +147,24 @@ const useDashboardBatch = () => {
       console.error("fetch CodeForce Error:", err);
     }
   };
+
+  //! Fetch user LeetCode data
+
   const FetchGithub = async () => {
     console.log("FetchGithub Run");
 
     try {
-      // TODO: add fetch Github logic
+      const username = dashboard?.githubUserName;
+      if (!username) throw new Error("Github username not found");
+
+      const res = await fetch(`/api/github/${username}?date=${Date.now()}`);
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const payload = await res.json();
+      console.log("Github payload: ", payload);
     } catch (err) {
       console.error("fetch Github Error:", err);
     }

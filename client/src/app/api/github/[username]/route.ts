@@ -2,15 +2,24 @@ import { githubQuery } from "@/lib/graphqlQuery";
 
 export async function GET(
   req: Request,
-  context: { params: { username: string; date: string } }
+  context: { params: { username: string } }
 ) {
-  const { username, date } = await context.params;
+  const { username } = await context.params;
+  const { searchParams } = new URL(req.url);
+  const dateParam = searchParams.get("date");
 
-  const clientDate = new Date(parseInt(date));
-  const to = clientDate.toISOString(); // current time
+  const date = dateParam ? parseInt(dateParam) : Date.now();
+  if (isNaN(date)) {
+    return new Response(JSON.stringify({ error: "Invalid date" }), {
+      status: 400,
+    });
+  }
+
+  const clientDate = new Date(date);
+  const to = clientDate.toISOString();
   const from = new Date(
     clientDate.setFullYear(clientDate.getFullYear() - 1)
-  ).toISOString(); // 1 year back
+  ).toISOString();
 
   const token: string = process.env.GITHUB_TOKEN || "no token cuh..";
   console.log(token);
