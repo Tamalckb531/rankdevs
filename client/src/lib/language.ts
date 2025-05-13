@@ -147,7 +147,7 @@ export const getRankInfo = (rank: string): { name: string; color: string } => {
     "legendary grandmaster": { name: "LGM", color: "#FF3333" }, // Bright Red
   };
 
-  return rankMap[rank.toLowerCase()] || { name: "??", color: "#000000" };
+  return rankMap[rank.toLowerCase()] || { name: "no-rank", color: "#000000" };
 };
 
 export const msToHM = (ms: number): string => {
