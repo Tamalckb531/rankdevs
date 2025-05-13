@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import PlatfromSelect from "./CPComp/PlatfromSelect";
