@@ -87,6 +87,12 @@ export type statPayload = {
 export type RankEntry = { userId: string; total: number };
 
 export type InfoPayload = {
+  firstname: string;
+  lastname: string;
+  isHireable: boolean;
+  imgLink: string | null;
+  bio: string;
+  location: string;
   portfolio: string | null;
   email: string | null;
   twitterUsername: string | null;

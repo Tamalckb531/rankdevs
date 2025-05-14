@@ -230,6 +230,12 @@ export const updateInfo = async (c: Context) => {
   const userId = c.get("user")?.id;
   try {
     const {
+      firstname,
+      lastname,
+      isHireable,
+      imgLink,
+      bio,
+      location,
       portfolio,
       email,
       twitterUsername,
@@ -248,6 +254,12 @@ export const updateInfo = async (c: Context) => {
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
+        firstname,
+        lastname,
+        isHireable,
+        imgLink,
+        bio,
+        location,
         portfolio,
         email,
         twitterUsername,
