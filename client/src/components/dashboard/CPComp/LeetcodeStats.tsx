@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { ModePieChart } from "./ModePieChart";
 import LeetCodeStatsSkeleton from "@/components/Skeletons/LeetCodeSkeleton";

@@ -1,7 +1,7 @@
+"use client";
 import { getRankInfo } from "@/lib/language";
 import React from "react";
 import { CFRankCard } from "./CFRankCard";
-import LeetCodeStatsSkeleton from "@/components/Skeletons/LeetCodeSkeleton";
 import useCPStatsStore from "@/store/useCPStatsStore";
 import { CodeForceSkeleton } from "@/components/Skeletons/CodeForceSkeleton";
 

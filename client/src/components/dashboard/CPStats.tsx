@@ -75,11 +75,12 @@ interface content {
 const Content = ({ loading, mode }: content) => {
   return (
     <CardContent className=" flex flex-col gap-2 -mt-3">
-      {mode === "leetcode" ? (
+      <div className={mode === "leetcode" ? "flex flex-col gap-2" : "hidden"}>
         <LeetcodeStats loading={loading} />
-      ) : (
+      </div>
+      <div className={mode === "codeforce" ? "flex flex-col gap-2" : "hidden"}>
         <CodeForceStats loading={loading} />
-      )}
+      </div>
     </CardContent>
   );
 };
