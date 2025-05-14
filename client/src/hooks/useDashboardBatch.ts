@@ -34,7 +34,6 @@ const useDashboardBatch = () => {
   const totalStore = useTotalStateStore();
 
   const CalculateTotal = (mode: any) => {
-    console.log("CalculateTotal Run");
     try {
       const data: Stats | undefined = dashboard?.totalStats[mode];
 
@@ -55,7 +54,6 @@ const useDashboardBatch = () => {
   const weeklyStore = useWeeklyStateStore();
 
   const CalculateWeekly = (mode: StatMode) => {
-    console.log("CalculateWeekly Run: ", mode);
     if (mode === "stats") return;
 
     try {
@@ -76,7 +74,6 @@ const useDashboardBatch = () => {
   const yearlyStore = useYearlyStateStore();
 
   const CalculateYearly = (mode: StatMode) => {
-    console.log("CalculateYearly Run");
     if (mode === "stats") return;
 
     try {
@@ -97,7 +94,6 @@ const useDashboardBatch = () => {
   const monthlyStats = useMonthlyStatsStore();
 
   const CalculateMonthly = (mode: StatMode) => {
-    console.log("CalculateMonthly Run");
     if (mode === "stats") return;
 
     try {
@@ -118,7 +114,6 @@ const useDashboardBatch = () => {
 
   //! Fetch user LeetCode data
   const FetchLeetCode = async () => {
-    console.log("FetchLeetCode Run");
     cp.setLoading(true);
     cp.setError(false);
 
@@ -146,7 +141,6 @@ const useDashboardBatch = () => {
   };
 
   const FetchCodeForce = async () => {
-    console.log("FetchCodeForce Run");
     cp.setLoading(true);
     cp.setError(false);
 
@@ -171,7 +165,8 @@ const useDashboardBatch = () => {
   const ghStats = useGithubStatsStore();
 
   const FetchGithub = async () => {
-    console.log("FetchGithub Run");
+    ghStats.setLoading(true);
+    ghStats.setError(false);
 
     try {
       const username = dashboard?.githubUserName;

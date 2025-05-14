@@ -18,6 +18,8 @@ const DashboardGridContainer = () => {
   );
   const dashboard = useDashboardStore((state) => state.dashboard);
 
+  console.log(dashboard);
+
   useEffect(() => {
     mutate();
   }, [mutate]);
