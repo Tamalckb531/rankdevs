@@ -3,9 +3,10 @@ import React from "react";
 import { CFRankCard } from "./CFRankCard";
 import LeetCodeStatsSkeleton from "@/components/Skeletons/LeetCodeSkeleton";
 import useCPStatsStore from "@/store/useCPStatsStore";
+import { CodeForceSkeleton } from "@/components/Skeletons/CodeForceSkeleton";
 
 const CodeForceStats = ({ loading }: { loading: boolean }) => {
-  if (loading) return <LeetCodeStatsSkeleton />;
+  if (loading) return <CodeForceSkeleton />;
   const codeForceStats = useCPStatsStore((state) => state.cpStats.cfData);
   if (!codeForceStats) return;
 
