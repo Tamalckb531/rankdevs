@@ -55,6 +55,12 @@ export function LoginForm({
           const newUser: User = {
             id: data.user.id,
             apiKey: data.user.apiKey,
+            firstname: data.user.firstname,
+            lastname: data.user.lastname,
+            isHireable: data.user.isHireable,
+            imgLink: data.user.imgLink,
+            bio: data.user.bio,
+            location: data.user.location,
             portfolio: data.user.portfolio,
             githubUserName: data.user.githubUserName,
             email: data.user.email,
