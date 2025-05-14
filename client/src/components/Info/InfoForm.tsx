@@ -22,6 +22,12 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 const FormSchema = z.object({
+  firstname: z.string().min(2).max(12),
+  lastname: z.string().min(2).max(15),
+  isHireable: z.boolean(),
+  imgLink: z.string().optional(),
+  bio: z.string().min(8).max(65),
+  location: z.string().min(5),
   apiKey: z.string().min(8),
   twitterUsername: z.string().optional(),
   peerlistLink: z.string().optional(),
