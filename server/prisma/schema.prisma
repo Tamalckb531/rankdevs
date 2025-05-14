@@ -15,6 +15,12 @@ datasource db {
 
 model User {
   id              String  @id @default(uuid())
+  firstname       String  @default("Human")
+  lastname        String  @default("Dev")
+  isHireable      Boolean @default(false)
+  imgLink         String?
+  bio             String  @default("Hey there! Welcome to my dashboard")
+  location        String? @default("Earth")
   githubUserName  String  @unique
   apiKey          String  @unique
   email           String?
