@@ -4,27 +4,28 @@ import Image from "next/image";
 import React from "react";
 
 interface Info {
-  twitterLink: string | null | undefined;
+  twitter: string | null | undefined;
+  github: string | null | undefined;
 }
 
-const UserInfo = ({ twitterLink }: Info) => {
+const UserInfo = ({ twitter, github }: Info) => {
   return (
     <div className=" flex flex-col gap-2">
       <div className=" flex gap-2 items-start">
-        <UserImg />
+        <UserImg twitter={twitter} github={github} />
         <div className=" flex flex-col justify-center">
           <div className=" flex items-center justify-center gap-2">
             <p className=" text-xl font-bold">Tamal Chakraborty</p>
             <Badge className="h-4 px-1 text-xs mt-1">Hireable</Badge>
           </div>
-          {twitterLink && (
+          {twitter && (
             <a
-              href={`https://x.com/${twitterLink}`}
+              href={`https://x.com/${twitter}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-400 text-sm -mt-0.5 cursor-pointer"
             >
-              {twitterLink}
+              @{twitter}
             </a>
           )}
         </div>
@@ -38,16 +39,27 @@ const UserInfo = ({ twitterLink }: Info) => {
 
 export default UserInfo;
 
-const UserImg = () => {
+const UserImg = ({ twitter, github }: Info) => {
+  let imageUrl = "/fallback.jpg"; // your local fallback
+
+  if (twitter) {
+    imageUrl = `https://unavatar.io/twitter/${twitter}`;
+  } else if (github) {
+    imageUrl = `https://unavatar.io/github/${github}`;
+  }
+
   return (
     <div className="w-[55px] h-[55px]">
       <AspectRatio ratio={3 / 4}>
         <Image
-          src="/ghibili.jpg"
-          alt="Image"
+          src={imageUrl}
+          alt="User avatar"
           className="rounded-md object-cover"
           width={100}
           height={100}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/fallback.jpg";
+          }}
         />
       </AspectRatio>
     </div>

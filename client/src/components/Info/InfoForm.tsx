@@ -92,6 +92,8 @@ export function InfoForm() {
   }, [isPending, isError]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log("Clicked");
+
     const { apiKey, ...rest } = data;
 
     // Convert empty strings to null
@@ -216,6 +218,20 @@ export function InfoForm() {
 
         <FormField
           control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location : </FormLabel>
+              <FormControl>
+                <Input placeholder="Dhaka, Bangladesh" {...field} />
+              </FormControl>
+              <FormDescription>Add your location here</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="twitterUsername"
           render={({ field }) => (
             <FormItem>
@@ -323,7 +339,7 @@ export function InfoForm() {
               <Spinner /> <span>Please Wait....</span>
             </div>
           ) : (
-            <>Submit</>
+            <div>Submit</div>
           )}
         </Button>
       </form>

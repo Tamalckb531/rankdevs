@@ -12,7 +12,10 @@ const UserProfile = () => {
 
   return (
     <Card className=" bg-background shadow-md dark:shadow-slate-500 flex flex-col items-start justify-between rounded-2xl px-2">
-      <UserInfo twitterLink={dashboard?.twitterUsername} />
+      <UserInfo
+        twitter={dashboard?.twitterUsername}
+        github={dashboard?.githubUserName}
+      />
       <OtherInfo email={dashboard?.email} joinAt={dashboard?.joinAt} />
       <CodingStat
         dailyRank={dashboard?.dailyRank ?? -1}
