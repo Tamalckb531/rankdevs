@@ -35,6 +35,7 @@ export type statPayload = {
 };
 
 export type userInfo = {
+  id?: string;
   githubUserName: string;
   twitterUsername?: string | null;
 };

@@ -11,10 +11,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { LanguageWrapper } from "./LanguageWrapper";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import TableRowSkeleton from "../Skeletons/TableRowSkeleton";
-import useLeaderboard from "@/hooks/useLeaderboard";
 import useLSSTore from "@/store/useLeaderboardStatsStore";
 import { msToHM } from "@/lib/language";
 import { Status, userInfo } from "@/lib/type";
+import { useRouter } from "next/navigation";
 
 export function DataTable({ isPending, isError, error }: Status) {
   const ls = useLSSTore((state) => state.ls);
@@ -47,6 +47,7 @@ export function DataTable({ isPending, isError, error }: Status) {
                   </TableCell>
                   <TableCell>
                     <UserInfo
+                      id={data.id}
                       githubUserName={data.githubUserName}
                       twitterUsername={data.twitterUsername}
                     />
@@ -80,28 +81,53 @@ export function DataTable({ isPending, isError, error }: Status) {
     </div>
   );
 }
-const UserInfo = ({ githubUserName, twitterUsername }: userInfo) => {
+const UserInfo = ({ id, githubUserName, twitterUsername }: userInfo) => {
+  const router = useRouter();
   return (
     <div className=" flex items-start justify-start gap-2">
-      <RankCardImg />
+      <RankCardImg
+        githubUserName={githubUserName}
+        twitterUsername={twitterUsername}
+      />
       <div className="flex flex-col">
-        <p className=" text-[15px] font-bold cursor-pointer">
+        <p
+          className=" text-[15px] font-bold cursor-pointer"
+          onClick={() => router.push(`/dashboard/${id}`)}
+        >
           {githubUserName}
         </p>
         {twitterUsername && (
-          <p className=" text-xs text-slate-400 cursor-pointer">
+          <a
+            className=" text-xs text-slate-400 cursor-pointer"
+            href={`https://twitter.com/${twitterUsername}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {twitterUsername}
-          </p>
+          </a>
         )}
       </div>
     </div>
   );
 };
 
-const RankCardImg = () => {
+const RankCardImg = ({ githubUserName, twitterUsername }: userInfo) => {
+  let imageUrl = "/fallback.jpg";
+
+  if (twitterUsername) {
+    imageUrl = `https://unavatar.io/twitter/${twitterUsername}`;
+  } else if (githubUserName) {
+    imageUrl = `https://unavatar.io/github/${githubUserName}`;
+  }
   return (
     <Avatar className="w-10 h-10">
-      <AvatarImage src="/ghibili.jpg" alt="Image" />
+      <AvatarImage
+        src={imageUrl}
+        alt="Image"
+        onError={(e) => {
+          (e.target as HTMLImageElement).src = "/fallback.jpg";
+        }}
+      />
       <AvatarFallback>DP</AvatarFallback>
     </Avatar>
   );
