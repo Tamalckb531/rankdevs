@@ -1,10 +1,10 @@
 export type InfoPayload = {
-  firstname: string;
-  lastname: string;
-  isHireable: boolean;
+  firstname: string | null;
+  lastname: string | null;
+  isHireable: boolean | null;
   imgLink: string | null;
-  bio: string;
-  location: string;
+  bio: string | null;
+  location: string | null;
   portfolio: string | null;
   email: string | null;
   twitterUsername: string | null;

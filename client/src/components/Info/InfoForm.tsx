@@ -20,6 +20,7 @@ import useInfo from "@/hooks/useInfo";
 import Spinner from "../Spinner";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { InfoPayload } from "@/lib/type";
 
 const FormSchema = z.object({
   firstname: z.string().min(2).max(12),
@@ -46,6 +47,12 @@ export function InfoForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       apiKey: "",
+      firstname: "",
+      lastname: "",
+      isHireable: false,
+      imgLink: "",
+      bio: "",
+      location: "",
       twitterUsername: "",
       peerlistLink: "",
       leetcodeLink: "",
@@ -60,6 +67,12 @@ export function InfoForm() {
     if (user) {
       form.reset({
         apiKey: user.apiKey || "",
+        firstname: user.firstname || "",
+        lastname: user.lastname || "",
+        isHireable: user.isHireable || false,
+        imgLink: user.imgLink || "",
+        bio: user.bio || "",
+        location: user.location || "",
         twitterUsername: user.twitterUsername || "",
         peerlistLink: user.peerlistLink || "",
         leetcodeLink: user.leetcodeLink || "",
@@ -86,7 +99,7 @@ export function InfoForm() {
         value === "" ? null : value,
       ])
     );
-    mutate(sanitizedData);
+    mutate(sanitizedData as InfoPayload);
   }
 
   return (

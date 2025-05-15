@@ -27,6 +27,12 @@ const useInfo = () => {
       const newUser: User = {
         id: data.id,
         apiKey: data.apiKey,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        isHireable: data.isHireable,
+        imgLink: data.imgLink,
+        bio: data.bio,
+        location: data.location,
         portfolio: data.portfolio,
         githubUserName: data.githubUserName,
         email: data.email,
