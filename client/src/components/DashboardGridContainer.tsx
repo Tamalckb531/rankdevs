@@ -11,11 +11,11 @@ import useDashboard from "@/hooks/useDashboard";
 import DashboardSkeleton from "./Skeletons/DashboardSkeleton";
 import useDashboardStore from "@/store/useDashboardStore";
 import CPStats from "./dashboard/CPStats";
+import { useParams } from "next/navigation";
 
 const DashboardGridContainer = () => {
-  const { mutate, isPending, isError, error } = useDashboard(
-    "914c32dc-07e1-4dda-b0f9-8fc8ed5a0624"
-  );
+  const { id } = useParams();
+  const { mutate, isPending, isError, error } = useDashboard(id as string);
   const dashboard = useDashboardStore((state) => state.dashboard);
 
   console.log(dashboard);
