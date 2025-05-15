@@ -10,6 +10,11 @@ interface Props {
   rank: number;
 }
 
+interface Info {
+  twitter: string | null | undefined;
+  github: string | null | undefined;
+}
+
 const RankCard = ({ rank }: Props) => {
   let color, img;
 
@@ -28,17 +33,18 @@ const RankCard = ({ rank }: Props) => {
 
   if (!ls[rank - 1]) return <RankCardSkeleton />;
 
+  const github = ls[rank - 1].githubUserName;
+  const twitter = ls[rank - 1].twitterUsername;
+
   return (
     <Card className="bg-transparent border-none flex flex-col items-start w-[250px] shadow-none py-2 relative overflow-hidden">
       <CardHeader className=" w-full">
         <div className="flex items-center justify-around gap-3">
-          <RankCardImg />
+          <RankCardImg github={github} twitter={twitter} />
           <div className="flex flex-col">
-            <p className="text-lg font-bold cursor-pointer">
-              {ls[rank - 1].githubUserName}
-            </p>
+            <p className="text-lg font-bold cursor-pointer">{github}</p>
             <p className="text-center text-sm text-slate-400 cursor-pointer">
-              {ls[rank - 1].twitterUsername}
+              {twitter}
             </p>
           </div>
           <RankSvg img={img} />
@@ -56,16 +62,26 @@ const RankCard = ({ rank }: Props) => {
   );
 };
 
-const RankCardImg = () => {
+const RankCardImg = ({ github, twitter }: Info) => {
+  let imageUrl = "/fallback.jpg";
+
+  if (twitter) {
+    imageUrl = `https://unavatar.io/twitter/${twitter}`;
+  } else if (github) {
+    imageUrl = `https://unavatar.io/github/${github}`;
+  }
   return (
     <div className="w-[45px] h-[45px] mt-2">
       <AspectRatio ratio={3 / 4}>
         <Image
-          src="/ghibili.jpg"
-          alt="Image"
+          src={imageUrl}
+          alt="User avatar"
           className="rounded-md object-cover"
           width={100}
           height={100}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/fallback.jpg";
+          }}
         />
       </AspectRatio>
     </div>
