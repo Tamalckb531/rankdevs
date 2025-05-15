@@ -54,7 +54,7 @@ const CodingStat = ({
   return (
     <div
       key={index}
-      className={`flex w-full items-center justify-around -mt-2 -mb-2 transition-opacity duration-600 ease-in-out ${
+      className={`flex w-full items-center justify-around -mt-3 -mb-2 transition-opacity duration-600 ease-in-out ${
         fade ? "opacity-100" : "opacity-0"
       }`}
     >

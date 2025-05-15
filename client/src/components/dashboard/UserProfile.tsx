@@ -20,7 +20,11 @@ const UserProfile = () => {
         twitter={dashboard?.twitterUsername}
         github={dashboard?.githubUserName}
       />
-      <OtherInfo email={dashboard?.email} joinAt={dashboard?.joinAt} />
+      <OtherInfo
+        email={dashboard?.email}
+        joinAt={dashboard?.joinAt}
+        location={dashboard?.location}
+      />
       <CodingStat
         dailyRank={dashboard?.dailyRank ?? -1}
         weeklyRank={dashboard?.weeklyRank ?? -1}

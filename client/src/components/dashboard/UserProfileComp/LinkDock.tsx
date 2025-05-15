@@ -11,7 +11,7 @@ interface Info {
 
 const LinkDock = ({ github, twitter, porfolio, peerlist, linkedIn }: Info) => {
   return (
-    <div className=" flex items-center justify-center gap-10 w-full mt-2">
+    <div className=" flex items-center justify-center gap-10 w-full mt-1">
       <a
         className=" cursor-pointer"
         title="Github"
