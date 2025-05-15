@@ -104,6 +104,12 @@ export type InfoPayload = {
 
 export type DashBoardPayload = {
   id: string;
+  firstname: string | null;
+  lastname: string | null;
+  isHireable: boolean | null;
+  imgLink: string | null;
+  bio: string | null;
+  location: string | null;
   githubUserName: string;
   email: string | null;
   portfolio: string | null;

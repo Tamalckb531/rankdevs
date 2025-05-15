@@ -196,6 +196,12 @@ export const getDashboard = async (c: Context) => {
 
     const data: DashBoardPayload = {
       id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      isHireable: user.isHireable,
+      imgLink: user.imgLink,
+      bio: user.bio,
+      location: user.location,
       githubUserName: user.githubUserName,
       email: user.email,
       portfolio: user.portfolio,

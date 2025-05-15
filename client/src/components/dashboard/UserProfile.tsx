@@ -13,6 +13,10 @@ const UserProfile = () => {
   return (
     <Card className=" bg-background shadow-md dark:shadow-slate-500 flex flex-col items-start justify-between rounded-2xl px-2">
       <UserInfo
+        firstname={dashboard?.firstname}
+        lastname={dashboard?.lastname}
+        isHireable={dashboard?.isHireable}
+        bio={dashboard?.bio}
         twitter={dashboard?.twitterUsername}
         github={dashboard?.githubUserName}
       />

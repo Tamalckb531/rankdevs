@@ -4,19 +4,34 @@ import Image from "next/image";
 import React from "react";
 
 interface Info {
+  firstname?: string | null | undefined;
+  lastname?: string | null | undefined;
+  isHireable?: boolean | null | undefined;
+  bio?: string | null;
   twitter: string | null | undefined;
   github: string | null | undefined;
 }
 
-const UserInfo = ({ twitter, github }: Info) => {
+const UserInfo = ({
+  firstname,
+  lastname,
+  isHireable,
+  bio,
+  twitter,
+  github,
+}: Info) => {
   return (
     <div className=" flex flex-col gap-2">
       <div className=" flex gap-2 items-start">
         <UserImg twitter={twitter} github={github} />
         <div className=" flex flex-col justify-center">
           <div className=" flex items-center justify-center gap-2">
-            <p className=" text-xl font-bold">Tamal Chakraborty</p>
-            <Badge className="h-4 px-1 text-xs mt-1">Hireable</Badge>
+            <p className=" text-xl font-bold">
+              {firstname} {lastname}
+            </p>
+            {isHireable && (
+              <Badge className="h-4 px-1 text-xs mt-1">Hireable</Badge>
+            )}
           </div>
           {twitter && (
             <a
@@ -31,7 +46,7 @@ const UserInfo = ({ twitter, github }: Info) => {
         </div>
       </div>
       <p className=" text-sm text-slate-600 dark:text-slate-300 pr-14 pl-1">
-        To confuse your enemy, confuse yourself first ~ Sun Tzu
+        {bio}
       </p>
     </div>
   );
@@ -40,7 +55,7 @@ const UserInfo = ({ twitter, github }: Info) => {
 export default UserInfo;
 
 const UserImg = ({ twitter, github }: Info) => {
-  let imageUrl = "/fallback.jpg"; // your local fallback
+  let imageUrl = "/fallback.jpg";
 
   if (twitter) {
     imageUrl = `https://unavatar.io/twitter/${twitter}`;
