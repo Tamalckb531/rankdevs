@@ -5,6 +5,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import useLSSTore from "@/store/useLeaderboardStatsStore";
 import RankCardSkeleton from "../Skeletons/RankCardSkeleton";
 import { countLanguages, msToHM } from "@/lib/language";
+import { useRouter } from "next/navigation";
 
 interface Props {
   rank: number;
@@ -30,9 +31,11 @@ const RankCard = ({ rank }: Props) => {
   }
 
   const ls = useLSSTore((state) => state.ls);
+  const router = useRouter();
 
   if (!ls[rank - 1]) return <RankCardSkeleton />;
 
+  const id = ls[rank - 1].id;
   const github = ls[rank - 1].githubUserName;
   const twitter = ls[rank - 1].twitterUsername;
 
@@ -42,10 +45,20 @@ const RankCard = ({ rank }: Props) => {
         <div className="flex items-center justify-around gap-3">
           <RankCardImg github={github} twitter={twitter} />
           <div className="flex flex-col">
-            <p className="text-lg font-bold cursor-pointer">{github}</p>
-            <p className="text-center text-sm text-slate-400 cursor-pointer">
-              {twitter}
+            <p
+              className="text-lg font-bold cursor-pointer"
+              onClick={() => router.push(`/dashboard/${id}`)}
+            >
+              {github}
             </p>
+            <a
+              className="text-center text-sm text-slate-400 cursor-pointer"
+              href={`https://twitter.com/${twitter}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {twitter}
+            </a>
           </div>
           <RankSvg img={img} />
         </div>
