@@ -21,6 +21,8 @@ import Spinner from "../Spinner";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { InfoPayload } from "@/lib/type";
+import { Checkbox } from "../ui/checkbox";
+import { Textarea } from "../ui/textarea";
 
 const FormSchema = z.object({
   firstname: z.string().min(2).max(12),
@@ -136,6 +138,82 @@ export function InfoForm() {
             </FormItem>
           )}
         />
+        <div className=" flex flex-col md:flex-row gap-3 w-full items-center justify-between">
+          <FormField
+            control={form.control}
+            name="firstname"
+            render={({ field }) => (
+              <FormItem className=" w-full">
+                <FormLabel>First Name : </FormLabel>
+                <FormControl>
+                  <Input placeholder="Quandale" {...field} />
+                </FormControl>
+                <FormDescription>Add your first name here</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastname"
+            render={({ field }) => (
+              <FormItem className=" w-full">
+                <FormLabel>Last Name : </FormLabel>
+                <FormControl>
+                  <Input placeholder="Dingle" {...field} />
+                </FormControl>
+                <FormDescription>Add your last name here</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="isHireable"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start w-full md:w-fit text-nowrap">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>I'm Hireable</FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+        </div>
+        <FormField
+          control={form.control}
+          name="bio"
+          render={({ field }) => {
+            const charCount = field.value?.length || 0;
+            return (
+              <FormItem>
+                <FormLabel>Bio :</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Textarea
+                      maxLength={65}
+                      placeholder="I’m a full-stack dev passionate about building cool stuff."
+                      {...field}
+                    />
+                    <span className="absolute bottom-1 right-2 text-xs text-muted-foreground">
+                      {charCount}/65
+                    </span>
+                  </div>
+                </FormControl>
+                <FormDescription>
+                  Write a short bio (max 65 characters)
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+
         <FormField
           control={form.control}
           name="twitterUsername"
