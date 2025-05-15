@@ -27,7 +27,7 @@ const DashboardGridContainer = () => {
   if (isError)
     return (
       <div className=" w-full h-[80vh] flex items-center justify-center  text-2xl md:text-4xl text-red-400">
-        {error.message}
+        Sorry! User dashboard currently not available
       </div>
     );
 
