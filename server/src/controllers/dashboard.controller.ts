@@ -210,6 +210,7 @@ export const getDashboard = async (c: Context) => {
       peerlistLink: user.peerlistLink,
       leetcodeLink: user.leetcodeLink,
       codeforcesLink: user.codeforcesLink,
+      latestTime: lastTime,
       dailyTotal,
       dailyRank,
       weeklyTotal,
