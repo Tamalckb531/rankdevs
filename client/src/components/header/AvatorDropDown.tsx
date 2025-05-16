@@ -7,8 +7,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
+import useUserStore from "@/store/useUserStore";
 export function AvatorDropDown() {
   const router = useRouter();
+  const user = useUserStore((state) => state.user);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -18,7 +20,7 @@ export function AvatorDropDown() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => router.push("/dashboard")}>
+        <DropdownMenuItem onClick={() => router.push(`/dashboard/${user?.id}`)}>
           Dashboard
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push("/info")}>
