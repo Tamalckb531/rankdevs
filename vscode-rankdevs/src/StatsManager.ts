@@ -99,6 +99,7 @@ export class StatsManager {
     if (isPrevDay(now, this.today.lastTime)) {
       //? processing of database and reset time
       sendDataToBackend(apiKey, this.context);
+      this.resetTodayStats();
     }
 
     this.today.total += typingTime;

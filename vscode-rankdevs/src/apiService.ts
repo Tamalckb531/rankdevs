@@ -47,8 +47,8 @@ export const sendDataToBackend = async (
   };
 
   //? reset today data :
-  const manager = StatsManager.getInstance(context);
-  manager.resetTodayStats();
+  // const manager = StatsManager.getInstance(context);
+  // manager.resetTodayStats();
 
   if (
     dailyStats.total === 0 &&
