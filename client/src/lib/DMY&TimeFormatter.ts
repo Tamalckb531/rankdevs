@@ -17,4 +17,21 @@ const formatDatetime = (input: string | Date) => {
   return `${day} ${month}, ${year} at ${formattedHours}:${minutes} ${period}`;
 };
 
+export const getWeekSpan = (timestamp: number | null | undefined): string => {
+  if (!timestamp) return "Time data not available";
+  const date = new Date(timestamp);
+  const day = date.getDay(); // 0 (Sun) to 6 (Sat)
+  const diffToMonday = day === 0 ? -6 : 1 - day;
+
+  const monday = new Date(date);
+  monday.setDate(date.getDate() + diffToMonday);
+
+  const format = (d: Date) =>
+    `${d.getDate()} ${d.toLocaleString("default", {
+      month: "short",
+    })}, ${d.getFullYear()}`;
+
+  return `${format(monday)} - ${format(date)}`;
+};
+
 export default formatDatetime;

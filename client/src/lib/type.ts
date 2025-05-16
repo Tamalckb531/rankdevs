@@ -117,6 +117,7 @@ export type DashBoardPayload = {
   peerlistLink: string | null;
   leetcodeLink: string | null;
   codeforcesLink: string | null;
+  latestTime: number | null;
   dailyTotal: number;
   weeklyTotal: number;
   monthlyTotal: number;
