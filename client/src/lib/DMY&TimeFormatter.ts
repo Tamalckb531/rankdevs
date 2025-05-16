@@ -34,4 +34,14 @@ export const getWeekSpan = (timestamp: number | null | undefined): string => {
   return `${format(monday)} - ${format(date)}`;
 };
 
+export const getYearSpan = (timestamp: number | null | undefined): string => {
+  if (!timestamp) return "Time data not available";
+
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = date.toLocaleString("default", { month: "short" });
+
+  return `Jan, ${year} - ${month}, ${year}`;
+};
+
 export default formatDatetime;
