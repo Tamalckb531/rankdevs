@@ -3,7 +3,6 @@ import * as path from "path";
 import * as vscode from "vscode";
 
 import { Stats, refinedStats, Payload, todaysStats } from "./utils/types";
-import { StatsManager } from "./StatsManager";
 
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
@@ -46,10 +45,6 @@ export const sendDataToBackend = async (
     lastTime: Date.now(),
   };
 
-  //? reset today data :
-  // const manager = StatsManager.getInstance(context);
-  // manager.resetTodayStats();
-
   if (
     dailyStats.total === 0 &&
     weeklyStats.total === 0 &&
@@ -72,19 +67,13 @@ export const sendDataToBackend = async (
   };
 
   try {
-    const response = await fetch(`${backendUrl}/api/leaderboard/update`, {
+    await fetch(`${backendUrl}/api/leaderboard/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
-
-    if (response.ok) {
-      console.log("Typing data sent successfully!");
-    } else {
-      console.error("Failed to send data to backend:", response.statusText);
-    }
   } catch (error) {
     console.error("Error sending typing data:", error);
   }

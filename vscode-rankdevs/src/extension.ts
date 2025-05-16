@@ -8,18 +8,12 @@ let intervalIdForApiCall: NodeJS.Timeout;
 
 //? run as soon as user open vs code
 export function activate(context: vscode.ExtensionContext) {
-  console.log("Hi Tamal! RankDevs extension is now active!");
   globalContext = context;
 
   const rankDevs = new RankDevs(context);
   const manager = StatsManager.getInstance(context);
   manager.init();
   manager.intervalWiseCleanUp(); //? initial clean-up while starting
-
-  console.log("Daily stats : ", context.globalState.get("dailyStats"));
-  console.log("Weekly stats : ", context.globalState.get("weeklyStats"));
-  console.log("Monthly stats : ", context.globalState.get("monthlyStats"));
-  console.log("Today stats : ", context.globalState.get("todaysStats"));
 
   //? Run whenever user change something in their codebase
   context.subscriptions.push(
@@ -97,12 +91,4 @@ export function deactivate() {
 
   clearInterval(intervalIdForCleanup);
   clearInterval(intervalIdForApiCall);
-
-  // const manager = StatsManager.getInstance(globalContext);
-  // const rankDevs = new RankDevs(globalContext);
-
-  // rankDevs.callApiService();
-  // rankDevs.stopTracking();
-  // manager.cleanup();
-  // manager.intervalWiseCleanUp(); //? clean up before user gets out of the vs code
 }
