@@ -84,6 +84,10 @@ export const languages: Record<string, LanguageColor> = {
   yaml: { color: "#cb171e" },
 };
 
+export const getLanguageColor = (lang: string): string => {
+  return languages[lang]?.color || "#454443";
+};
+
 export const getContrastTextColor = (hexColor: string): string => {
   hexColor = hexColor.replace("#", "");
 

@@ -10,7 +10,7 @@ interface lang {
 }
 
 export const LanguageCard = ({ language, time }: lang) => {
-  const langColor = languages[language].color;
+  const langColor = languages[language].color || "#454443";
   const textColor = getContrastTextColor(langColor);
   const lang = getLanguageType(language);
   return (
