@@ -223,7 +223,7 @@ export function InfoForm() {
             <FormItem>
               <FormLabel>Location : </FormLabel>
               <FormControl>
-                <Input placeholder="Dhaka, Bangladesh" {...field} />
+                <Input placeholder="Ohio, USA" {...field} />
               </FormControl>
               <FormDescription>Add your location here</FormDescription>
               <FormMessage />
@@ -237,7 +237,7 @@ export function InfoForm() {
             <FormItem>
               <FormLabel>Twitter : </FormLabel>
               <FormControl>
-                <Input placeholder="TamalCDip" {...field} />
+                <Input placeholder="elonmusk" {...field} />
               </FormControl>
               <FormDescription>Add your twitter username here</FormDescription>
               <FormMessage />
@@ -251,7 +251,7 @@ export function InfoForm() {
             <FormItem>
               <FormLabel>Peerlist : </FormLabel>
               <FormControl>
-                <Input placeholder="https://peerlist.io/tamaldip" {...field} />
+                <Input placeholder="https://peerlist.io/user" {...field} />
               </FormControl>
               <FormDescription>Add your peerlist account here</FormDescription>
               <FormMessage />
@@ -265,7 +265,7 @@ export function InfoForm() {
             <FormItem>
               <FormLabel>Leetcode : </FormLabel>
               <FormControl>
-                <Input placeholder="TamalCDip" {...field} />
+                <Input placeholder="elonmusk" {...field} />
               </FormControl>
               <FormDescription>Add Your Leetcode username here</FormDescription>
               <FormMessage />
@@ -279,7 +279,7 @@ export function InfoForm() {
             <FormItem>
               <FormLabel>Code-Force </FormLabel>
               <FormControl>
-                <Input placeholder="TamalCDip" {...field} />
+                <Input placeholder="elonmusk" {...field} />
               </FormControl>
               <FormDescription>
                 Add your codeforce username here
@@ -295,7 +295,7 @@ export function InfoForm() {
             <FormItem>
               <FormLabel>Portfolio : </FormLabel>
               <FormControl>
-                <Input placeholder="tamal.com" {...field} />
+                <Input placeholder="elonmusk.com" {...field} />
               </FormControl>
               <FormDescription>Add your Portfolio link here</FormDescription>
               <FormMessage />
@@ -309,7 +309,7 @@ export function InfoForm() {
             <FormItem>
               <FormLabel>Email : </FormLabel>
               <FormControl>
-                <Input placeholder="ckbtamaldipnew@gmail.com" {...field} />
+                <Input placeholder="elonmusk@gmail.com" {...field} />
               </FormControl>
               <FormDescription>Add your Email account here</FormDescription>
               <FormMessage />
@@ -323,7 +323,7 @@ export function InfoForm() {
             <FormItem>
               <FormLabel>LinkedIn : </FormLabel>
               <FormControl>
-                <Input placeholder="TamalCDip" {...field} />
+                <Input placeholder="elonmusk" {...field} />
               </FormControl>
               <FormDescription>Add your LinkedIn username here</FormDescription>
               <FormMessage />
