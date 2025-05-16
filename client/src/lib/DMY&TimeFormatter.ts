@@ -44,4 +44,15 @@ export const getYearSpan = (timestamp: number | null | undefined): string => {
   return `Jan, ${year} - ${month}, ${year}`;
 };
 
+export const getMonthSpan = (timestamp: number | null | undefined): string => {
+  if (!timestamp) return "Time data not available";
+
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = date.toLocaleString("default", { month: "short" });
+  const day = date.getDate();
+
+  return `1 ${month}, ${year} - ${day} ${month}, ${year}`;
+};
+
 export default formatDatetime;
