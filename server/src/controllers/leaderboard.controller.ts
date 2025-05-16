@@ -58,17 +58,7 @@ export const updateLeaderboard = async (c: Context) => {
       const newTime = parseInt(snap.data.lastTime);
       const oldTime = stats.lastTime;
 
-      if (isSameDay(oldTime, newTime)) {
-        stats.total += snap.data.total;
-        stats.lastTime = parseInt(snap.data.lastTime);
-
-        for (const lang in snap.data) {
-          if (lang !== "total" && lang !== "lastTime") {
-            stats[lang] = (stats[lang] || 0) + snap.data[lang];
-          }
-        }
-      } else {
-        //? sending data to the backend to save it
+      if (!isSameDay(oldTime, newTime)) {
         const status = await saveToDataBase(stats, user, newTime);
         if (!status) {
           return c.json({
@@ -83,12 +73,10 @@ export const updateLeaderboard = async (c: Context) => {
         dailyStats: snap.dailyStats,
         weeklyStats: snap.weeklyStats,
         monthlyStats: snap.monthlyStats,
-        todaysStats: isSameDay(oldTime, newTime)
-          ? stats
-          : {
-              ...snap.data,
-              lastTime: newTime,
-            },
+        todaysStats: {
+          ...snap.data,
+          lastTime: parseInt(snap.data.lastTime),
+        },
         lastReportTime: Date.now(),
       };
     }
