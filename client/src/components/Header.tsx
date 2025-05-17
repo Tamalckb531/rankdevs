@@ -13,7 +13,7 @@ const Header = () => {
   const router = useRouter();
   const user = useUserStore((state) => state.user);
   return (
-    <div className=" flex items-center justify-between p-2 mt-1 md:mx-3">
+    <div className=" flex items-center justify-between p-2 mt-1 md:mx-3 relative z-50">
       <div className=" logo flex justify-start items-center">
         <Logo />
       </div>
