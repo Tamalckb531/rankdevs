@@ -1,3 +1,9 @@
+import Landing from "@/components/Landing";
+
 export default function Home() {
-  return <div className="">Design done for now</div>;
+  return (
+    <div className="">
+      <Landing />
+    </div>
+  );
 }
