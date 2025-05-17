@@ -24,7 +24,6 @@ const StatSelect = () => {
       CalculateWeekly(weeklyStats.mode);
     }
     setFirstRender(false);
-    console.log("Run");
   }, [weeklyStats.mode]);
 
   return (

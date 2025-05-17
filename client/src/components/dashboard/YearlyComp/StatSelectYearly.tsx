@@ -24,7 +24,6 @@ const StatSelectYearly = () => {
       CalculateYearly(yearlyStats.mode);
     }
     setFirstRender(false);
-    console.log("Run");
   }, [yearlyStats.mode]);
 
   return (

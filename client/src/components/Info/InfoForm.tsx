@@ -92,8 +92,6 @@ export function InfoForm() {
   }, [isPending, isError]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Clicked");
-
     const { apiKey, ...rest } = data;
 
     // Convert empty strings to null

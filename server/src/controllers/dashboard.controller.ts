@@ -125,8 +125,6 @@ export const saveToDataBase = async (
     },
   });
 
-  console.log("Here is the result : ", result);
-
   return !!result;
 };
 

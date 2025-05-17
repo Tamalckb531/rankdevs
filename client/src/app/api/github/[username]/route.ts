@@ -22,7 +22,6 @@ export async function GET(
   ).toISOString();
 
   const token: string = process.env.GITHUB_TOKEN || "no token cuh..";
-  console.log(token);
 
   let hasNextPage = true;
   let endCursor: string | null = null;

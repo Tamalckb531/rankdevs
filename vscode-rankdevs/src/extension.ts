@@ -87,8 +87,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 //? run as soon as user close vs code
 export function deactivate() {
-  console.log("RankDevs got de-active ");
-
   clearInterval(intervalIdForCleanup);
   clearInterval(intervalIdForApiCall);
 }

@@ -50,7 +50,6 @@ export function LoginForm({
           }
 
           const data = await res.json();
-          console.log("Data : ", data);
 
           const newUser: User = {
             id: data.user.id,

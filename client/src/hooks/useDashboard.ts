@@ -46,9 +46,7 @@ const useDashboard = (userId: string) => {
       for (const fn of queue) {
         try {
           fn();
-        } catch (err) {
-          console.log("Batch failed: ", err);
-        }
+        } catch (err) {}
       }
     },
   });

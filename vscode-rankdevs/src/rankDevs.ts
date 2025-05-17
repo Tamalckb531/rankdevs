@@ -62,8 +62,6 @@ export class RankDevs {
   }
 
   public callApiService(): void {
-    console.log("Call Api Service called");
-
     const apiKey = this.context.globalState.get<string>("rankDevsApiKey");
     if (apiKey) {
       sendDataToBackend(apiKey, this.context);

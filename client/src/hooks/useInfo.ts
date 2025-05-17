@@ -47,7 +47,7 @@ const useInfo = () => {
       toast("Information updated", {
         action: {
           label: "Undo",
-          onClick: () => console.log("Undo"),
+          onClick: () => {},
         },
       });
       return newUser;

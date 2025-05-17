@@ -32,7 +32,6 @@ const PlatfromSelect = () => {
       }
     }
     setFirstRender(false);
-    console.log("Run from the select comp");
   }, [mode]);
 
   return (

@@ -69,5 +69,4 @@ export const sumStats = (existing: any, newData: any) => {
       result[key] = (existing[key] || 0) + (newData[key] || 0);
   }
   return result;
-  console.log("Sum State worked fine ass homie");
 };

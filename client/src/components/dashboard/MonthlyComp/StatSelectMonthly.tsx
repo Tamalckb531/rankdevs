@@ -24,7 +24,6 @@ const StatSelectMonthly = () => {
       CalculateMonthly(monthlyStats.mode);
     }
     setFirstRender(false);
-    console.log("Run");
   }, [monthlyStats.mode]);
 
   return (
