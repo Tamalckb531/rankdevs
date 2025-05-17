@@ -29,7 +29,7 @@ const transitionVariants = {
 export default function HeroSection() {
   return (
     <>
-      <main className="overflow-hidden z-0">
+      <main className="overflow-hidden z-0 -mt-10">
         <div
           aria-hidden
           className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block"
