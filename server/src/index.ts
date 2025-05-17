@@ -39,13 +39,13 @@ if (weeklyInterval) clearInterval(weeklyInterval);
 if (monthlyInterval) clearInterval(monthlyInterval);
 
 dailyInterval = setInterval(() => {
-  removeInactiveUsers("daily", 6 * 60 * 60 * 1000); //? 6 hours
-}, 2 * 60 * 60 * 1000); // every 1 hour
+  removeInactiveUsers("daily", 30 * 1000); //? 6 hours
+}, 20 * 1000); // every 2 hour
 weeklyInterval = setInterval(() => {
-  removeInactiveUsers("weekly", 2 * 24 * 60 * 60 * 1000); // 2 days
+  removeInactiveUsers("weekly", 2 * 24 * 60 * 60 * 1000); //? 2 days
 }, 24 * 60 * 60 * 1000); // every 1 day
 monthlyInterval = setInterval(() => {
-  removeInactiveUsers("monthly", 5 * 24 * 60 * 60 * 1000); // 5 days
+  removeInactiveUsers("monthly", 5 * 24 * 60 * 60 * 1000); //? 5 days
 }, 3 * 24 * 60 * 60 * 1000); // every 3 days
 
 //? Global catch middleware

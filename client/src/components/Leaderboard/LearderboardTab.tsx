@@ -12,6 +12,7 @@ const LeaderboardTab = () => {
         <TabsTrigger
           value="daily"
           className="text-lg md:text-xl md:p-5 p-3 py-4 rounded-lg"
+          title="Will auto remove rank for >6 hours of inactivity  "
           onClick={() => setTab("daily")}
         >
           Daily
@@ -19,6 +20,7 @@ const LeaderboardTab = () => {
         <TabsTrigger
           value="weekly"
           className="text-lg md:text-xl md:p-5 p-3 py-4  rounded-lg"
+          title="Will auto remove rank for >2 Days of inactivity  "
           onClick={() => setTab("weekly")}
         >
           Weekly
@@ -26,6 +28,7 @@ const LeaderboardTab = () => {
         <TabsTrigger
           value="monthly"
           className=" text-lg md:text-xl md:p-5 p-3 py-4 rounded-lg"
+          title="Will auto remove rank for >5 Days of inactivity  "
           onClick={() => setTab("monthly")}
         >
           Monthly
