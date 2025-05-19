@@ -12,32 +12,32 @@ dotenv.config();
 
 const app = new Hono();
 
-//! For Development -> comment it out in Production
-
-// app.use(
-//   "*",
-//   cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   })
-// );
-
-//! For Production -> comment it out in development
 app.use(
   "*",
   cors({
     origin: (origin) => {
-      if (!origin) return ""; // Block requests with no Origin (like Postman, curl)
+      if (process.env.NODE_ENV === "development") {
+        //? Dev mode : allow localhost, vscode, curl/postman (no origin = curl/postman)
+        if (!origin) return "*"; // allow curl/postman (no origin)
+        if (
+          origin === process.env.LOCAL_ORIGIN ||
+          origin.startsWith("vscode-webview://")
+        ) {
+          return origin;
+        }
+        return ""; // block others
+      }
 
+      //? Production mode: allow only rankdevs and vscode
+      const prodAllowed = ["https://rankdevs.com"];
       if (
-        origin === "https://rankdevs.vercel.app" ||
-        origin === "http://localhost:3000" ||
-        origin.startsWith("vscode-webview://")
+        origin &&
+        (prodAllowed.includes(origin) || origin.startsWith("vscode-webview://"))
       ) {
         return origin;
       }
 
-      return ""; // Block everything else
+      return ""; // block everything else
     },
     credentials: true,
   })
