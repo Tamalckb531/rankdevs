@@ -2,7 +2,10 @@
   "name": "server",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@faker-js/faker": "^9.6.0",

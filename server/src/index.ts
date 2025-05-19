@@ -11,11 +11,33 @@ dotenv.config();
 
 const app = new Hono();
 
-// Enable CORS with type safety, allowing credentials
+//! For Development -> comment it out in Production
+
+// app.use(
+//   "*",
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   })
+// );
+
+//! For Production -> comment it out in development
 app.use(
   "*",
   cors({
-    origin: "http://localhost:3000",
+    origin: (origin) => {
+      if (!origin) return ""; // Block requests with no Origin (like Postman, curl)
+
+      if (
+        origin === "https://rankdevs.vercel.app" ||
+        origin === "http://localhost:3000" ||
+        origin.startsWith("vscode-webview://")
+      ) {
+        return origin;
+      }
+
+      return ""; // Block everything else
+    },
     credentials: true,
   })
 );
