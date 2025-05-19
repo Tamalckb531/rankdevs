@@ -6,6 +6,7 @@ import leaderboardRoute from "./routes/leaderboard.route.js";
 import dashboardRoute from "./routes/dashboard.route.js";
 import authRoute from "./routes/auth.route.js";
 import { removeInactiveUsers } from "./utils/inMemoFunctions.js";
+import { rateLimiter } from "hono-rate-limiter";
 
 dotenv.config();
 
@@ -41,6 +42,24 @@ app.use(
     credentials: true,
   })
 );
+
+//! Security helmet :
+app.use("*", async (c, next) => {
+  c.header("X-Content-Type-Options", "nosniff");
+  c.header("X-Frame-Options", "DENY");
+  c.header("X-XSS-Protection", "1; mode=block");
+  return next();
+});
+
+//! Rate limit
+
+const limiter = rateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 300, // per IP
+  standardHeaders: "draft-7",
+});
+
+app.use(limiter);
 
 app.get("/test", (c) => {
   return c.text("Sever is healthy");
