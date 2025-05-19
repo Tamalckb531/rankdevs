@@ -12,6 +12,17 @@ dotenv.config();
 
 const app = new Hono();
 
+//! Rate limit
+
+const limiter = rateLimiter({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 300, // per IP
+  standardHeaders: "draft-7",
+  keyGenerator: (c) => "<unique_key>",
+});
+
+app.use(limiter);
+
 app.use(
   "*",
   cors({
@@ -50,16 +61,6 @@ app.use("*", async (c, next) => {
   c.header("X-XSS-Protection", "1; mode=block");
   return next();
 });
-
-//! Rate limit
-
-const limiter = rateLimiter({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  limit: 300, // per IP
-  standardHeaders: "draft-7",
-});
-
-app.use(limiter);
 
 app.get("/test", (c) => {
   return c.text("Sever is healthy");
