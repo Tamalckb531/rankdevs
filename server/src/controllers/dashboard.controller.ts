@@ -131,13 +131,20 @@ export const saveToDataBase = async (
 export const getDashboard = async (c: Context) => {
   const userId = c.req.param("id");
 
+  console.log("This is running : ", process.env.DATABASE_URL);
+  console.log(userId);
+
   try {
+    console.log("Hello");
+
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
       },
     });
     if (!user) throw new HTTPException(404, { message: "User not found" });
+
+    console.log("This run");
 
     //? other info's :
     const { lastTime, ...currentStats } = inMemoryStats[userId]
@@ -196,6 +203,8 @@ export const getDashboard = async (c: Context) => {
       : currentStats;
     newTotalStats.sum = sumStats(newTotalStats.sum, currentStats);
 
+    console.log("This run 2");
+
     const data: DashBoardPayload = {
       id: user.id,
       firstname: user.firstname,
@@ -225,6 +234,8 @@ export const getDashboard = async (c: Context) => {
       totalStats: newTotalStats,
       joinAt: user.createdAt,
     };
+
+    console.log("This run 3");
 
     return c.json(data);
   } catch (error: any) {

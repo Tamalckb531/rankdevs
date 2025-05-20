@@ -54,11 +54,6 @@ app.use(limiter);
 //   })
 // );
 
-console.log(process.env.DATABASE_URL);
-console.log(process.env.JWT_SECRET_KEY);
-console.log(process.env.NODE_ENV);
-console.log(process.env.LOCAL_ORIGIN);
-
 app.use(
   "*",
   cors({
