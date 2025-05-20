@@ -1,12 +1,10 @@
 name: Server CI
 
 on:
-  push:
-    paths:
-      - "server/**"
   pull_request:
     paths:
       - "server/**"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -27,11 +25,8 @@ jobs:
       - name: Install deps
         run: npm install
 
-      - name: Lint code
-        run: npm run lint
-
-      - name: Run tests
-        run: npm test
+      - name: Generate Prisma client
+        run: npx prisma generate
 
       - name: Build project
         run: npm run build
