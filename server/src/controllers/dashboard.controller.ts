@@ -228,6 +228,7 @@ export const getDashboard = async (c: Context) => {
 
     return c.json(data);
   } catch (error: any) {
+    console.log(error);
     throw new HTTPException(500, {
       message:
         error.message || "An error from dashboard -> getDashboard controller ",
