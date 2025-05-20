@@ -12,8 +12,6 @@ dotenv.config();
 
 const app = new Hono();
 
-//? Direct code
-
 //! Rate limit
 
 const limiter = rateLimiter({
