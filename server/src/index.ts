@@ -12,8 +12,6 @@ dotenv.config();
 
 const app = new Hono();
 
-//? testing CI from new branch
-
 //! Rate limit
 
 const limiter = rateLimiter({
