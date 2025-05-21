@@ -23,41 +23,35 @@ const limiter = rateLimiter({
 
 app.use(limiter);
 
-// app.use(
-//   "*",
-//   cors({
-//     origin: (origin) => {
-//       if (process.env.NODE_ENV === "development") {
-//         //? Dev mode : allow localhost, vscode, curl/postman (no origin = curl/postman)
-//         if (!origin) return "*"; // allow curl/postman (no origin)
-//         if (
-//           origin === process.env.LOCAL_ORIGIN ||
-//           origin.startsWith("vscode-webview://")
-//         ) {
-//           return origin;
-//         }
-//         return ""; // block others
-//       }
-
-//       //? Production mode: allow only rankdevs and vscode
-//       const prodAllowed = ["https://rankdevs.com"];
-//       if (
-//         origin &&
-//         (prodAllowed.includes(origin) || origin.startsWith("vscode-webview://"))
-//       ) {
-//         return origin;
-//       }
-
-//       return ""; // block everything else
-//     },
-//     credentials: true,
-//   })
-// );
-
 app.use(
   "*",
   cors({
-    origin: () => "*", // trust all for now
+    origin: (origin) => {
+      console.log(origin);
+
+      if (process.env.NODE_ENV === "development") {
+        //? Dev mode : allow localhost, vscode, curl/postman (no origin = curl/postman)
+        if (!origin) return "*"; // allow curl/postman (no origin)
+        if (
+          origin === process.env.LOCAL_ORIGIN ||
+          origin.startsWith("vscode-webview://")
+        ) {
+          return origin;
+        }
+        return ""; // block others
+      }
+
+      //? Production mode: allow only rankdevs and vscode
+      const prodAllowed = ["https://rankdevs.com"];
+      if (
+        origin &&
+        (prodAllowed.includes(origin) || origin.startsWith("vscode-webview://"))
+      ) {
+        return origin;
+      }
+
+      return ""; // block everything else
+    },
     credentials: true,
   })
 );
