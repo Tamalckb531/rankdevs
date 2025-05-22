@@ -1,1 +1,1 @@
-sudo docker build -t rankdevs-docker-img .
+sudo docker build -t docker-image-name .
