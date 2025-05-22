@@ -1,0 +1,1 @@
+sudo docker build -t rankdevs-docker-img .
