@@ -41,4 +41,11 @@ jobs:
             sudo docker pull tamalcdip/rankdevs-docker-img:latest
             sudo docker stop rankdevs-docker-img || true
             sudo docker rm rankdevs-docker-img || true
-            sudo docker run -d --name rankdevs-docker-img -p 3001:3001 tamalcdip/rankdevs-docker-img:latest
+            sudo docker run -d \
+                --name rankdevs-docker-img \
+                -p 3001:3001 \
+                -e DATABASE_URL='${{ secrets.EC2_DATABASE_URL }}' \
+                -e JWT_SECRET_KEY='${{ secrets.JWT_SECRET_KEY }}' \
+                -e NODE_ENV='production' \
+                -e LOCAL_ORIGIN='http://localhost:3000' \
+                tamalcdip/rankdevs-docker-img:latest
