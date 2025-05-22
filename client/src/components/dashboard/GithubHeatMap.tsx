@@ -8,14 +8,13 @@ interface Info {
 }
 
 const GithubHeatMap = ({ github }: Info) => {
+  const { theme } = useTheme();
   if (!github)
     return (
       <Card className="flex md:col-span-2 bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2 items-center justify-center md:text-2xl text-lg text-blue-400">
         No Github Username Found :)
       </Card>
     );
-
-  const { theme } = useTheme();
 
   return (
     <Card className="flex flex-col md:col-span-2 bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
