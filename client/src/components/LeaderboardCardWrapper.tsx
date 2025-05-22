@@ -2,7 +2,7 @@ import React from "react";
 import TopRanks from "./Leaderboard/TopRanks";
 import { Status } from "@/lib/type";
 
-const LeaderboardCardWrapper = ({ isPending, isError, error }: Status) => {
+const LeaderboardCardWrapper = ({ isPending, isError }: Status) => {
   if (isError) {
     return;
   }

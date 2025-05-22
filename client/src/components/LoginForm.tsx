@@ -95,6 +95,8 @@ export function LoginForm({
 
       if (response?.error) setError("Github login failed. Please try again");
     } catch (error) {
+      console.log(error);
+
       setError("An unexpected error occurred. Please try again");
     }
   };

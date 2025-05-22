@@ -15,7 +15,7 @@ import { useParams } from "next/navigation";
 
 const DashboardGridContainer = () => {
   const { id } = useParams();
-  const { mutate, isPending, isError, error } = useDashboard(id as string);
+  const { mutate, isPending, isError } = useDashboard(id as string);
   const dashboard = useDashboardStore((state) => state.dashboard);
 
   useEffect(() => {

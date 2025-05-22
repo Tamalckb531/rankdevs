@@ -9,7 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { getLanguageType, languages, msToHM } from "@/lib/language";
+import { getLanguageType, msToHM } from "@/lib/language";
 import ChartToolTip from "@/components/ChartToolTip";
 import useTotalStateStore from "@/store/useTotalStatsStore";
 
@@ -30,7 +30,7 @@ export function YearlyPieChart() {
           content={
             <ChartTooltipContent
               hideLabel={false}
-              formatter={(value, name, entry, index, payload) => {
+              formatter={(value, name, entry) => {
                 const ms = value as number;
                 return (
                   <ChartToolTip

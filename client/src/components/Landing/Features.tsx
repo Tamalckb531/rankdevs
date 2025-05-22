@@ -1,12 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-  ContactRound,
-  Settings2,
-  Sparkles,
-  Timer,
-  Trophy,
-  Zap,
-} from "lucide-react";
+import { ContactRound, Timer, Trophy } from "lucide-react";
 import { ReactNode } from "react";
 
 export default function Features() {

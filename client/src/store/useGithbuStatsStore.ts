@@ -1,4 +1,4 @@
-import { LeetCodeData, GHPayload, GithubData } from "@/lib/type";
+import { GHPayload, GithubData } from "@/lib/type";
 import { create } from "zustand";
 
 type GithubStatsStore = {

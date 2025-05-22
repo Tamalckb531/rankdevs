@@ -17,7 +17,7 @@ const chartConfig = {} satisfies ChartConfig;
 export function LanguagePieChart({ language }: { language: Language[] }) {
   let chartData: LanguageForChart[] = [];
 
-  language.map((lang, index) => {
+  language.map((lang) => {
     const langName = validLanguage(lang.name);
 
     const obj: LanguageForChart = {
@@ -39,7 +39,7 @@ export function LanguagePieChart({ language }: { language: Language[] }) {
           content={
             <ChartTooltipContent
               hideLabel={false}
-              formatter={(value, name, entry, index, payload) => {
+              formatter={(value, name, entry) => {
                 const size = value as number;
                 return (
                   <LanguageToolTip

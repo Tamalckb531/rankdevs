@@ -1,7 +1,5 @@
 import { getLanguageType, msToHM } from "@/lib/language";
-import { TotalChartData } from "@/lib/type";
 import useTotalStateStore from "@/store/useTotalStatsStore";
-import React, { useEffect, useState } from "react";
 
 interface slide {
   language: string;

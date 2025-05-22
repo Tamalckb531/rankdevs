@@ -46,7 +46,7 @@ export function WeeklyPieChart() {
           content={
             <ChartTooltipContent
               hideLabel={false}
-              formatter={(value, name, entry, index, payload) => {
+              formatter={(value, name, entry) => {
                 const ms = value as number;
                 return (
                   <ChartToolTip

@@ -69,6 +69,7 @@ export async function GET(
       status: 200,
     });
   } catch (err) {
+    console.log(err);
     return new Response(JSON.stringify({ error: "Server error" }), {
       status: 500,
     });

@@ -1,14 +1,8 @@
 import NextAuth from "next-auth";
-import type { AuthOptions, Account, Profile, Session, User } from "next-auth";
+import type { AuthOptions, Session } from "next-auth";
 
 import { JWT } from "next-auth/jwt";
 import GitHubProvider from "next-auth/providers/github";
-
-interface SignIn {
-  user: User;
-  account: Account | null;
-  profile?: Profile;
-}
 
 interface stu {
   session: Session;

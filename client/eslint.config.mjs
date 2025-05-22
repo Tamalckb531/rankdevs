@@ -15,7 +15,10 @@ const eslintConfig = [
   {
     files: ["**/*.ts", "**/*.tsx"],
     rules: {
-      "no-unused-vars": "off", // disables 'defined but never used'
+      "no-unused-vars": [
+        "warn",
+        { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" },
+      ],
       "@typescript-eslint/no-explicit-any": "off", // disables 'unexpected any'
       "prefer-const": "off", // disables 'use const instead of let'
     },

@@ -46,7 +46,9 @@ const useDashboard = (userId: string) => {
       for (const fn of queue) {
         try {
           fn();
-        } catch (err) {}
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
   });
