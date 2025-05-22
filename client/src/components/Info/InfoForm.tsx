@@ -92,7 +92,8 @@ export function InfoForm() {
   }, [isPending, isError]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const { apiKey: _apiKey, ...rest } = data;
+    const { apiKey, ...rest } = data;
+    void apiKey;
 
     // Convert empty strings to null
     const sanitizedData = Object.fromEntries(
