@@ -5,9 +5,9 @@ import LeetCodeStatsSkeleton from "@/components/Skeletons/LeetCodeSkeleton";
 import useCPStatsStore from "@/store/useCPStatsStore";
 
 const LeetcodeStats = ({ loading }: { loading: boolean }) => {
-  if (loading) return <LeetCodeStatsSkeleton />;
-
   const leetCodeStats = useCPStatsStore((state) => state.cpStats.lcData);
+  if (loading) return <LeetCodeStatsSkeleton />;
+  if (!leetCodeStats) return;
 
   return (
     <>

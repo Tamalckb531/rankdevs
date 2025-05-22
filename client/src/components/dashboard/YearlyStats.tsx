@@ -16,7 +16,7 @@ const YearlyStats = () => {
     return (
       <Card className="flex flex-col lg:col-span-2 bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2 ">
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
-          Can't show Yearly Stats
+          Can&apos;t show Yearly Stats
         </div>
       </Card>
     );

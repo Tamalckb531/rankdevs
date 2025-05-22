@@ -179,7 +179,7 @@ export function InfoForm() {
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel>I'm Hireable</FormLabel>
+                  <FormLabel>I&apos;m Hireable</FormLabel>
                 </div>
               </FormItem>
             )}

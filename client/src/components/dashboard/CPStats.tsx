@@ -31,7 +31,7 @@ const CPStats = () => {
       <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
         <Header text={text} />
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
-          Can't show {text} Stats
+          Can&apos;t show {text} Stats
         </div>
       </Card>
     );

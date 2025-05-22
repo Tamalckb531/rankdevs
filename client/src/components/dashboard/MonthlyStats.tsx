@@ -16,7 +16,7 @@ const MonthlyStats = () => {
     return (
       <Card className="flex flex-col md:col-span-2 lg:col-span-3 bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
-          Can't show Monthly Stats
+          Can&apos;t show Monthly Stats
         </div>
       </Card>
     );

@@ -6,8 +6,8 @@ import useCPStatsStore from "@/store/useCPStatsStore";
 import { CodeForceSkeleton } from "@/components/Skeletons/CodeForceSkeleton";
 
 const CodeForceStats = ({ loading }: { loading: boolean }) => {
-  if (loading) return <CodeForceSkeleton />;
   const codeForceStats = useCPStatsStore((state) => state.cpStats.cfData);
+  if (loading) return <CodeForceSkeleton />;
   if (!codeForceStats) return;
 
   const primeRank = getRankInfo(codeForceStats.maxRank);
