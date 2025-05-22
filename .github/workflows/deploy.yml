@@ -2,8 +2,10 @@ name: Build and Deploy to Docker Hub
 
 on:
   push:
+    paths:
+      - "server/**"
     branches:
-      - lulu
+      - main
 
 jobs:
   build-and-push:
@@ -11,9 +13,6 @@ jobs:
     steps:
       - name: Check Out Repo
         uses: actions/checkout@v2
-
-      - name: Prepare Dockerfile
-        run: cp ./server/Dockerfile ./Dockerfile
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -24,13 +23,13 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./server
+          file: ./server/Dockerfile
           push: true
           tags: tamalcdip/rankdevs-docker-img:latest
 
       - name: Verify Pushed Image
-        run: tamalcdip/rankdevs-docker-img:latest
+        run: docker pull tamalcdip/rankdevs-docker-img:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
@@ -40,6 +39,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo docker pull tamalcdip/rankdevs-docker-img:latest
-            sudo docker stop web-app || true
-            sudo docker rm web-app || true
-            sudo docker run -d --name web-app -p 3001:3001 tamalcdip/rankdevs-docker-img:latest
+            sudo docker stop rankdevs-docker-img || true
+            sudo docker rm rankdevs-docker-img || true
+            sudo docker run -d --name rankdevs-docker-img -p 3001:3001 tamalcdip/rankdevs-docker-img:latest
