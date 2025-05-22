@@ -1,9 +1,6 @@
 import { CodeForceData } from "@/lib/type";
 
-export async function GET(
-  req: Request,
-  context: { params: { username: string } }
-) {
+export async function GET(req: Request, context: any) {
   const { username } = await context.params;
 
   let data: CodeForceData;

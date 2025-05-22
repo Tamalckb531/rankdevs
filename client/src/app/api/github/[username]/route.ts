@@ -1,9 +1,6 @@
 import { githubQuery } from "@/lib/graphqlQuery";
 
-export async function GET(
-  req: Request,
-  context: { params: { username: string } }
-) {
+export async function GET(req: Request, context: any) {
   const { username } = await context.params;
   const { searchParams } = new URL(req.url);
   const dateParam = searchParams.get("date");
