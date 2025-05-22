@@ -42,7 +42,7 @@ app.use(
       }
 
       //? Production mode: allow only rankdevs and vscode
-      const prodAllowed = ["https://rankdevs.com"];
+      const prodAllowed = ["https://www.rankdevs.com"];
       if (
         origin &&
         (prodAllowed.includes(origin) || origin.startsWith("vscode-webview://"))
