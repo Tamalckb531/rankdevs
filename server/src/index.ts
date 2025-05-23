@@ -5,6 +5,7 @@ import { Hono } from "hono";
 import leaderboardRoute from "./routes/leaderboard.route.js";
 import dashboardRoute from "./routes/dashboard.route.js";
 import authRoute from "./routes/auth.route.js";
+import keyRoute from "./routes/apiKey.route.js";
 import { removeInactiveUsers } from "./utils/inMemoFunctions.js";
 import { rateLimiter } from "hono-rate-limiter";
 
@@ -70,6 +71,7 @@ app.get("/test", (c) => {
 app.route("/api/auth", authRoute);
 app.route("/api/leaderboard", leaderboardRoute);
 app.route("/api/dashboard", dashboardRoute);
+app.route("/api/key", keyRoute);
 
 //? Interval wise leaderboard cleanup -> remove in active users from leaderboard
 let dailyInterval: NodeJS.Timeout | null = null,

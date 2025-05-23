@@ -6,6 +6,12 @@ import { Stats, refinedStats, Payload, todaysStats } from "./utils/types";
 
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
+interface Info {
+  status: number;
+  msg: "nokey" | "check";
+  value: boolean;
+}
+
 const extractStats = (stat: Stats): refinedStats => {
   const { logs, ...otherProps } = stat;
   return otherProps;
@@ -18,9 +24,7 @@ export const sendDataToBackend = async (
   const backendUrl = process.env.BACKEND_URL;
 
   if (!backendUrl || !apiKey) {
-    console.error(
-      "Backend URL or apiKey not found! Please check your .env file."
-    );
+    vscode.window.showInformationMessage("ApiKey not found!");
     return;
   }
 
@@ -76,5 +80,81 @@ export const sendDataToBackend = async (
     });
   } catch (error) {
     console.error("Error sending typing data:", error);
+  }
+};
+
+export const checkApiKeyExist = async (apiKey: string): Promise<boolean> => {
+  const backendUrl = process.env.BACKEND_URL;
+
+  if (!backendUrl || !apiKey) {
+    vscode.window.showInformationMessage("Api Key not found");
+    return false;
+  }
+
+  try {
+    const res = await fetch(`${backendUrl}/api/key/check`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ apiKey }),
+    });
+
+    if (!res.ok) {
+      const err: any = await res.json();
+      throw new Error(err.message);
+    }
+
+    const data = (await res.json()) as Info;
+    if (data.msg === "nokey") {
+      vscode.window.showInformationMessage("No such key found");
+    } else if (!data.value && data.msg === "check") {
+      vscode.window.showInformationMessage("Api Key already set");
+    }
+    return data.value;
+  } catch (error: any) {
+    vscode.window.showInformationMessage(
+      "Some error occurred : ",
+      error.message
+    );
+    return false;
+  }
+};
+
+export const clearApiKeyBE = async (apiKey: string): Promise<boolean> => {
+  const backendUrl = process.env.BACKEND_URL;
+
+  if (!backendUrl || !apiKey) {
+    vscode.window.showInformationMessage("Api Key not found");
+    return false;
+  }
+
+  try {
+    const res = await fetch(`${backendUrl}/api/key/clear`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ apiKey }),
+    });
+
+    if (!res.ok) {
+      const err: any = await res.json();
+      throw new Error(err.message);
+    }
+
+    const data = (await res.json()) as Info;
+    if (data.msg === "nokey") {
+      vscode.window.showInformationMessage("No such key found to clear");
+    } else if (data.value && data.msg === "check") {
+      vscode.window.showInformationMessage("Api Key cleared successfully");
+    }
+    return data.value;
+  } catch (error: any) {
+    vscode.window.showInformationMessage(
+      "Some error occurred : ",
+      error.message
+    );
+    return false;
   }
 };

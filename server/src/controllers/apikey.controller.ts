@@ -23,7 +23,11 @@ export const isApiKeyExist = async (c: Context) => {
     });
 
     if (!user) {
-      throw new HTTPException(404, { message: "User not found" });
+      return c.json({
+        status: 200,
+        msg: "nokey",
+        value: false,
+      });
     }
 
     if (!user.isApiKeySet) {
@@ -35,7 +39,11 @@ export const isApiKeyExist = async (c: Context) => {
       });
     }
 
-    return c.json(user.isApiKeySet);
+    return c.json({
+      status: 200,
+      msg: "check",
+      value: user.isApiKeySet,
+    });
   } catch (error: any) {
     throw new HTTPException(500, {
       message: error.message || "An error occurred while logging in",
@@ -56,7 +64,11 @@ export const clearApiKey = async (c: Context) => {
     });
 
     if (!user) {
-      throw new HTTPException(404, { message: "User not found" });
+      return c.json({
+        status: 200,
+        msg: "nokey",
+        value: false,
+      });
     }
 
     await prisma.user.update({
@@ -66,7 +78,11 @@ export const clearApiKey = async (c: Context) => {
       },
     });
 
-    return c.json(!!user);
+    return c.json({
+      status: 200,
+      msg: "check",
+      value: true,
+    });
   } catch (error: any) {
     throw new HTTPException(500, {
       message: error.message || "An error occurred while logging in",
