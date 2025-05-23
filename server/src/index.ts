@@ -30,7 +30,7 @@ app.use(
     origin: (origin) => {
       if (process.env.NODE_ENV === "development") {
         //? Dev mode : allow localhost, vscode, curl/postman (no origin = curl/postman)
-        if (!origin) return "*"; // allow curl/postman (no origin)
+        if (!origin) return process.env.LOCAL_ORIGIN;
         if (
           origin === process.env.LOCAL_ORIGIN ||
           origin.startsWith("vscode-webview://")
@@ -42,6 +42,7 @@ app.use(
 
       //? Production mode: allow only rankdevs and vscode
       const prodAllowed = ["https://www.rankdevs.com"];
+      if (!origin) return "https://www.rankdevs.com";
       if (
         origin &&
         (prodAllowed.includes(origin) || origin.startsWith("vscode-webview://"))
