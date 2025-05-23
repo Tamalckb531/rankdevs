@@ -49,7 +49,7 @@ export default function HeroSection() {
                   as="h1"
                   className="mt-8 text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem]"
                 >
-                  Type Rank Flex
+                  Code Rank Flex
                 </TextEffect>
 
                 <TextEffect
@@ -60,7 +60,7 @@ export default function HeroSection() {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  Track your Typing with our RankDevs extension, Rank higher in
+                  Track your Coding with our RankDevs extension, Rank higher in
                   Leaderboard and Flex your Dev journey via Dashboard.
                 </TextEffect>
 

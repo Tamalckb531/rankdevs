@@ -8,10 +8,10 @@ const Footer = () => {
         <Logo />
         <p className="text-sm">© 2025 RankDevs, All rights reserved</p>
       </div>
-      <div className=" text-sm text-accent-foreground">
+      <div className=" hidden md:block text-sm text-accent-foreground text-wrap">
         Facing an issue or have a feature request? Tag us on
         <a
-          href={`https://x.com/TamalCDip`}
+          href={`https://x.com/rankdevs`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-slate-400 text-base italic underline -mt-0.5 cursor-pointer ml-1"
