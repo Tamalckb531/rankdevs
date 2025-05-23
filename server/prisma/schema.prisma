@@ -23,6 +23,7 @@ model User {
   location        String? @default("Earth")
   githubUserName  String  @unique
   apiKey          String  @unique
+  isApiKeySet     Boolean @default(false)
   email           String?
   portfolio       String?
   twitterUsername String?
