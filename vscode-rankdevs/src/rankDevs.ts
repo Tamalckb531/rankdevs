@@ -22,11 +22,8 @@ export class RankDevs {
   public async setApiKey(apiKey: string, oldApiKey?: string): Promise<void> {
     if (!!oldApiKey && apiKey !== oldApiKey) {
       const isClear = await clearApiKeyBE(oldApiKey);
-      if (!isClear) {
-        vscode.window.showErrorMessage(
-          "Can't clear the old api key and set the new one"
-        );
-        return;
+      if (isClear) {
+        this.context.globalState.update("rankDevsApiKey", undefined);
       }
     }
 

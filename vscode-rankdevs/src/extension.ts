@@ -60,7 +60,9 @@ export function activate(context: vscode.ExtensionContext) {
   const clearKeyCommand = vscode.commands.registerCommand(
     "vscode-rankdevs.clearApiKey",
     async () => {
-      const isClear = await clearApiKeyBE(existingKey as string);
+      const apiKey: string | undefined =
+        context.globalState.get("rankDevsApiKey");
+      const isClear = await clearApiKeyBE(apiKey as string);
       if (isClear) {
         context.globalState.update("rankDevsApiKey", undefined);
       }
@@ -83,13 +85,13 @@ export function activate(context: vscode.ExtensionContext) {
   // **!Interval-Based test Cleanup -> DO NOT TOUCH**
 
   // **Interval-Based api call**
-  intervalIdForApiCall = setInterval(() => {
-    rankDevs.callApiService();
-  }, 2 * 60 * 1000); // Run every 2 minute
+  // intervalIdForApiCall = setInterval(() => {
+  //   rankDevs.callApiService();
+  // }, 2 * 60 * 1000); // Run every 2 minute
 }
 
 //? run as soon as user close vs code
 export function deactivate() {
   clearInterval(intervalIdForCleanup);
-  clearInterval(intervalIdForApiCall);
+  // clearInterval(intervalIdForApiCall);
 }

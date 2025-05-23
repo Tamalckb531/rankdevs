@@ -125,6 +125,7 @@ export const checkApiKeyExist = async (apiKey: string): Promise<boolean> => {
     }
 
     const data = (await res.json()) as Info;
+
     if (data.msg === "nokey") {
       vscode.window.showErrorMessage("No such key found");
     } else if (!data.value && data.msg === "check") {
@@ -160,6 +161,7 @@ export const clearApiKeyBE = async (apiKey: string): Promise<boolean> => {
     }
 
     const data = (await res.json()) as Info;
+
     if (data.msg === "nokey") {
       vscode.window.showErrorMessage("No such key found to clear");
     } else if (data.value && data.msg === "check") {
