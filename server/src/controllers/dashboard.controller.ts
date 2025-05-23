@@ -129,15 +129,16 @@ export const saveToDataBase = async (
 };
 
 export const getDashboard = async (c: Context) => {
-  const userId = c.req.param("id");
+  const username = c.req.param("username");
 
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: userId,
+        githubUserName: username,
       },
     });
     if (!user) throw new HTTPException(404, { message: "User not found" });
+    const userId = user.id;
 
     //? other info's :
     const { lastTime, ...currentStats } = inMemoryStats[userId]

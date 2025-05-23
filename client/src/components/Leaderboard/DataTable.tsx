@@ -47,7 +47,6 @@ export function DataTable({ isPending, isError, error }: Status) {
                   </TableCell>
                   <TableCell>
                     <UserInfo
-                      id={data.id}
                       githubUserName={data.githubUserName}
                       twitterUsername={data.twitterUsername}
                     />
@@ -81,7 +80,7 @@ export function DataTable({ isPending, isError, error }: Status) {
     </div>
   );
 }
-const UserInfo = ({ id, githubUserName, twitterUsername }: userInfo) => {
+const UserInfo = ({ githubUserName, twitterUsername }: userInfo) => {
   const router = useRouter();
   return (
     <div className=" flex items-start justify-start gap-2">
@@ -92,7 +91,7 @@ const UserInfo = ({ id, githubUserName, twitterUsername }: userInfo) => {
       <div className="flex flex-col">
         <p
           className=" text-[15px] font-bold cursor-pointer"
-          onClick={() => router.push(`/dashboard/${id}`)}
+          onClick={() => router.push(`/${githubUserName}`)}
         >
           {githubUserName}
         </p>

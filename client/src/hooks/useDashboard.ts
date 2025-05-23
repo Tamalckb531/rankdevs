@@ -6,7 +6,7 @@ import useDashboardBatch from "./useDashboardBatch";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const useDashboard = (userId: string) => {
+const useDashboard = (username: string) => {
   const setDashboard = useDashboardStore((state) => state.setDashboard);
 
   const {
@@ -20,7 +20,7 @@ const useDashboard = (userId: string) => {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const res = await fetch(`${backendUrl}/api/dashboard/data/${userId}`, {
+      const res = await fetch(`${backendUrl}/api/dashboard/data/${username}`, {
         method: "GET",
       });
 
