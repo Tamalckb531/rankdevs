@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { RankDevs } from "./rankDevs";
 import { StatsManager } from "./StatsManager";
+import { clearApiKeyBE } from "./apiService";
 
 let globalContext: vscode.ExtensionContext;
 let intervalIdForCleanup: NodeJS.Timeout;
@@ -22,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
 
-  //? run when user first time install the app
+  //? run when user first time install the extension
   const existingKey: string | undefined =
     context.globalState.get("rankDevsApiKey");
 
@@ -50,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
           value: apiKeyVal,
         })
         .then((apiKey) => {
-          if (apiKey) rankDevs.setApiKey(apiKey);
+          if (apiKey) rankDevs.setApiKey(apiKey, apiKeyVal);
         });
     }
   );
@@ -58,9 +59,11 @@ export function activate(context: vscode.ExtensionContext) {
   //? to clear up the api Key
   const clearKeyCommand = vscode.commands.registerCommand(
     "vscode-rankdevs.clearApiKey",
-    () => {
-      context.globalState.update("rankDevsApiKey", undefined);
-      vscode.window.showInformationMessage("API Key cleared");
+    async () => {
+      const isClear = await clearApiKeyBE(existingKey as string);
+      if (isClear) {
+        context.globalState.update("rankDevsApiKey", undefined);
+      }
     }
   );
 

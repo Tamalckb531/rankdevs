@@ -42,7 +42,7 @@ export const isApiKeyExist = async (c: Context) => {
     return c.json({
       status: 200,
       msg: "check",
-      value: user.isApiKeySet,
+      value: !user.isApiKeySet,
     });
   } catch (error: any) {
     throw new HTTPException(500, {

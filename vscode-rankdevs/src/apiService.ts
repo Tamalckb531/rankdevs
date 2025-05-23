@@ -87,7 +87,7 @@ export const checkApiKeyExist = async (apiKey: string): Promise<boolean> => {
   const backendUrl = process.env.BACKEND_URL;
 
   if (!backendUrl || !apiKey) {
-    vscode.window.showInformationMessage("Api Key not found");
+    vscode.window.showErrorMessage("Api Key not found");
     return false;
   }
 
@@ -107,16 +107,13 @@ export const checkApiKeyExist = async (apiKey: string): Promise<boolean> => {
 
     const data = (await res.json()) as Info;
     if (data.msg === "nokey") {
-      vscode.window.showInformationMessage("No such key found");
+      vscode.window.showErrorMessage("No such key found");
     } else if (!data.value && data.msg === "check") {
-      vscode.window.showInformationMessage("Api Key already set");
+      vscode.window.showErrorMessage("Api Key already set");
     }
     return data.value;
   } catch (error: any) {
-    vscode.window.showInformationMessage(
-      "Some error occurred : ",
-      error.message
-    );
+    vscode.window.showErrorMessage("Some error occurred : ", error.message);
     return false;
   }
 };
@@ -125,7 +122,7 @@ export const clearApiKeyBE = async (apiKey: string): Promise<boolean> => {
   const backendUrl = process.env.BACKEND_URL;
 
   if (!backendUrl || !apiKey) {
-    vscode.window.showInformationMessage("Api Key not found");
+    vscode.window.showErrorMessage("Api Key not found");
     return false;
   }
 
@@ -145,16 +142,13 @@ export const clearApiKeyBE = async (apiKey: string): Promise<boolean> => {
 
     const data = (await res.json()) as Info;
     if (data.msg === "nokey") {
-      vscode.window.showInformationMessage("No such key found to clear");
+      vscode.window.showErrorMessage("No such key found to clear");
     } else if (data.value && data.msg === "check") {
       vscode.window.showInformationMessage("Api Key cleared successfully");
     }
     return data.value;
   } catch (error: any) {
-    vscode.window.showInformationMessage(
-      "Some error occurred : ",
-      error.message
-    );
+    vscode.window.showErrorMessage("Some error occurred : ", error.message);
     return false;
   }
 };
