@@ -150,6 +150,9 @@ const useDashboardBatch = () => {
       if (cp.cpStats.cfData?.username === username) return;
 
       const res = await fetch(`/api/codeforce/${username}`);
+      if (res.status !== 200) {
+        throw new Error("can't get data");
+      }
       const data: CodeForceData = await res.json();
 
       cp.setCodeForceStats(data);

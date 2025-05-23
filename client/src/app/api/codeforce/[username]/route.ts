@@ -18,7 +18,9 @@ export async function GET(req: Request, context: any) {
     const ratingData = await ratingRes.json();
     const statData = await statusRes.json();
 
-    if (ratingData.status !== "OK" || statData.status !== "OK") return null;
+    if (ratingData.status === "FAILED" || statData.status === "FAILED") {
+      throw new Error("Failed to fetch from CodeForce");
+    }
 
     const statusData = statData.result[0];
 
