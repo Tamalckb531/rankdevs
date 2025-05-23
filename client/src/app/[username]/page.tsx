@@ -10,5 +10,3 @@ const page = () => {
 };
 
 export default page;
-
-//? Check
