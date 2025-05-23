@@ -12,6 +12,12 @@ interface Info {
   value: boolean;
 }
 
+interface BRes {
+  status: number;
+  msg: string;
+  warning: boolean;
+}
+
 const extractStats = (stat: Stats): refinedStats => {
   const { logs, ...otherProps } = stat;
   return otherProps;
@@ -71,15 +77,28 @@ export const sendDataToBackend = async (
   };
 
   try {
-    await fetch(`${backendUrl}/api/leaderboard/update`, {
+    const res = await fetch(`${backendUrl}/api/leaderboard/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
-  } catch (error) {
-    console.error("Error sending typing data:", error);
+    if (!res.ok) {
+      const err: any = await res.json();
+      throw new Error(err.message);
+    }
+
+    const data = (await res.json()) as BRes;
+    if (data.warning) {
+      vscode.window.showWarningMessage(
+        "Update this extension, Old one is soon to be deprecated"
+      );
+    }
+  } catch (error: any) {
+    vscode.window.showErrorMessage(
+      "There might be some server issue or extension must be deprecated"
+    );
   }
 };
 
