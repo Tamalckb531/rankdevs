@@ -20,7 +20,9 @@ export function AvatorDropDown() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => router.push(`/dashboard/${user?.id}`)}>
+        <DropdownMenuItem
+          onClick={() => router.push(`/${user?.githubUserName}`)}
+        >
           Dashboard
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push("/info")}>

@@ -14,8 +14,8 @@ import CPStats from "./dashboard/CPStats";
 import { useParams } from "next/navigation";
 
 const DashboardGridContainer = () => {
-  const { id } = useParams();
-  const { mutate, isPending, isError } = useDashboard(id as string);
+  const { username } = useParams();
+  const { mutate, isPending, isError } = useDashboard(username as string);
   const dashboard = useDashboardStore((state) => state.dashboard);
 
   useEffect(() => {

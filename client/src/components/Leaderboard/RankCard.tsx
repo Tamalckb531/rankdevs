@@ -47,7 +47,7 @@ const RankCard = ({ rank }: Props) => {
           <div className="flex flex-col">
             <p
               className="text-lg font-bold cursor-pointer"
-              onClick={() => router.push(`/dashboard/${id}`)}
+              onClick={() => router.push(`/${github}`)}
             >
               {github}
             </p>
