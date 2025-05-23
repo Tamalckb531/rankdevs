@@ -5,6 +5,7 @@ import { Hono } from "hono";
 import leaderboardRoute from "./routes/leaderboard.route.js";
 import dashboardRoute from "./routes/dashboard.route.js";
 import authRoute from "./routes/auth.route.js";
+import keyRoute from "./routes/apiKey.route.js";
 import { removeInactiveUsers } from "./utils/inMemoFunctions.js";
 import { rateLimiter } from "hono-rate-limiter";
 
@@ -29,7 +30,7 @@ app.use(
     origin: (origin) => {
       if (process.env.NODE_ENV === "development") {
         //? Dev mode : allow localhost, vscode, curl/postman (no origin = curl/postman)
-        if (!origin) return "*"; // allow curl/postman (no origin)
+        if (!origin) return process.env.LOCAL_ORIGIN;
         if (
           origin === process.env.LOCAL_ORIGIN ||
           origin.startsWith("vscode-webview://")
@@ -41,6 +42,7 @@ app.use(
 
       //? Production mode: allow only rankdevs and vscode
       const prodAllowed = ["https://www.rankdevs.com"];
+      if (!origin) return "https://www.rankdevs.com";
       if (
         origin &&
         (prodAllowed.includes(origin) || origin.startsWith("vscode-webview://"))
@@ -70,6 +72,7 @@ app.get("/test", (c) => {
 app.route("/api/auth", authRoute);
 app.route("/api/leaderboard", leaderboardRoute);
 app.route("/api/dashboard", dashboardRoute);
+app.route("/api/key", keyRoute);
 
 //? Interval wise leaderboard cleanup -> remove in active users from leaderboard
 let dailyInterval: NodeJS.Timeout | null = null,

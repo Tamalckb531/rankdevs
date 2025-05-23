@@ -104,7 +104,7 @@ export const updateLeaderboard = async (c: Context) => {
     updateLeaderboardArray("weekly", userId, snap.weeklyStats.total);
     updateLeaderboardArray("monthly", userId, snap.monthlyStats.total);
 
-    return c.json({ status: 200, msg: "stats updated" });
+    return c.json({ status: 200, msg: "stats updated", warning: false });
   } catch (error: any) {
     throw new HTTPException(500, {
       message: error.message || "An error from leader board update",

@@ -1,5 +1,9 @@
 import * as vscode from "vscode";
-import { sendDataToBackend } from "./apiService";
+import {
+  checkApiKeyExist,
+  clearApiKeyBE,
+  sendDataToBackend,
+} from "./apiService";
 import { StatsManager } from "./StatsManager";
 
 //? test
@@ -15,9 +19,19 @@ export class RankDevs {
     this.context = context;
   }
 
-  public setApiKey(apiKey: string): void {
-    this.context.globalState.update("rankDevsApiKey", apiKey);
-    vscode.window.showInformationMessage("API Key set successfully");
+  public async setApiKey(apiKey: string, oldApiKey?: string): Promise<void> {
+    if (!!oldApiKey && apiKey !== oldApiKey) {
+      const isClear = await clearApiKeyBE(oldApiKey);
+      if (isClear) {
+        this.context.globalState.update("rankDevsApiKey", undefined);
+      }
+    }
+
+    const isOk = await checkApiKeyExist(apiKey);
+    if (isOk) {
+      this.context.globalState.update("rankDevsApiKey", apiKey);
+      vscode.window.showInformationMessage("API Key set successfully");
+    }
   }
 
   //? Store the first typed time of a frequent typed code inside typingStartTime within less than 10 seconds break
