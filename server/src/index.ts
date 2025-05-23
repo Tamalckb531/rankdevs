@@ -27,8 +27,6 @@ app.use(
   "*",
   cors({
     origin: (origin) => {
-      console.log(origin);
-
       if (process.env.NODE_ENV === "development") {
         //? Dev mode : allow localhost, vscode, curl/postman (no origin = curl/postman)
         if (!origin) return "*"; // allow curl/postman (no origin)

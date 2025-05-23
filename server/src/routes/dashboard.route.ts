@@ -7,7 +7,7 @@ import {
 
 const dashboardRoute = new Hono();
 
-dashboardRoute.get("/data/:id", getDashboard);
+dashboardRoute.get("/data/:username", getDashboard);
 dashboardRoute.put("/info", verifyToken, updateInfo);
 
 export default dashboardRoute;
