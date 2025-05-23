@@ -14,7 +14,7 @@ const WeeklyStats = () => {
 
   if (weeklyStats.isError || !weeklyStats) {
     return (
-      <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
+      <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2 min-h-[220px]">
         <div className=" h-full w-full flex items-center justify-center text-xl text-red-400">
           Can&apos;t show Weekly Stats
         </div>
@@ -24,7 +24,7 @@ const WeeklyStats = () => {
 
   if (!weeklyStats.isLoading && weeklyStats.data.length === 0) {
     return (
-      <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2">
+      <Card className="flex flex-col bg-background shadow-md dark:shadow-slate-500 rounded-2xl px-2 ">
         <Header time="Time data not available" />
         <div className=" h-full w-full flex items-center justify-center text-xl text-blue-400">
           Data is empty

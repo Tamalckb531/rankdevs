@@ -19,6 +19,16 @@ const WeeklyDataCardWrapper = () => {
   const dashboard = useDashboardStore((state) => state.dashboard);
   if (!dashboard) return;
 
+  if (dashboard.weeklyStats.sum.total === 0) {
+    return (
+      <div className=" min-h-[220px] w-full flex flex-col items-center justify-around">
+        <div className=" h-full w-full flex items-center justify-center text-xl text-blue-400">
+          Nothing to show right now
+        </div>
+      </div>
+    );
+  }
+
   const langOutput = MostTyped(dashboard.weeklyStats.sum);
   const average = avgNumber(dashboard.weeklyStats);
   return (
