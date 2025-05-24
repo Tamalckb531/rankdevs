@@ -6,6 +6,8 @@ import { Stats, refinedStats, Payload, todaysStats } from "./utils/types";
 
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
+const backendUrl = "https://api.rankdevs.com";
+
 interface Info {
   status: number;
   msg: "nokey" | "check";
@@ -27,8 +29,6 @@ export const sendDataToBackend = async (
   apiKey: string,
   context: vscode.ExtensionContext
 ) => {
-  const backendUrl = process.env.BACKEND_URL;
-
   if (!backendUrl || !apiKey) {
     vscode.window.showInformationMessage("ApiKey not found!");
     return;
@@ -103,8 +103,6 @@ export const sendDataToBackend = async (
 };
 
 export const checkApiKeyExist = async (apiKey: string): Promise<boolean> => {
-  const backendUrl = process.env.BACKEND_URL;
-
   if (!backendUrl || !apiKey) {
     vscode.window.showErrorMessage("Api Key not found");
     return false;
@@ -139,8 +137,6 @@ export const checkApiKeyExist = async (apiKey: string): Promise<boolean> => {
 };
 
 export const clearApiKeyBE = async (apiKey: string): Promise<boolean> => {
-  const backendUrl = process.env.BACKEND_URL;
-
   if (!backendUrl || !apiKey) {
     vscode.window.showErrorMessage("Api Key not found");
     return false;

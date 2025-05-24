@@ -13,12 +13,11 @@ import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import TableRowSkeleton from "../Skeletons/TableRowSkeleton";
 import useLSSTore from "@/store/useLeaderboardStatsStore";
 import { msToHM } from "@/lib/language";
-import { Status, userInfo } from "@/lib/type";
+import { Stats, Status, userInfo } from "@/lib/type";
 import { useRouter } from "next/navigation";
 
 export function DataTable({ isPending, isError, error }: Status) {
   const ls = useLSSTore((state) => state.ls);
-
   return (
     <div className="w-full rounded-md border shadow-md dark:shadow-amber-50">
       <ScrollArea className=" w-full rounded-md">

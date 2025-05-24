@@ -123,6 +123,8 @@ export const getLanguageType = (language: string) => {
     case "jsonl":
     case "jsonc":
       return "json";
+    case "code-runner-output":
+      return "runner";
     default:
       return language;
   }
