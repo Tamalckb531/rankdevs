@@ -82,6 +82,7 @@ export const languages: Record<string, LanguageColor> = {
   xml: { color: "#0060ac" },
   xsl: { color: "#9c3eaf" },
   yaml: { color: "#cb171e" },
+  "github-action-workflow": { color: "#1aa2c4" },
 };
 
 export const getLanguageColor = (lang: string): string => {
@@ -102,7 +103,6 @@ export const getContrastTextColor = (hexColor: string): string => {
 
 export const getLanguageType = (language: string) => {
   switch (language) {
-    case "dockercompose":
     case "dockerbake":
     case "dockerfile":
       return "docker";
@@ -125,6 +125,8 @@ export const getLanguageType = (language: string) => {
       return "json";
     case "code-runner-output":
       return "runner";
+    case "github-action-workflow":
+      return "CI/CD";
     default:
       return language;
   }
