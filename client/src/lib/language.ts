@@ -82,6 +82,7 @@ export const languages: Record<string, LanguageColor> = {
   xml: { color: "#0060ac" },
   xsl: { color: "#9c3eaf" },
   yaml: { color: "#cb171e" },
+  solidity: { color: "#AA6746" },
   "github-actions-workflow": { color: "#1aa2c4" },
 };
 
