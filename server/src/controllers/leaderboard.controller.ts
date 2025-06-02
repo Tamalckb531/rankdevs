@@ -38,6 +38,14 @@ export const updateLeaderboard = async (c: Context) => {
     if (!user) return c.json({ status: 404, msg: "User not found" });
     const userId = user.id;
 
+    //? Making Timezone correct :
+    const machineOffset = new Date().getTimezoneOffset();
+    const userOffset = snap.timezoneOffset || 0;
+
+    //* User sending date.now() which will show machine timezone time in server -> this dateTime basically calculate the utc mill second with offsets which will be same as in user's machine -> so dateTime is an utc mill second which represents the sending time from user's machine
+    const dateTime =
+      parseInt(snap.data.lastTime) - (userOffset - machineOffset) * 60 * 1000;
+
     //? storing user details in memory:
     if (!inMemoryStats[userId]) {
       //* Tested -> working fine
@@ -47,7 +55,7 @@ export const updateLeaderboard = async (c: Context) => {
         monthlyStats: snap.monthlyStats,
         todaysStats: {
           ...snap.data,
-          lastTime: parseInt(snap.data.lastTime),
+          lastTime: dateTime,
         },
         lastReportTime: Date.now(),
       };
@@ -55,7 +63,8 @@ export const updateLeaderboard = async (c: Context) => {
       //? adding the new today stats
       const stats = inMemoryStats[userId].todaysStats;
 
-      const newTime = parseInt(snap.data.lastTime);
+      const newTime = dateTime;
+
       const oldTime = stats.lastTime;
 
       if (!isSameDay(oldTime, newTime)) {
@@ -75,7 +84,7 @@ export const updateLeaderboard = async (c: Context) => {
         monthlyStats: snap.monthlyStats,
         todaysStats: {
           ...snap.data,
-          lastTime: parseInt(snap.data.lastTime),
+          lastTime: dateTime,
         },
         lastReportTime: Date.now(),
       };
