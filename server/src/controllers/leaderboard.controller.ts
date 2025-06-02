@@ -38,6 +38,12 @@ export const updateLeaderboard = async (c: Context) => {
     if (!user) return c.json({ status: 404, msg: "User not found" });
     const userId = user.id;
 
+    //? Making Timezone correct :
+    const machineOffset = new Date().getTimezoneOffset();
+
+    const dataTime =
+      snap.data.lastTime + (snap.timezoneOffset - machineOffset) * 60 * 1000;
+
     //? storing user details in memory:
     if (!inMemoryStats[userId]) {
       //* Tested -> working fine
@@ -56,6 +62,7 @@ export const updateLeaderboard = async (c: Context) => {
       const stats = inMemoryStats[userId].todaysStats;
 
       const newTime = parseInt(snap.data.lastTime);
+
       const oldTime = stats.lastTime;
 
       if (!isSameDay(oldTime, newTime)) {

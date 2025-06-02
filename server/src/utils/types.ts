@@ -1,6 +1,7 @@
 export type SnapShot = {
   apiKey: string;
   timestamp: number;
+  timezoneOffset: number;
   data: Stats & { lastTime: string };
   dailyStats: Stats;
   weeklyStats: Stats;
