@@ -22,6 +22,7 @@ export type todaysStats = refinedStats & {
 export interface Payload {
   apiKey: string;
   timestamp: number;
+  timezoneOffset: number;
   data: todaysStats;
   dailyStats: refinedStats;
   weeklyStats: refinedStats;

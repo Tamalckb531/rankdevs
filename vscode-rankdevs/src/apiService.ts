@@ -70,6 +70,7 @@ export const sendDataToBackend = async (
   const payload: Payload = {
     apiKey,
     timestamp: Date.now(),
+    timezoneOffset: new Date().getTimezoneOffset(),
     data: todayData,
     dailyStats: dailyRefinedStats,
     weeklyStats: weeklyRefinedStats,
