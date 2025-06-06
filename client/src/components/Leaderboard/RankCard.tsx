@@ -45,7 +45,7 @@ const RankCard = ({ rank }: Props) => {
           <RankCardImg github={github} twitter={twitter} />
           <div className="flex flex-col">
             <p
-              className="text-lg font-bold cursor-pointer"
+              className="text-lg font-bold cursor-pointer text-nowrap"
               onClick={() => router.push(`/${github}`)}
             >
               {github.length > 11 ? github.slice(0, 11) + ".." : github}
