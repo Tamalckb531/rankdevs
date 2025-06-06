@@ -17,7 +17,7 @@ interface Info {
 }
 
 const RankCard = ({ rank }: Props) => {
-  let color, img;
+  let color: string, img: string;
 
   if (rank === 1) {
     color = "text-amber-400";
@@ -35,7 +35,6 @@ const RankCard = ({ rank }: Props) => {
 
   if (!ls[rank - 1]) return <RankCardSkeleton />;
 
-  const id = ls[rank - 1].id;
   const github = ls[rank - 1].githubUserName;
   const twitter = ls[rank - 1].twitterUsername;
 
@@ -49,7 +48,7 @@ const RankCard = ({ rank }: Props) => {
               className="text-lg font-bold cursor-pointer"
               onClick={() => router.push(`/${github}`)}
             >
-              {github}
+              {github.length > 11 ? github.slice(0, 11) + ".." : github}
             </p>
             <a
               className="text-center text-sm text-slate-400 cursor-pointer"

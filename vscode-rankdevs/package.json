@@ -3,7 +3,7 @@
   "displayName": "rankdevs",
   "icon": "icon.png",
   "description": "programming time tracker",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "tamalckb",
   "repository": {
     "type": "git",
