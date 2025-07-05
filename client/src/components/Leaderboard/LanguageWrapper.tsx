@@ -3,6 +3,13 @@ import React from "react";
 import { msToHM } from "@/lib/language";
 import { LanguageCard } from "./LanguageCard";
 import { Ellipsis } from "lucide-react";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 export const LanguageWrapper = ({ stats }: { stats: Stats }) => {
   return (
@@ -13,12 +20,32 @@ export const LanguageWrapper = ({ stats }: { stats: Stats }) => {
         .map(([language, ms]) => (
           <LanguageCard key={language} language={language} time={msToHM(ms)} />
         ))}
-      <div
-        title="See all"
-        className=" cursor-pointer hover:border border-red-300 rounded-full"
-      >
-        <Ellipsis />
-      </div>
+      <Drawer>
+        <DrawerTrigger>
+          <div
+            title="See all"
+            className=" cursor-pointer hover:border border-red-300 rounded-full"
+          >
+            <Ellipsis />
+          </div>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>All Languages with time</DrawerTitle>
+            <div className=" flex flex-wrap m-2 p-2 items-start justify-start gap-2 w-full">
+              {Object.entries(stats)
+                .filter(([key]) => key !== "total")
+                .map(([language, ms]) => (
+                  <LanguageCard
+                    key={language}
+                    language={language}
+                    time={msToHM(ms)}
+                  />
+                ))}
+            </div>
+          </DrawerHeader>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };
