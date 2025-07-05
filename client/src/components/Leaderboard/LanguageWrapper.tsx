@@ -1,7 +1,7 @@
 import { Stats } from "@/lib/type";
 import React from "react";
 import { msToHM } from "@/lib/language";
-import { LanguageCard } from "./LanguageCard";
+import { LanguageCard, LanguageCardNoSpin } from "./LanguageCard";
 import { Ellipsis } from "lucide-react";
 import {
   Drawer,
@@ -18,34 +18,40 @@ export const LanguageWrapper = ({ stats }: { stats: Stats }) => {
         .filter(([key]) => key !== "total")
         .slice(0, 5)
         .map(([language, ms]) => (
-          <LanguageCard key={language} language={language} time={msToHM(ms)} />
+          <LanguageCardNoSpin
+            key={language}
+            language={language}
+            time={msToHM(ms)}
+          />
         ))}
-      <Drawer>
-        <DrawerTrigger>
-          <div
-            title="See all"
-            className=" cursor-pointer hover:border border-red-300 rounded-full"
-          >
-            <Ellipsis />
-          </div>
-        </DrawerTrigger>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>All Languages with time</DrawerTitle>
-            <div className=" flex flex-wrap m-2 p-2 items-start justify-start gap-2 w-full">
-              {Object.entries(stats)
-                .filter(([key]) => key !== "total")
-                .map(([language, ms]) => (
-                  <LanguageCard
-                    key={language}
-                    language={language}
-                    time={msToHM(ms)}
-                  />
-                ))}
+      {Object.entries(stats).length > 6 && (
+        <Drawer>
+          <DrawerTrigger>
+            <div
+              title="See all"
+              className=" cursor-pointer hover:border border-red-300 rounded-full"
+            >
+              <Ellipsis />
             </div>
-          </DrawerHeader>
-        </DrawerContent>
-      </Drawer>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>All Languages with time</DrawerTitle>
+              <div className=" flex flex-wrap m-2 p-2 items-start justify-start gap-2 w-full">
+                {Object.entries(stats)
+                  .filter(([key]) => key !== "total")
+                  .map(([language, ms]) => (
+                    <LanguageCard
+                      key={language}
+                      language={language}
+                      time={msToHM(ms)}
+                    />
+                  ))}
+              </div>
+            </DrawerHeader>
+          </DrawerContent>
+        </Drawer>
+      )}
     </div>
   );
 };
