@@ -49,6 +49,7 @@ export const languages: Record<string, LanguageColor> = {
   makefile: { color: "#427819" },
   markdown: { color: "#083fa1" },
   mdx: { color: "#F8B32C" },
+  mdc: { color: "#28292b" },
   sql: { color: "#e38c00" },
   "objective-c": { color: "#438eff" },
   "objective-cpp": { color: "#6866fb" },
@@ -83,6 +84,7 @@ export const languages: Record<string, LanguageColor> = {
   xsl: { color: "#9c3eaf" },
   yaml: { color: "#cb171e" },
   solidity: { color: "#AA6746" },
+  csv: { color: "#39B560" },
   "github-actions-workflow": { color: "#1aa2c4" },
 };
 
@@ -122,8 +124,9 @@ export const getLanguageType = (language: string) => {
     case "plaintext":
       return "txt";
     case "jsonl":
-    case "jsonc":
       return "json";
+    case "jsonc":
+      return "json (comment)";
     case "code-runner-output":
       return "runner";
     case "github-actions-workflow":
