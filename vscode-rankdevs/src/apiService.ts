@@ -92,14 +92,14 @@ export const sendDataToBackend = async (
 
     const data = (await res.json()) as BRes;
     if (data.warning) {
-      vscode.window.showWarningMessage(
-        "Update this extension, Old one is soon to be deprecated"
-      );
+      // vscode.window.showWarningMessage(
+      //   "Update this extension, Old one is soon to be deprecated"
+      // );
     }
   } catch (error: any) {
-    vscode.window.showErrorMessage(
-      "There might be some server issue or extension must be deprecated"
-    );
+    // vscode.window.showErrorMessage(
+    //   "There might be some server issue or extension must be deprecated"
+    // );
   }
 };
 
@@ -132,7 +132,7 @@ export const checkApiKeyExist = async (apiKey: string): Promise<boolean> => {
     }
     return data.value;
   } catch (error: any) {
-    vscode.window.showErrorMessage("Some error occurred : ", error.message);
+    // vscode.window.showErrorMessage("Some error occurred : ", error.message);
     return false;
   }
 };
@@ -166,7 +166,7 @@ export const clearApiKeyBE = async (apiKey: string): Promise<boolean> => {
     }
     return data.value;
   } catch (error: any) {
-    vscode.window.showErrorMessage("Some error occurred : ", error.message);
+    // vscode.window.showErrorMessage("Some error occurred : ", error.message);
     return false;
   }
 };

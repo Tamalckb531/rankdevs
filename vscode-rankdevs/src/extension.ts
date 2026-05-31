@@ -9,6 +9,11 @@ let intervalIdForApiCall: NodeJS.Timeout;
 
 //? run as soon as user open vs code
 export function activate(context: vscode.ExtensionContext) {
+  vscode.window.showInformationMessage(
+        "The RankDevs service is currently undergoing maintenance and will be unavailable. We apologize for the inconvenience."
+    );
+
+  return;
   globalContext = context;
 
   const rankDevs = new RankDevs(context);
